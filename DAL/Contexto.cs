@@ -15,7 +15,7 @@ namespace DAL
 
         public Contexto()
         {
-            MinhaConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["TesteCliente"].ConnectionString);
+            MinhaConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["TarentoConn"].ConnectionString);
             MinhaConexao.Open();
         }
 
