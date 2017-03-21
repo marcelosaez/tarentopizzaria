@@ -41,8 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutenticacaoDAL.cs" />
+    <Compile Include="Cliente\ClienteDAL.cs" />
     <Compile Include="Cliente_DAL.cs" />
     <Compile Include="Contexto.cs" />
+    <Compile Include="Funcionario\FuncionarioDAL.cs" />
+    <Compile Include="Produto\ProdutoTipoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +55,7 @@
       <Name>MODEL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

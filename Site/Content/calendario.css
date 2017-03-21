@@ -1,0 +1,26 @@
+﻿.cabecalho {
+    background-color:#006DCC;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    padding:5px;
+
+}
+
+.espaco{
+    padding:10px 0px;
+    border-bottom:2px solid #f2f2f2;
+
+}
+
+row:nth-child(even){background-color: #f2f2f2}
+
+.margimEsquerda
+{
+    margin-left:10px;
+
+}
+.titulo {
+    padding:5px;
+    margin-left:150px;
+}

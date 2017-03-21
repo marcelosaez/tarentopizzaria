@@ -1,4 +1,5 @@
 ﻿using MODEL;
+using MODEL.Funcionario;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -36,8 +37,8 @@ namespace DAL
 
             return lista;
         }
-
-        public List<Cliente_VO> listarTipoCliente(string tipo)
+        /*
+        public List<Funcionario_VO> listarTipoCliente(string tipo)
         {
             List<Cliente_VO> lista = new List<Cliente_VO>();
             var strQuery = "SELECT c.IdCliente, c.NomeCliente, c.Ativo, t.Descricao  FROM tb_Cliente c INNER JOIN tb_Tipo t ON c.TipoCliente=t.IdTipo WHERE c.TipoCliente = "+ int.Parse(tipo);
@@ -86,6 +87,6 @@ namespace DAL
             }
 
             return lista;
-        }
+        }*/
     }
 }

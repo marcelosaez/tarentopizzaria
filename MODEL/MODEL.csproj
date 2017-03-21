@@ -40,10 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cliente.cs" />
-    <Compile Include="TipoCliente.cs" />
+    <Compile Include="Cliente\Cliente_VO.cs" />
+    <Compile Include="ERRO_VO.cs" />
+    <Compile Include="Funcionario\Funcionario_VO.cs" />
+    <Compile Include="Funcionario\TipoFuncionario_VO.cs" />
+    <Compile Include="Cliente\TipoCliente.cs" />
+    <Compile Include="Produto\TipoProduto_VO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuario_VO_apagar.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

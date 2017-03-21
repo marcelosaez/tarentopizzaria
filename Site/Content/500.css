@@ -1,0 +1,16 @@
+﻿body {
+    text-align:center;
+    
+   
+}
+
+.imgFundo {
+    opacity: 0.03;  
+    filter: alpha(opacity=10);
+    background-repeat:no-repeat;
+    background-position:center;
+    margin-top:-20px;
+    height:500px;
+    background-image: url('../Images/logo_grande.jpg');
+    
+}

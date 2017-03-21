@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{8D9C2804-3C31-4B0F-9B2E-959BBB176529}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeriadosMoveis", "FeriadosMoveis\FeriadosMoveis.csproj", "{6012FE15-FCE6-4531-BB19-C08786F17C10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{8D9C2804-3C31-4B0F-9B2E-959BBB176529}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D9C2804-3C31-4B0F-9B2E-959BBB176529}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D9C2804-3C31-4B0F-9B2E-959BBB176529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6012FE15-FCE6-4531-BB19-C08786F17C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6012FE15-FCE6-4531-BB19-C08786F17C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6012FE15-FCE6-4531-BB19-C08786F17C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6012FE15-FCE6-4531-BB19-C08786F17C10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
