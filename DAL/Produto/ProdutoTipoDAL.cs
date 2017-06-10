@@ -46,6 +46,32 @@ namespace DAL.Produto
             return registro;
         }
 
+        public List<TipoProduto_VO> obterTipos()
+        {
+            List<TipoProduto_VO> lstTipos = new List<TipoProduto_VO> ();
+           
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" SELECT idtb_tipo as id , tipo ");
+            query.Append(" FROM tb_tipoProduto ");
+            query.Append(" WHERE ativo  = 1");
+
+            //executa
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+            TipoProduto_VO registro = null;
+
+            while (dr.Read())
+            {
+                registro = new TipoProduto_VO();
+
+                registro.idTipoProduto = Convert.ToInt32(dr["id"]);
+                registro.tipo = Convert.ToString(dr["tipo"]);
+                lstTipos.Add(registro);
+            }
+
+            return lstTipos;
+        }
+
         public bool verificaTipoProduto(string tipo)
         {
             TipoProduto_VO registro = new TipoProduto_VO();

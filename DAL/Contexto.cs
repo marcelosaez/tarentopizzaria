@@ -146,11 +146,12 @@ namespace DAL
             return dr;
         }
 
-        public SqlParameter createParametro(String nome, SqlDbType tipo, Object valor)
+        public SqlParameter createParametro(String nome, SqlDbType tipo, Object valor, ParameterDirection direcao)
         {
             SqlParameter parametro = new SqlParameter();
             parametro.ParameterName = nome;
             parametro.SqlDbType = tipo;
+            parametro.Direction = direcao;
 
             if (valor == null)
             {
@@ -170,6 +171,33 @@ namespace DAL
 
             return parametro;
         }
+
+        public SqlParameter createParametro(String nome, SqlDbType tipo, Object valor)
+        {
+            SqlParameter parametro = new SqlParameter();
+            parametro.ParameterName = nome;
+            parametro.SqlDbType = tipo;
+
+           
+            if (valor == null)
+            {
+                parametro.Value = DBNull.Value;
+            }
+            else
+            {
+                if (tipo.Equals(SqlDbType.VarChar) && valor.ToString().Length.Equals(0))
+                {
+                    parametro.Value = DBNull.Value;
+                }
+                else
+                {
+                    parametro.Value = valor;
+                }
+            }
+
+            return parametro;
+        }
+
 
         /// <summary>
         /// Executa um comando SQL sem retorno de dados.

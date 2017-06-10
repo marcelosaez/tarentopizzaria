@@ -160,5 +160,57 @@ namespace DAL.Cliente
             return registro;
         }
 
+        public List<Cliente_VO> autoComplete(string busca)
+        {
+            List<Cliente_VO> listaClientes = new List<Cliente_VO>();
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" SELECT  [idtb_cliente] as id, [nome], [endereco] ,[numero],[email] ,[ativo], ");
+            query.Append(" CASE WHEN [dddcel] <> 0 THEN [dddcel] END as dddcel, ");
+            query.Append(" CASE WHEN[cel] <> 0 THEN[cel] END as cel, ");
+            query.Append(" CASE WHEN[dddres] <> 0 THEN[dddres] END as dddres, ");
+            query.Append(" CASE WHEN[telres] <> 0 THEN[telres] END as telres  ");
+            query.Append(" FROM tb_cliente ");
+            query.Append(" WHERE ((cel like '" + busca + "%')  ");
+            query.Append(" or(telres like '" + busca + "%'))   ");
+            query.Append(" and cel is not null ");
+            query.Append(" and telres is not null ");
+            query.Append(" ORDER BY nome");
+            Cliente_VO registro = null;
+
+            //executa
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+
+            while (dr.Read())
+            {
+                registro = new Cliente_VO();
+                registro.idCliente = Convert.ToInt32(dr["id"]);
+                registro.nome = Convert.ToString(dr["nome"]);
+                registro.endereco = Convert.ToString(dr["endereco"]);
+                registro.numero = Convert.ToInt32(dr["numero"]);
+                registro.email = Convert.ToString(dr["email"]);
+                registro.ativo = Convert.ToBoolean(dr["ativo"]);
+                if (!DBNull.Value.Equals(dr["dddcel"]))
+                {
+                    registro.dddcel = Convert.ToInt32(dr["dddcel"]);
+                    registro.cel = Convert.ToInt32(dr["cel"]);
+                }
+
+                if (!DBNull.Value.Equals(dr["dddres"]))
+                {
+                    registro.dddres = Convert.ToInt32(dr["dddres"]);
+                    registro.telres = Convert.ToInt32(dr["telres"]);
+                }
+
+                    
+                listaClientes.Add(registro);
+
+
+            }
+
+            return listaClientes;
+        }
+
+
     }
 }

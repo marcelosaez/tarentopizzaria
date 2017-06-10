@@ -46,6 +46,9 @@
     <Compile Include="Cliente_DAL.cs" />
     <Compile Include="Contexto.cs" />
     <Compile Include="Funcionario\FuncionarioDAL.cs" />
+    <Compile Include="Pedidos\PedidosDAL.cs" />
+    <Compile Include="Produto\ProdutoDAL.cs" />
+    <Compile Include="Produto\ProdutoOpcaoDAL.cs" />
     <Compile Include="Produto\ProdutoTipoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

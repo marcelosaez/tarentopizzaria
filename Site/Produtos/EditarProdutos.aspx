@@ -1,10 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="EditarProdutoTipos.aspx.cs" Inherits="Site.Produtos.EditarProdutoTipos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="EditarProdutos.aspx.cs" Inherits="Site.Produtos.EditarProdutos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="/Content/bootstrap.css" rel="stylesheet" />
     <link href="/Content/clientes.css" rel="stylesheet" />
 
     <script src="/Scripts/jquery-1.9.0.min.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/jquery.maskMoney.js"></script>
     <script type="text/javascript">
         window.alert = function(){};
         var defaultCSS = document.getElementById('bootstrap-css');
@@ -23,6 +24,9 @@
         }
         //newAlert('success', 'Oh yeah!');
 
+        $(function () {
+            $("#ctl00_ContentPlaceHolder1_txtValor").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
+        })
     </script>
 
 </asp:Content>
@@ -33,15 +37,28 @@
      <div class="col-md-4 text-center">
          <div id="alert-area" style="width:420px;"></div>
      <div class="formulario">   
-         <h1>Tipo Produto</h1>
+         <h1>Produto</h1>
          <section class="login-form">
                 <asp:ValidationSummary ID="ValidationSummary1" runat="server" Visible="false" />
                 <asp:Panel ID="panelFormulario" runat="server" DefaultButton="cmdSalvar">
-                
                 <div class="col-md-12">
-                     <asp:TextBox ID="txtTipo" runat="server" EnableTheming="True" MaxLength="50"  CssClass="form-control input-lg espaco" placeholder="Tipo" ></asp:TextBox>
-                     <asp:RequiredFieldValidator ID="reqTipo" runat="server" ControlToValidate="txtTipo" ErrorMessage="Informe o tipo" EnableClientScript="True" Display="Dynamic">* Tipo Obrigatório</asp:RequiredFieldValidator>
+                     <asp:DropDownList ID="ddlTipoProdutos" runat="server" CssClass="form-control espaco" Width="340px">
+                </asp:DropDownList>
                 </div>
+                <div class="col-md-12">
+                     <asp:TextBox ID="txtNome" ClientIDMode="Static" runat="server" EnableTheming="True" MaxLength="50"  CssClass="form-control input-lg espaco" placeholder="Nome" ></asp:TextBox>
+                     <asp:RequiredFieldValidator ID="reqNome" runat="server" ControlToValidate="txtNome" ErrorMessage="Informe o nome" EnableClientScript="True" Display="Dynamic">* Nome Obrigatório</asp:RequiredFieldValidator>
+                </div>
+                <div class="col-md-12">
+                     <asp:TextBox ID="txtValor" data-symbol="R$ "  runat="server" EnableTheming="True" MaxLength="50"  CssClass="form-control input-lg espaco" placeholder="Valor"></asp:TextBox>
+                     <asp:RequiredFieldValidator ID="reqValor"  runat="server" ControlToValidate="txtValor" ErrorMessage="Informe o valor" EnableClientScript="True" Display="Dynamic">* Valor Obrigatório</asp:RequiredFieldValidator>
+                </div>
+                <div class="col-md-12">
+                     <asp:TextBox ID="txtIngredientes" runat="server" EnableTheming="True" MaxLength="50"  CssClass="form-control input-lg espaco" placeholder="Ingredientes" ></asp:TextBox>
+                     <%--<asp:RequiredFieldValidator ID="reqIngredientes" runat="server" ControlToValidate="txtIngredientes" ErrorMessage="Informe os ingredientes" EnableClientScript="True" Display="Dynamic">* Tipo Obrigatório</asp:RequiredFieldValidator>--%>
+                </div>
+
+                 
                 
                 <div class="col-md-12 text-left cbxCliente">
                     <asp:CheckBox ID="cbxAtivo" runat="server" Visible="false" EnableTheming="True"  Checked="false" Text="Ativo?" >
@@ -73,3 +90,4 @@
 
 
 </asp:Content>
+

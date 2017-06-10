@@ -36,5 +36,10 @@ namespace BLL.Produto
             return new ProdutoTipoDAL().verificaTipoProduto(tipo);
             
         }
+
+        public List<TipoProduto_VO> obterTipos()
+        {
+            return new ProdutoTipoDAL().obterTipos();
+        }
     }
 }

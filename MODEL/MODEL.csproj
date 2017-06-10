@@ -45,6 +45,10 @@
     <Compile Include="Funcionario\Funcionario_VO.cs" />
     <Compile Include="Funcionario\TipoFuncionario_VO.cs" />
     <Compile Include="Cliente\TipoCliente.cs" />
+    <Compile Include="Pedido\Pedido_VO.cs" />
+    <Compile Include="Produto\BordaProduto_VO.cs" />
+    <Compile Include="Produto\OpcaoProduto_VO.cs" />
+    <Compile Include="Produto\Produto_VO.cs" />
     <Compile Include="Produto\TipoProduto_VO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario_VO_apagar.cs" />

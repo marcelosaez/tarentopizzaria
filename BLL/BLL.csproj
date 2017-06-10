@@ -44,6 +44,9 @@
     <Compile Include="AutenticacaoBLL.cs" />
     <Compile Include="Cliente\ClienteBLL.cs" />
     <Compile Include="Funcionario\FuncionarioBLL.cs" />
+    <Compile Include="Pedidos\PedidoBLL.cs" />
+    <Compile Include="Produto\OpcaoBLL.cs" />
+    <Compile Include="Produto\ProdutoBLL.cs" />
     <Compile Include="Produto\ProdutoTipoBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

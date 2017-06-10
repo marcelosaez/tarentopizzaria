@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MODEL.Produto
 {
-    public class TipoProduto_VO
+    public class BordaProduto_VO
     {
-        public bool temCadastro;
-        public int idTipoProduto { get; set; }
-        public string tipo { get; set; }
+        public int idBordaProduto { get; set; }
+        public string borda { get; set; }
+        public decimal valor { get; set; }
         public bool ativo { get; set; }
     }
 }
