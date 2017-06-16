@@ -40,7 +40,7 @@ namespace Site.Pedidos
 
             //Carrego os tipos dos produtos
             carregarTiposProdutos();
-            carregarBorda();
+            
 
         }
 
@@ -60,9 +60,9 @@ namespace Site.Pedidos
         {
             List<BordaProduto_VO> bordas = new ProdutoBLL().obterBordas();
 
-            this.ddlBorda.Visible = true;
+            //this.ddlBorda.Visible = true;
             this.ddlBorda.Items.Clear();
-            this.ddlBorda.Items.Add(new ListItem("Borda", ""));
+            this.ddlBorda.Items.Add(new ListItem("Selecione a borda", ""));
             if (bordas != null)
             {
                 foreach (BordaProduto_VO tpBorda in bordas)
@@ -155,9 +155,7 @@ namespace Site.Pedidos
 
             if (!validaForm())
             {
-                //ClientScript.RegisterStartupScript(GetType(), "message", "newAlert('danger-alert','Preencha todos os campos!');", true);
-                ClientScript.RegisterStartupScript(GetType(), "message", "newAlert('Preencha todos os campos!');", true);
-
+                ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Preencha todos os campos!');", true);
                 return;
             }
 
@@ -194,6 +192,16 @@ namespace Site.Pedidos
 
             NovoPedido.qtd = Convert.ToInt32(ddlQtd.SelectedValue);
             NovoPedido.TemPedido = true;
+
+            decimal bordaValor = 0;
+            //ViewState["Preco"] = (decimal)ViewState["Preco"] ;
+            if (ViewState["BordaValor"] != null)
+            {
+                bordaValor = (decimal)ViewState["BordaValor"];
+                ViewState["Preco"] = (decimal)ViewState["Preco"] + (bordaValor * Convert.ToInt32(ddlQtd.SelectedValue));
+
+            }
+
             NovoPedido.valor = (decimal)ViewState["Preco"];
 
 
@@ -243,7 +251,9 @@ namespace Site.Pedidos
 
             if (ddlTipoProdutos.SelectedValue == "1")
             {
+
                 carregaOpcao();
+                carregarBorda();
                 ddlOpcao.Visible = true;
                 divBorda.Visible = true;
             }
@@ -379,15 +389,22 @@ namespace Site.Pedidos
 
             decimal valor = ObterValor(qtdSabores);
             decimal total = 0;
+            decimal valorBorda = 0;
             if (ddlQtd.SelectedValue != "")
                 qtd = Convert.ToInt32(ddlQtd.SelectedValue);
             else
                 return;
             total = (qtd * valor) ;
+
+            if (ViewState["BordaValor"] != null)
+                valorBorda = qtd * (decimal)ViewState["BordaValor"];
+
             ViewState["Preco"] = total;
 
+            total += valorBorda;
 
-            ClientScript.RegisterStartupScript(GetType(), "message", "newSucess('R$ "+total+"');", true);
+
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newSucess('R$ "+total+"');", true);
         }
 
         protected void ddlSabor_SelectedIndexChanged(object sender, EventArgs e)
@@ -414,6 +431,18 @@ namespace Site.Pedidos
             return 0;
         }
 
+        private decimal ObterValorBorda(int idBorda)
+        {
+            if (idBorda != 0)
+            {
+             return new ProdutoBLL().obterValorBorda(idBorda);
+            }
+
+            return 0;
+        }
+
+
+
         private void obterPedido()
         {
             Pedido_VO Pedido = new Pedido_VO();
@@ -429,6 +458,51 @@ namespace Site.Pedidos
                 //gvListaPedidos.DataBind();
             }
            
+        }
+
+        protected void MostraBorda_Click(object sender, EventArgs e)
+        {
+            if (fancyCheckBox.Checked)
+                ddlBorda.Visible = true;
+            else
+            {
+                ddlBorda.Visible = false;
+                ddlBorda.SelectedIndex = 0;
+            }
+        }
+
+        protected void ddlBorda_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idBorda = Convert.ToInt32(ddlBorda.SelectedValue);
+            decimal valor = new ProdutoBLL().obterValorBorda(idBorda);
+            ViewState["BordaValor"] = valor;
+
+            decimal qtd = 0;
+            decimal total = 0;
+            //decimal bordaValor = 0;
+
+            if (ddlQtd.SelectedValue != "")
+                qtd = Convert.ToInt32(ddlQtd.SelectedValue);
+            else
+                return;
+            if(qtd > 0)
+                total = (qtd * valor);
+
+            decimal pedido = (decimal)ViewState["Preco"];
+            decimal pedidoTotal = pedido + total;
+
+            //ViewState["Preco"] = pedidoTotal;
+
+            /*if (ViewState["BordaValor"] != null)
+            {
+                bordaValor = (decimal)ViewState["BordaValor"];
+                ViewState["Preco"] = (decimal)ViewState["Preco"] + (bordaValor * Convert.ToInt32(ddlQtd.SelectedValue));
+
+            }*/
+
+
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newSucess('R$ " + pedidoTotal + "');", true);
+
         }
     }
 }

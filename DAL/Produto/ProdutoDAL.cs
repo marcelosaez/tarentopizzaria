@@ -70,6 +70,31 @@ namespace DAL.Produto
             return lstBordas;
         }
 
+
+        public decimal obterValorBorda(int idBorda)
+
+        {
+            decimal retorno = 0;
+           
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" SELECT max([valor]) as valor ");
+            query.Append(" FROM[dbo].[tb_BordaProduto]  ");
+            query.Append(" WHERE idtb_borda in (" + idBorda + ")");
+
+            //executa
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+
+            while (dr.Read())
+            {
+                retorno = Convert.ToDecimal(dr["valor"]);
+            }
+
+            return retorno;
+        }
+
+
+
         public void alterar(Produto_VO Produto)
         {
             StringBuilder query = new StringBuilder();
@@ -129,7 +154,7 @@ namespace DAL.Produto
             StringBuilder query = new StringBuilder();
             query.Append(" SELECT idtb_produtos as id ");
             query.Append(" FROM tb_Produtos ");
-            query.Append(" WHERE nome = '" + produto + "' and tb_tipo_idtb_tipo="+idTipo);
+            query.Append(" WHERE nome = '" + produto + "' and tb_tipo_idtb_tipo=" + idTipo);
 
             //executa
             SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
@@ -170,17 +195,16 @@ namespace DAL.Produto
             return lstProdutos;
         }
 
-        //public decimal obterValor(int idSabor1, int idSabor2, int idSabor3)
         public decimal obterValor(string idSabor)
         {
             decimal retorno = 0;
             List<Produto_VO> lstProdutos = new List<Produto_VO>();
-           /* string sql = "";
-            sql += idSabor1;
-            if (idSabor2 != 0)
-                sql += ","+idSabor2;
-            if (idSabor3 != 0)
-                sql += "," + idSabor3;*/
+            /* string sql = "";
+             sql += idSabor1;
+             if (idSabor2 != 0)
+                 sql += ","+idSabor2;
+             if (idSabor3 != 0)
+                 sql += "," + idSabor3;*/
 
             // query
             StringBuilder query = new StringBuilder();
@@ -188,7 +212,7 @@ namespace DAL.Produto
             query.Append(" FROM[dbo].[tb_produtos] p ");
             query.Append(" WHERE idtb_produtos in (" + idSabor + ")");
 
-           
+
             //executa
             SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
 

@@ -67,5 +67,10 @@ namespace BLL.Produto
         {
             return new ProdutoDAL().obterBordas();
         }
+
+        public decimal obterValorBorda(int idBorda)
+        {
+            return new ProdutoDAL().obterValorBorda(idBorda);
+        }
     }
 }
