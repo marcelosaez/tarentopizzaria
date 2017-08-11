@@ -19,11 +19,7 @@ over-ride "Weak" message, show font in dark grey
 	  font-size: 16px;
 	  height: auto;
 	  padding: 10px;
-		@include box-sizing(border-box);
-
-		&:focus {
-		  z-index: 2;
-		}
+		
 	}
 
 body {
@@ -196,4 +192,10 @@ color: #1C1C1C;
 width:292px;
 background-color:#f9f9f9;
 padding:10px;
+}
+
+.rodape {
+    background-color: #006DCC;
+    color:#000;
+    font-weight:bold;
 }

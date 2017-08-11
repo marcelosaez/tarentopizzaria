@@ -22,6 +22,15 @@ namespace Site.Pedidos {
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
         
         /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
+        /// <summary>
         /// gvListaPedidos control.
         /// </summary>
         /// <remarks>
@@ -40,15 +49,6 @@ namespace Site.Pedidos {
         protected global::System.Web.UI.WebControls.ObjectDataSource SourceData;
         
         /// <summary>
-        /// updPainel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updPainel1;
-        
-        /// <summary>
         /// ValidationSummary2 control.
         /// </summary>
         /// <remarks>
@@ -65,6 +65,15 @@ namespace Site.Pedidos {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel panelFormulario;
+        
+        /// <summary>
+        /// updPainel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updPainel1;
         
         /// <summary>
         /// ddlTipoProdutos control.
@@ -164,6 +173,15 @@ namespace Site.Pedidos {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button cmdSalvar;
+        
+        /// <summary>
+        /// cmdAtualizar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cmdAtualizar;
         
         /// <summary>
         /// cmdFinalizar control.

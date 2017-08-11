@@ -185,6 +185,8 @@
     <Content Include="Produtos\Produtos.aspx" />
     <Content Include="Produtos\Tipos.aspx" />
     <Content Include="Sair.aspx" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\jquery-1.9.0.min.map" />
     <Content Include="Scripts\jquery.maskMoney.js" />
     <Content Include="Scripts\login.js" />

@@ -17,6 +17,12 @@ namespace BLL.Pedidos
         {
             return new PedidosDAL().obterDadosPedidos(idPedido);
         }
+
+        public List<Pedido_VO> obterDadosDetPedido(int idDetPedido)
+        {
+            return new PedidosDAL().obterDadosDetPedido(idDetPedido);
+        }
+
         public DataSet obterDataSet()
         {
             return new PedidosDAL().obterDataSet();
@@ -36,5 +42,9 @@ namespace BLL.Pedidos
                 return new PedidosDAL().adicionaPedidos(pedido);
         }
 
+        public Pedido_VO atualizaPedido(Pedido_VO pedidoAtualizado)
+        {
+            return new PedidosDAL().atualizaPedidos(pedidoAtualizado);
+        }
     }
 }
