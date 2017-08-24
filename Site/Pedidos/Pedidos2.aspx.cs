@@ -64,9 +64,9 @@ namespace Site.Pedidos
             var pedido = new PedidosBLL().obterDadosDetPedido(idDetPed);
             if (pedido.Count > 0)
                 PreenchePedido(pedido);
-
-            //throw new NotImplementedException();
         }
+
+        
 
         private void PreenchePedido(List<Pedido_VO> pedido)
         {
@@ -124,8 +124,11 @@ namespace Site.Pedidos
             carregarQuantidade(pedido[0].qtd);
 
             ViewState["Preco"] = Convert.ToDecimal(pedido[0].valor) - (valorBorda);
-            
 
+            if (! String.IsNullOrEmpty(pedido[0].obs))
+            {
+                txtObs.Text = pedido[0].obs;
+            }
 
 
             updPainel1.Update();
@@ -213,29 +216,25 @@ namespace Site.Pedidos
             {
                 int detPedido = Convert.ToInt32(e.CommandArgument.ToString());
                 editarPedido(detPedido);
-
-                //ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "confirmDelete(sender);", true);
-
-
-                // Int32.TryParse(gvListaPedidos.DataKeys[index].Value.ToString(), out id_);
-
-                // Rows[Convert.ToInt32(e.CommandArgument)]
-
-                //Response.Redirect("Pedidos2.aspx?idDetPed=" + index.ToString());
             }
 
             if (e.CommandName == "Delete")
             {
-                int id_ = 0;
-                Int32.TryParse(gvListaPedidos.DataKeys[index].Value.ToString(), out id_);
+                int detPedido = Convert.ToInt32(e.CommandArgument.ToString());
+                //excluirPedido(detPedido);
+                bool excluido = new PedidosBLL().apagarDadosDetPedido(detPedido);
+                if (excluido == true)
+                     Response.Redirect("Pedidos2.aspx");
+                else
+                    ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Nao foi possivel excluir o pedido!');", true);
 
-                Response.Redirect("Pedidos2.aspx?idDetPed=" + index.ToString());
             }
 
 
         }
-
+        
         decimal totalPedido = 0;
+
         protected void gvListaPedidos_RowDataBound(Object sender, GridViewRowEventArgs e)
         {
             
@@ -255,6 +254,7 @@ namespace Site.Pedidos
                 e.Row.CssClass = "rodape";
             }
         }
+
         private void carregarTiposProdutos(int tipoID)
         {
             List<TipoProduto_VO> produtos = new ProdutoTipoBLL().obterTipos();
@@ -273,6 +273,7 @@ namespace Site.Pedidos
                 }
             }
         }
+
         private void carregarTiposProdutos()
         {
             List<TipoProduto_VO> produtos = new ProdutoTipoBLL().obterTipos();
@@ -298,6 +299,13 @@ namespace Site.Pedidos
                 int.TryParse(Session["DetPedido"].ToString(), out idDetPed);
 
             }
+
+            if (!validaForm())
+            {
+                ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Preencha todos os campos!');", true);
+                return;
+            }
+
 
             PedidosBLL pedido = new PedidosBLL();
             Pedido_VO  PedidoAtualizado = new Pedido_VO();
@@ -332,6 +340,9 @@ namespace Site.Pedidos
 
             }
 
+            if (txtObs.Text.Trim() != null)
+                PedidoAtualizado.obs = txtObs.Text;
+
             PedidoAtualizado.valor = (decimal)ViewState["Preco"];
 
             PedidoAtualizado.idPedido =  (int)Session["Pedido"];
@@ -352,7 +363,6 @@ namespace Site.Pedidos
 
 
         }
-
 
         protected void cmdSalvar_Click(object sender, EventArgs e)
         {
@@ -428,6 +438,9 @@ namespace Site.Pedidos
 
             }
 
+            if (txtObs.Text.Trim() != null)
+                NovoPedido.obs = txtObs.Text;
+
             NovoPedido.valor = (decimal)ViewState["Preco"];
 
 
@@ -448,12 +461,16 @@ namespace Site.Pedidos
         private bool validaForm()
         {
             bool retorno = true;
-            if (ddlTipoProdutos.SelectedValue == "0")
+            if (ddlTipoProdutos.SelectedValue == "")
                 retorno = false;
-            if (ddlSabor1.SelectedValue == "0")
+            if (ddlSabor1.SelectedValue == "")
                 retorno = false;
             if ((ddlQtd.SelectedValue == "0") || (ddlQtd.SelectedValue == ""))
                 retorno = false;
+            if (fancyCheckBox.Checked  == true)
+                if (ddlBorda.SelectedValue == "")
+                    retorno = false;
+
 
             return retorno;
         }
@@ -467,7 +484,6 @@ namespace Site.Pedidos
         {
             //Response.Redirect("Default.aspx");
         }
-        
 
         protected void ddlTipoProdutos_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -522,6 +538,7 @@ namespace Site.Pedidos
             this.ddlQtd.Visible = false;
             ViewState["Sabores"] = null;
             escondeBordas();
+            txtObs.Text = "";
 
         }
 
@@ -648,7 +665,6 @@ namespace Site.Pedidos
                 }
             }
         }
-
 
         protected void ddlQtd_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -780,8 +796,6 @@ namespace Site.Pedidos
 
         protected void MostraBorda_Click(object sender, EventArgs e)
         {
-            
-
             if (fancyCheckBox.Checked)
                 ddlBorda.Visible = true;
             else

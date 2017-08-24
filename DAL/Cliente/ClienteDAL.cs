@@ -202,11 +202,14 @@ namespace DAL.Cliente
                     registro.telres = Convert.ToInt32(dr["telres"]);
                 }
 
-                    
+                
                 listaClientes.Add(registro);
 
 
             }
+
+            
+            dr.Close();
 
             return listaClientes;
         }

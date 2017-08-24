@@ -110,7 +110,7 @@
        <Columns>
              <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
-                    <asp:LinkButton ID="lnkDelete" runat="server" CommandArgument='<%#Eval("idDetPed") %>' CommandName="Delete" OnClientClick="return confirmDelete(this);" CausesValidation="false" >Apagar </asp:LinkButton>             
+                    <asp:LinkButton ID="lnkDelete" runat="server" CommandArgument='<%#Eval("idDetPed") %>' CommandName="Delete" CausesValidation="false" >Apagar </asp:LinkButton>             
                 </ItemTemplate>
              </asp:TemplateField>
            <asp:TemplateField ShowHeader="False">
@@ -234,7 +234,12 @@
                 <div class="col-md-12">
                      <asp:DropDownList ID="ddlBorda" runat="server" CssClass="form-control espaco" Width="340px"  AutoPostBack="true" Visible="false" OnSelectedIndexChanged="ddlBorda_SelectedIndexChanged" >
                 </asp:DropDownList>
-                </div>  
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                     <asp:TextBox ID="txtObs" runat="server" CssClass="form-control espaco" Width="340px" placeholder="Obs:" TextMode="MultiLine" ></asp:TextBox>
+                    </div>
+                </div>   
 
                    
                     <div class="col-md-12">
@@ -250,7 +255,7 @@
                         <%--<div class="col-md-6">
                             <asp:Button ID="Button1" runat="server" Text="Voltar" OnClick="cmdVoltar_Click" CssClass="btn btn-lg btn-danger btn-block botaoVoltar" CausesValidation="false" UseSubmitBehavior="false" />&nbsp;
                          </div>--%>
-                            <asp:Button ID="cmdAtualizar" runat="server" Text="Atualizar" OnClick="cmdAtualizar_Click" CssClass="btn btn-lg btn-primary btn-block botaoFinalizar" Visible="false" />
+                            <asp:Button ID="cmdAtualizar" runat="server" Text="Atualizar" OnClick="cmdAtualizar_Click" CssClass="btn btn-lg btn-primary btn-block botaoAtualizar" Visible="false" />
 
                             <asp:Button ID="cmdFinalizar" runat="server" Text="Finalizar" OnClick="cmdFinalizar_Click" CssClass="btn btn-lg btn-success btn-block botaoFinalizar" />
                         

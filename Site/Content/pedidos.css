@@ -109,9 +109,18 @@ form[role=login] {
     padding: 5px 10px;
     text-decoration:none;
     margin-right:20px;
-
-   
 }
+
+.botaoAtualizar {
+    background-color: #563d7c;
+    border-color: #563d7c;
+}
+
+    .botaoAtualizar:hover, .botaoAtualizar:focus, .botaoAtualizar:active, .botaoAtualizar.active {
+        color: #fff;
+        background-color: #391e63;
+        border-color: #391e63; /*set the color you want here*/
+    }
 
 .cbxCliente {
     padding:20px;
@@ -198,4 +207,7 @@ padding:10px;
     background-color: #006DCC;
     color:#000;
     font-weight:bold;
+}
+.btn {
+    height:45px;
 }

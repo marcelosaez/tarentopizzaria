@@ -46,5 +46,10 @@ namespace BLL.Pedidos
         {
             return new PedidosDAL().atualizaPedidos(pedidoAtualizado);
         }
+
+        public bool apagarDadosDetPedido(int idDetPed)
+        {
+            return new PedidosDAL().apagarDadosDetPedido(idDetPed);
+        }
     }
 }

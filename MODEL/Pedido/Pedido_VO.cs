@@ -11,6 +11,7 @@ namespace MODEL.Pedido
         public int idCliente;
         public int idTipo;
         public int idBorda;
+        public string obs;
 
         public int qtd { get; set; }
         public int idDetPed { get; set; }

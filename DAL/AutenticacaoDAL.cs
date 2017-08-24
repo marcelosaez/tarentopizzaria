@@ -44,6 +44,7 @@ namespace DAL
                     usuario= user;
 
                 }
+                retornoDataReader.Close();
             }
 
             return usuario;

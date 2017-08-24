@@ -15,8 +15,8 @@ namespace DAL
 
         public Contexto()
         {
-            MinhaConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["TarentoConn"].ConnectionString);
-            MinhaConexao.Open();
+           MinhaConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["TarentoConn"].ConnectionString);
+           MinhaConexao.Open();
         }
 
 
@@ -39,6 +39,7 @@ namespace DAL
             };
 
             cmdComando.ExecuteNonQuery();
+            closeConexao(MinhaConexao);
         }
 
         public SqlDataReader executaComandoComRetorno(string query)
@@ -244,6 +245,13 @@ namespace DAL
             //TO DO
             //if (makelog) this.fazerLog(query, parametros, conexao, transacao);
 
+        }
+
+        public void fecharTodasConexoes(SqlDataReader dr)
+        {
+            dr.Close();
+            dr.Dispose();
+            SqlConnection.ClearPool(MinhaConexao);
         }
 
     }
