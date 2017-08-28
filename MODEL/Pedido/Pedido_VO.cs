@@ -8,10 +8,10 @@ namespace MODEL.Pedido
 {
     public class Pedido_VO
     {
-        public int idCliente;
-        public int idTipo;
-        public int idBorda;
-        public string obs;
+        public int idCliente { get; set; }
+        public int idTipo    { get; set; }
+        public int idBorda   { get; set; }
+        public string obs    { get; set; }
 
         public int qtd { get; set; }
         public int idDetPed { get; set; }

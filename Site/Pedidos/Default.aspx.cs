@@ -1,4 +1,5 @@
-﻿using BLL.Pedidos;
+﻿using BLL.Cliente;
+using BLL.Pedidos;
 using MODEL.Cliente;
 using MODEL.Pedido;
 using System;
@@ -39,14 +40,81 @@ namespace Site.Pedidos
         private void fazerPedido()
         {
             Pedido_VO clientePedido = new Pedido_VO();
-            var pedido = "";
+            var idCliente = "";
             string[] arrPedido = txtBusca.Text.Split('-');
-            pedido = arrPedido[0].Trim();
-            clientePedido.idCliente = Convert.ToInt32(pedido);
-            Session["pedido"] = clientePedido;
-            Response.Redirect("Pedidos2.aspx");
+            idCliente = arrPedido[0].Trim();
+
+            if (validaCliente(idCliente))
+            {
+                clientePedido.idCliente = Convert.ToInt32(idCliente);
+                Session["pedido"] = clientePedido;
+                Session["NovoPedido"] = null;
+                Response.Redirect("Pedidos2.aspx");
+            }
+            
 
         }
 
+        protected void carregaDadosCliente_OnClientItemSelected(object sender, EventArgs e)
+        {
+            Pedido_VO clientePedido = new Pedido_VO();
+            var idCliente = "";
+            string[] arrPedido = txtBusca.Text.Split('-');
+            idCliente = arrPedido[0].Trim();
+
+            if (validaCliente(idCliente))
+            {
+                //clientePedido.idCliente = Convert.ToInt32(idCliente);
+                //Session["pedido"] = clientePedido;
+                //Session["NovoPedido"] = null;
+                //Response.Redirect("Pedidos2.aspx");
+            }
+
+        }
+
+        private bool validaCliente(string idCliente)
+        {
+            bool retorno = false;
+            Cliente_VO cliente = new Cliente_VO();
+
+           int idCli = 0;
+            int.TryParse(idCliente, out idCli);
+
+            if (idCli > 0)
+            {
+                divDetalhaCliente.Visible = false;
+                cliente = new ClienteBLL().obterRegistro(idCli);
+                if (cliente == null)
+                {
+                    ClientScript.RegisterStartupScript(GetType(), "message", "newAlert('alert alert-danger', 'Cliente nao encontrado!');", true);
+
+                }
+                else
+                {
+                    retorno = true;
+                    exibeDetalhas(cliente);
+                }
+            }
+            else
+                ClientScript.RegisterStartupScript(GetType(), "message", "newAlert('alert alert-danger', 'Por favor digite um telefone valido!');", true);
+
+            return retorno;
+        }
+
+        private void exibeDetalhas(Cliente_VO cliente)
+        {
+            divDetalhaCliente.Visible = true;
+            lblNome.Text = cliente.nome;
+            lblEnd.Text = cliente.endereco;
+            if(cliente.dddcel!=0)
+                 lblTel.Text = cliente.dddcel + " " + cliente.cel;
+            if (cliente.dddres != 0)
+            {
+                if (cliente.dddcel != 0)
+                    lblTel.Text += " | ";
+                lblTel.Text += cliente.dddres + " " + cliente.telres;
+
+            }
+        }
     }
 }

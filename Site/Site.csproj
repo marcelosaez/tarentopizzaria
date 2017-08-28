@@ -158,6 +158,7 @@
     <Content Include="Content\calendario.css" />
     <Content Include="Content\clientes.css" />
     <Content Include="Content\css.css" />
+    <Content Include="Content\finalizar.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\funcionarios.css" />
@@ -178,6 +179,7 @@
     </Content>
     <Content Include="Pedidos\AutoComplete.asmx" />
     <Content Include="Pedidos\Default.aspx" />
+    <Content Include="Pedidos\Finalizar.aspx" />
     <Content Include="Pedidos\Pedidos2.aspx" />
     <Content Include="Produtos\Default.aspx" />
     <Content Include="Produtos\EditarProdutos.aspx" />
@@ -310,6 +312,13 @@
     </Compile>
     <Compile Include="Pedidos\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedidos\Finalizar.aspx.cs">
+      <DependentUpon>Finalizar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pedidos\Finalizar.aspx.designer.cs">
+      <DependentUpon>Finalizar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pedidos\Pedidos2.aspx.cs">
       <DependentUpon>Pedidos2.aspx</DependentUpon>

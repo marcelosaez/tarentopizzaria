@@ -1,6 +1,7 @@
 ﻿using DAL.Cliente;
 using DAL.Pedidos;
 using MODEL.Cliente;
+using MODEL.Pagamento;
 using MODEL.Pedido;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,21 @@ namespace BLL.Pedidos
         public bool apagarDadosDetPedido(int idDetPed)
         {
             return new PedidosDAL().apagarDadosDetPedido(idDetPed);
+        }
+
+        public decimal totalPedido(int idDetPed)
+        {
+            return new PedidosDAL().totalPedido(idDetPed);
+        }
+
+        public List<Pagamento_VO> obterPagamento()
+        {
+            return new PedidosDAL().obterPagamento();
+        }
+
+        public void atualizaPagamento(Pagamento_VO pagamento)
+        {
+            new PedidosDAL().atualizaPagamento(pagamento);
         }
     }
 }

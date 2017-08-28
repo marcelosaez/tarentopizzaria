@@ -8,6 +8,7 @@ using DAL.Cliente;
 using System.Data;
 using MODEL.Pedido;
 using System.Data.SqlClient;
+using MODEL.Pagamento;
 
 namespace DAL.Pedidos
 {
@@ -27,7 +28,7 @@ namespace DAL.Pedidos
             query.Append("  WHEN op.idOpcao = 3 THEN pr.nome + ' | ' + pr2.nome + ' | ' + pr3.nome ");
             query.Append("  ELSE pr.nome ");
             query.Append("  END as sabor, ");
-            query.Append(" dt.quantidade, dt.valor, st.statusPedido ");
+            query.Append(" dt.quantidade, dt.valor, st.statusPedido, dt.obs ");
             query.Append(" FROM[dbo].[tb_cliente_tem_pedido] ctp ");
             query.Append(" INNER JOIN tb_detalhaPedido dt on dt.idPedido = ctp.idPedido ");
             query.Append(" LEFT JOIN tb_opcao op on dt.idOpcao = op.idOpcao ");
@@ -39,6 +40,53 @@ namespace DAL.Pedidos
             query.Append(" WHERE dt.idPedido = 0");
 
             return executeDataSet(query.ToString(), CommandType.Text, false);
+        }
+
+        public void atualizaPagamento(Pagamento_VO pagamento)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append(" UPDATE [tb_cliente_tem_pedido] SET [tb_TipoPagamento]=@idPagamento, tb_status_idtb_statusPedido=@statusPedido");
+            query.Append(" WHERE idPedido = @idPedido ");
+
+            //parametros
+            SqlParameter[] parametros = {
+                createParametro("@idPagamento", SqlDbType.Int, pagamento.idTipoPagamento),
+                createParametro("@idPedido", SqlDbType.Int, pagamento.idPedido),
+                createParametro("@statusPedido", SqlDbType.Int, pagamento.idStatusPedido)
+            };
+
+            //executa
+            try
+            {
+                executeNonQuery(query.ToString(), CommandType.Text, null, null, parametros, false);
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+        public List<Pagamento_VO> obterPagamento()
+        {
+            List<Pagamento_VO> lst = new List<Pagamento_VO>();
+
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" SELECT idtipoPagamento, tipoPagamento ");
+            query.Append(" FROM[dbo].[tb_tipoPagamento] order by tipoPagamento ");
+            
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+
+            while (dr.Read())
+            {
+                Pagamento_VO pagamento = new Pagamento_VO();
+                pagamento.idTipoPagamento = Convert.ToInt32(dr["idtipoPagamento"]);
+                pagamento.TipoPagamento = Convert.ToString(dr["tipoPagamento"]);
+                lst.Add(pagamento);
+            }
+
+            dr.Close();
+            return lst;
         }
 
         public bool apagarDadosDetPedido(int idDetPed)
@@ -65,6 +113,28 @@ namespace DAL.Pedidos
             return retorno;
         }
 
+        public decimal totalPedido(int idPedido)
+        {
+            decimal valor = 0;
+            try
+            {
+                StringBuilder query = new StringBuilder();
+                query.Append(" SELECT SUM(VALOR) as total FROM tb_detalhaPedido WHERE idPedido="+ idPedido);
+
+                SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+
+                while (dr.Read())
+                {
+                    valor = Convert.ToDecimal(dr["total"]);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return valor;
+        }
+
         public List<Pedido_VO> obterDadosPedidos(int idPedido)
         {
             List<Pedido_VO> lst = new List<Pedido_VO>();
@@ -78,7 +148,7 @@ namespace DAL.Pedidos
             query.Append("  WHEN op.idOpcao = 3 THEN pr.nome + ' | ' + pr2.nome + ' | ' + pr3.nome ");
             query.Append("  ELSE pr.nome ");
             query.Append("  END as sabor, ");
-            query.Append(" dt.quantidade, dt.valor, st.statusPedido ");
+            query.Append(" dt.quantidade, dt.valor, st.statusPedido, dt.obs ");
             query.Append(" FROM[dbo].[tb_cliente_tem_pedido] ctp ");
             query.Append(" INNER JOIN tb_detalhaPedido dt on dt.idPedido = ctp.idPedido ");
             query.Append(" LEFT JOIN tb_opcao op on dt.idOpcao = op.idOpcao ");
@@ -102,6 +172,14 @@ namespace DAL.Pedidos
                 pedido.qtd = Convert.ToInt32(dr["quantidade"]);
                 pedido.valor = Convert.ToDecimal(dr["valor"]);
                 pedido.StatusPedido = Convert.ToString(dr["statusPedido"]);
+                pedido.obs = Convert.ToString(dr["obs"]);
+
+                if (dr["obs"] == DBNull.Value)
+                    pedido.obs = "";
+                else
+                    pedido.obs = Convert.ToString(dr["obs"]);
+
+
                 lst.Add(pedido);
             }
 

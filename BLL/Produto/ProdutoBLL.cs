@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MODEL.Produto;
+using MODEL.Pagamento;
 
 namespace BLL.Produto
 {
@@ -57,7 +58,6 @@ namespace BLL.Produto
             return new ProdutoDAL().obterValor(idSabor);
         }
 
-        
         public List<BordaProduto_VO> obterTipos()
         {
             return new ProdutoDAL().obterBordas();

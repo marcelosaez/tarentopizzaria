@@ -28,15 +28,7 @@ namespace Site.Pedidos
             List<Cliente_VO> clientes = new List<Cliente_VO>();
 
             clientes = new PedidosBLL().autoComplete(prefixText);
-            //_objdt = clientes;
-            //_objdt = GetDataFromDataBase(prefixText);
-            //if (_objdt.Rows.Count > 0)
-            //{
-            //    for (int i = 0; i < _objdt.Rows.Count; i++)
-            //    {
-            //        ajaxDataCollection.Add(_objdt.Rows[i]["LanguageName"].ToString());
-            //    }
-            //}
+            
             var tel = "";
 
             foreach (var cliente in clientes)
