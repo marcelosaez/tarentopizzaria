@@ -169,6 +169,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Funcionarios\Default.aspx" />
     <Content Include="Funcionarios\Editar.aspx" />
+    <Content Include="Images\empty.png" />
     <Content Include="Images\logo.jpg" />
     <Content Include="Images\logo_grande.jpg" />
     <Content Include="Login.aspx" />
@@ -387,7 +388,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">

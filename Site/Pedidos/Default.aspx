@@ -50,15 +50,16 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="row voffset6">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-                <h2 style="text-align:center;">Pesquisar Clientes</h2>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2 style="text-align: center;">Pesquisar Clientes</h2>
 
             <div id="alert-area" style="width: 490px;"></div>
-            <asp:TextBox ID="txtBusca" runat="server" EnableTheming="True" MaxLength="50" CssClass="form-control input-lg espaco" placeholder="Buscar" required class="search-box">
-                <button id="btnClear" class="close-icon" type="reset"></button>
-            </asp:TextBox>
-
+            <div class="col-md-12 text-right">
+                <asp:TextBox ID="txtBusca" runat="server" EnableTheming="True" MaxLength="50" CssClass="form-control input-lg espaco" placeholder="Buscar" required class="search-box">
+                </asp:TextBox>
+            </div>
+           
             <asp:HiddenField ID="hdnValue" OnValueChanged="carregaDadosCliente_OnClientItemSelected" runat="server" />
 
             <asp:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server"
@@ -76,15 +77,21 @@
                 OnClientItemSelected="OnContactSelected">
             </asp:AutoCompleteExtender>
             <div class="col-md-12">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="btn btn-lg btn-danger btn-block botaoVoltar semUnderline" data-toggle="modal" data-load-url="" data-target="#myModal">Novo Cliente</div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4"></div>
+
+                <div class="col-md-4">
                     <asp:Button ID="cmdSalvar" runat="server" Text="Fazer Pedido" CssClass="btn btn-lg btn-primary btn-block botaoSalvar" OnClick="cmdSalvar_Click" />
                 </div>
+
             </div>
         </div>
-        <div class="col-md-4"></div>
+         <div class="col-md-1 text-left">
+                <asp:ImageButton ID="imgLimpar" runat="server" OnClick="imgLimpar_Click" ImageUrl="~/Images/empty.png" Width="32" Height="32" ImageAlign="Left" CssClass="imgLimpar" AlternateText="Limpar" ToolTip="Limpar" />
+        </div>
+        <div class="col-md-2"></div>
         <%--<a href="#" data-toggle="modal" data-load-url="" data-target="#myModal">Click me</a>--%>
         <%--<a href="#" >Click me</a>--%>
     </div>
@@ -110,33 +117,39 @@
     </div>
     <div id="divDetalhaCliente" runat="server" visible="false">
         <div class="row voffset4">
-            <div class="col-md-5">&nbsp;</div>
-            <div class="col-md-2">
-                <h2>Detalhes</h2>
+            <div class="col-md-4">&nbsp;</div>
+            <div class="col-md-4 text-center">
+                <h2>Detalhes do cliente</h2>
             </div>
-            <div class="col-md-5">&nbsp;</div>
+            <div class="col-md-4">&nbsp;</div>
         </div>
-        <table id="tbDetalhaCliente" runat="server">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Endereço</th>
-                    <th>Telefone</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblNome" runat="server"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:Label ID="lblEnd" runat="server"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:Label ID="lblTel" runat="server"></asp:Label>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <table id="tbDetalhaCliente" runat="server">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Endereço</th>
+                            <th>Telefone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblNome" runat="server"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label ID="lblEnd" runat="server"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label ID="lblTel" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
     </div>
 </asp:Content>

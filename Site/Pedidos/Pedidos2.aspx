@@ -243,10 +243,10 @@
 
                                     <div class="col-md-12">
                                         <div class="col-md-6">
-                                            <asp:Button ID="cmdVoltar" runat="server" Text="Voltar" OnClick="cmdVoltar_Click" CssClass="btn btn-lg btn-danger btn-block botaoVoltar" CausesValidation="false" UseSubmitBehavior="false" />&nbsp;
+                                            <asp:Button ID="cmdVoltar" runat="server" Text="Voltar" OnClick="cmdVoltar_Click" CssClass="btn btn-lg btn-danger btn-block botaoVoltar2" CausesValidation="false" UseSubmitBehavior="false" />&nbsp;
                                         </div>
                                         <div class="col-md-6">
-                                            <asp:Button ID="cmdSalvar" runat="server" Text="Adicionar" OnClick="cmdSalvar_Click" CssClass="btn btn-lg btn-primary btn-block botaoSalvar" />
+                                            <asp:Button ID="cmdSalvar" runat="server" Text="Adicionar" OnClick="cmdSalvar_Click" CssClass="btn btn-lg btn-primary btn-block botaoSalvar2" />
                                         </div>
 
                                     </div>

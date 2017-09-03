@@ -78,12 +78,12 @@
         </FooterTemplate>
     </asp:Repeater>
     <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <asp:DropDownList ID="ddlPagamento" runat="server" CssClass="form-control espaco" Width="340px">
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+            <asp:DropDownList ID="ddlPagamento" runat="server" CssClass="form-control espaco">
             </asp:DropDownList>
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-5"></div>
     </div>
     <div class="row">
         <div class="col-md-4">&nbsp;</div>
@@ -94,15 +94,20 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <div class="col-md-4">
+        <div class="col-md-3"></div>
+
+            <div class="col-md-3">
                 <asp:Button ID="cmdVoltar" runat="server" Text="Voltar" OnClick="cmdVoltar_Click" CssClass="btn btn-lg btn-danger btn-block botaoVoltar" CausesValidation="false" UseSubmitBehavior="false" />&nbsp;
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <asp:Button ID="cmdFinalizar" runat="server" Text="Finalizar" OnClick="cmdFinalizar_Click" CssClass="btn btn-lg btn-primary btn-block botaoSalvar" />
             </div>
+        <div class="col-md-3"></div>
+
         </div>
+        <div class="col-md-4"></div>
+
     </div>
 
-    <div class="col-md-4"></div>
 
 </asp:Content>

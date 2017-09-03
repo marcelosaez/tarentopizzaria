@@ -10,10 +10,11 @@ using static ClassFeriados.Feriado;
 
 namespace Site.FeriadosM
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Default : BaseWebForm
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected override void Page_Load(object sender, EventArgs e)
         {
+            base.Page_Load(sender, e);
             if (!IsPostBack)
                 montaCalendario();
         }

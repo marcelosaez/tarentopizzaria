@@ -14,6 +14,7 @@ namespace Site.Funcionarios
     {
         protected override void Page_Load(object sender, EventArgs e)
         {
+            base.Page_Load(sender, e);
             //configura o titulo da pagina
             this.Title = this.Title + " - Funcionários";
 

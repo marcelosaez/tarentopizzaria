@@ -13,10 +13,11 @@ using System.Web.UI.WebControls;
 
 namespace Site.Pedidos
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Default : BaseWebForm
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected override void Page_Load(object sender, EventArgs e)
         {
+            base.Page_Load(sender, e);
             this.txtBusca.Attributes.Add("OnChange", "tbDrugName_OnChange()");
         }
 
@@ -105,7 +106,7 @@ namespace Site.Pedidos
         {
             divDetalhaCliente.Visible = true;
             lblNome.Text = cliente.nome;
-            lblEnd.Text = cliente.endereco;
+            lblEnd.Text = "" +cliente.endereco + " - apto: " + cliente.numero;
             if(cliente.dddcel!=0)
                  lblTel.Text = cliente.dddcel + " " + cliente.cel;
             if (cliente.dddres != 0)
@@ -115,6 +116,12 @@ namespace Site.Pedidos
                 lblTel.Text += cliente.dddres + " " + cliente.telres;
 
             }
+        }
+
+        protected void imgLimpar_Click(object sender, ImageClickEventArgs e)
+        {
+            txtBusca.Text = "";
+            divDetalhaCliente.Visible = false;
         }
     }
 }
