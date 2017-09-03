@@ -56,14 +56,14 @@ h2 {
 
 .botaoVoltar {
     display: block;
-    margin-left: -13px;
+    margin-left: -15px;
     padding: 5px 10px;
     text-decoration: none;
 }
 
 .botaoSalvar {
     display: block;
-    margin-left: 52px;
+    margin-left: 13px;
     padding: 5px 10px;
     margin-right: 10px;
     text-decoration: none;
