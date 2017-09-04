@@ -1,9 +1,11 @@
 ﻿using BLL.Pedidos;
 using BLL.Produto;
+using Framework.Impressao;
 using MODEL.Pagamento;
 using MODEL.Pedido;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -19,7 +21,7 @@ namespace Site.Pedidos
             if (!IsPostBack)
                 carregarDados();
         }
-
+        List<Pedido_VO> lst = new List<Pedido_VO>();
         private void carregarDados()
         {
             Pedido_VO Pedido = new Pedido_VO();
@@ -65,10 +67,10 @@ namespace Site.Pedidos
         private void obterPedido(int idDetPed)
         {
             Pedido_VO Pedido = new Pedido_VO();
-            List<Pedido_VO> lst = new List<Pedido_VO>();
+            
             if (idDetPed > 0)
             {
-                lst = new PedidosBLL().obterDadosPedidos(idDetPed);
+                this.lst = new PedidosBLL().obterDadosPedidos(idDetPed);
                 this.rptItems.DataSource = lst;
                 this.rptItems.DataBind();
 
@@ -103,13 +105,15 @@ namespace Site.Pedidos
                 pagamento.idStatusPedido = (int)StatusPagamento.Finalizado;
                 pagamento.idPedido = idPedido;
                 pedido.atualizaPagamento(pagamento);
-                imprimirCupom();
+                imprimirCupom(idPedido);
             }
         }
 
-        private void imprimirCupom()
+        private void imprimirCupom(int idPedido)
         {
+            int idEmp = Convert.ToInt32(ConfigurationManager.AppSettings["idEmpresa"]);
             //TO DO
+            new PrintCupom().ImprimeVendaVista(this.lst, idEmp, idPedido);
         }
     }
 }

@@ -45,6 +45,7 @@
     <Compile Include="Cliente\ClienteDAL.cs" />
     <Compile Include="Cliente_DAL.cs" />
     <Compile Include="Contexto.cs" />
+    <Compile Include="Empresa\EmpresaDAL.cs" />
     <Compile Include="Funcionario\FuncionarioDAL.cs" />
     <Compile Include="Pedidos\PedidosDAL.cs" />
     <Compile Include="Produto\ProdutoDAL.cs" />

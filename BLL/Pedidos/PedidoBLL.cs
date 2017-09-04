@@ -67,5 +67,11 @@ namespace BLL.Pedidos
         {
             new PedidosDAL().atualizaPagamento(pagamento);
         }
+
+        public Cupom_VO obterDadosCupomFiscal(int idPedido)
+        {
+            return new PedidosDAL().obterDadosCupomFiscal(idPedido);
+        }
+
     }
 }

@@ -41,12 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cliente\Cliente_VO.cs" />
+    <Compile Include="Empresa\Empresa_VO.cs" />
     <Compile Include="ERRO_VO.cs" />
     <Compile Include="Funcionario\Funcionario_VO.cs" />
     <Compile Include="Funcionario\TipoFuncionario_VO.cs" />
     <Compile Include="Cliente\TipoCliente.cs" />
     <Compile Include="Pagamento\Pagamento_VO.cs" />
     <Compile Include="Pagamento\StatusPagamento.cs" />
+    <Compile Include="Pedido\Cupom_VO.cs" />
     <Compile Include="Pedido\Pedido_VO.cs" />
     <Compile Include="Produto\BordaProduto_VO.cs" />
     <Compile Include="Produto\OpcaoProduto_VO.cs" />

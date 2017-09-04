@@ -42,6 +42,41 @@ namespace DAL.Pedidos
             return executeDataSet(query.ToString(), CommandType.Text, false);
         }
 
+        public Cupom_VO obterDadosCupomFiscal(int idPedido)
+        {
+            Cupom_VO cupom = new Cupom_VO();
+
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" select c.nome as cliente, c.endereco, c.numero,ISNULL(c.dddres,0) as dddres,ISNULL(c.telres,0) as telres, ");
+            query.Append(" ISNULL(c.dddcel, 0) as dddcel, ISNULL(c.cel, 0) as cel, ");
+            query.Append(" f.nome as funcionario, ");
+            query.Append(" tp.TipoPagamento ");
+            query.Append(" from tb_cliente c  ");
+            query.Append(" inner join tb_cliente_tem_pedido ctp on c.idtb_cliente = ctp.tb_cliente_idtb_cliente  ");
+            query.Append(" inner join tb_funcionarios f on f.idtb_funcionario = ctp.tb_funcionario_idtb_funcionario  ");
+            query.Append(" inner join tb_tipoPagamento tp on tp.idTipoPagamento = ctp.tb_tipoPagamento  ");
+            query.Append(" where ctp.idPedido = "+idPedido);
+
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+
+            while (dr.Read())
+            {
+               cupom.cliente.nome = Convert.ToString(dr["cliente"]);
+               cupom.cliente.endereco = Convert.ToString(dr["endereco"]);
+               cupom.cliente.numero = Convert.ToInt32(dr["numero"]);
+               cupom.cliente.dddres = Convert.ToInt32(dr["dddres"]);
+               cupom.cliente.telres = Convert.ToInt32(dr["telres"]);
+               cupom.cliente.dddcel = Convert.ToInt32(dr["dddcel"]);
+               cupom.cliente.cel = Convert.ToInt32(dr["cel"]);
+               cupom.funcionario.nome = Convert.ToString(dr["funcionario"]);
+               cupom.pagamento.TipoPagamento = Convert.ToString(dr["TipoPagamento"]);
+            }
+
+            dr.Close();
+            return cupom;
+        }
+
         public void atualizaPagamento(Pagamento_VO pagamento)
         {
             StringBuilder query = new StringBuilder();
@@ -172,7 +207,7 @@ namespace DAL.Pedidos
                 pedido.qtd = Convert.ToInt32(dr["quantidade"]);
                 pedido.valor = Convert.ToDecimal(dr["valor"]);
                 pedido.StatusPedido = Convert.ToString(dr["statusPedido"]);
-                pedido.obs = Convert.ToString(dr["obs"]);
+                //pedido.obs = Convert.ToString(dr["obs"]);
 
                 if (dr["obs"] == DBNull.Value)
                     pedido.obs = "";

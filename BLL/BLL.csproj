@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AutenticacaoBLL.cs" />
     <Compile Include="Cliente\ClienteBLL.cs" />
+    <Compile Include="Empresa\EmpresaBLL.cs" />
     <Compile Include="Funcionario\FuncionarioBLL.cs" />
     <Compile Include="Pedidos\PedidoBLL.cs" />
     <Compile Include="Produto\OpcaoBLL.cs" />
@@ -54,10 +55,6 @@
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{882a5240-87c6-4f33-ba7f-2c10c295cb02}</Project>
       <Name>DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Framework\Framework.csproj">
-      <Project>{8d9c2804-3c31-4b0f-9b2e-959bbb176529}</Project>
-      <Name>Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\MODEL\MODEL.csproj">
       <Project>{6f22ad1f-6b2c-4e94-ac05-deb89578026a}</Project>
