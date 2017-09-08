@@ -8,6 +8,8 @@ namespace MODEL.Pagamento
 {
     public class Pagamento_VO
     {
+        public int idEntrega;
+
         public int idStatusPedido { get; set; }
         public int idPedido { get; set; }
 

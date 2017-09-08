@@ -80,14 +80,15 @@ namespace DAL.Pedidos
         public void atualizaPagamento(Pagamento_VO pagamento)
         {
             StringBuilder query = new StringBuilder();
-            query.Append(" UPDATE [tb_cliente_tem_pedido] SET [tb_TipoPagamento]=@idPagamento, tb_status_idtb_statusPedido=@statusPedido");
+            query.Append(" UPDATE [tb_cliente_tem_pedido] SET [tb_TipoPagamento]=@idPagamento, tb_status_idtb_statusPedido=@statusPedido, idtb_entrega=@idEntrega");
             query.Append(" WHERE idPedido = @idPedido ");
 
             //parametros
             SqlParameter[] parametros = {
                 createParametro("@idPagamento", SqlDbType.Int, pagamento.idTipoPagamento),
                 createParametro("@idPedido", SqlDbType.Int, pagamento.idPedido),
-                createParametro("@statusPedido", SqlDbType.Int, pagamento.idStatusPedido)
+                createParametro("@statusPedido", SqlDbType.Int, pagamento.idStatusPedido),
+                createParametro("@idEntrega", SqlDbType.Int, pagamento.idEntrega)
             };
 
             //executa

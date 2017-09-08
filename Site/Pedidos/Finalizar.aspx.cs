@@ -46,6 +46,7 @@ namespace Site.Pedidos
 
             
             carregarPagamento();
+            carregarEntrega();
 
         }
 
@@ -63,6 +64,18 @@ namespace Site.Pedidos
                 }
             }
         }
+        
+        private void carregarEntrega()
+        {
+
+            this.ddlEntrega.Items.Clear();
+            this.ddlEntrega.Items.Add(new ListItem("Entrega", "1"));
+            this.ddlEntrega.Items.Add(new ListItem("Retirada", "2"));
+            this.ddlEntrega.SelectedIndex = 0;
+
+        }
+
+
 
         private void obterPedido(int idDetPed)
         {
@@ -101,11 +114,15 @@ namespace Site.Pedidos
                 ClientScript.RegisterStartupScript(GetType(), "message", "newAlert('alert alert-danger', 'Por favor escolha a forma de pagamento!');", true);
             else
             {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "ModalView", "<script>$('#myModal').modal('show');</script>", false);
+
                 pagamento.idTipoPagamento = Convert.ToInt32(ddlPagamento.SelectedValue);
                 pagamento.idStatusPedido = (int)StatusPagamento.Finalizado;
                 pagamento.idPedido = idPedido;
+                pagamento.idEntrega = Convert.ToInt32(ddlEntrega.SelectedValue);
                 pedido.atualizaPagamento(pagamento);
-                imprimirCupom(idPedido);
+                //imprimirCupom(idPedido);
+
             }
         }
 

@@ -774,6 +774,8 @@ namespace Site.Pedidos
 
                 lst = new PedidosBLL().obterDadosPedidos(lst[0].idPedido);
                 gvListaPedidos.DataSource = lst;
+
+                cmdFinalizar.Visible = true;
                 //gvListaPedidos.DataBind();
             }
 

@@ -22,6 +22,15 @@ namespace Site.Pedidos {
         protected global::System.Web.UI.WebControls.Repeater rptItems;
         
         /// <summary>
+        /// ddlEntrega control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEntrega;
+        
+        /// <summary>
         /// ddlPagamento control.
         /// </summary>
         /// <remarks>

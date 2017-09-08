@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="/Content/bootstrap.css" rel="stylesheet" />
     <link href="/Content/finalizar.css" rel="stylesheet" />
+    <link href="/Content/font-awesome-animation.min.css" rel="stylesheet" >
 
     <script src="/Scripts/jquery-1.9.0.min.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
@@ -17,6 +18,10 @@
             $(".alert-message").delay(6000).fadeOut("slow", function () { $(this).remove(); });
         }
 
+        $('#myModal').on('show.bs.modal', function (e) {
+            var loadurl = e.relatedTarget.data('load-url');
+            $(this).find('.modal-body').load(loadurl);
+        });
 
     </script>
 
@@ -80,11 +85,25 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
+            <asp:DropDownList ID="ddlEntrega" runat="server" CssClass="form-control espaco">
+            </asp:DropDownList>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">&nbsp;</div>
+        <div class="col-md-4">&nbsp;</div>
+        <div class="col-md-4">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
             <asp:DropDownList ID="ddlPagamento" runat="server" CssClass="form-control espaco">
             </asp:DropDownList>
         </div>
         <div class="col-md-4"></div>
     </div>
+    
     <div class="row">
         <div class="col-md-4">&nbsp;</div>
         <div class="col-md-4">&nbsp;</div>
@@ -106,6 +125,34 @@
         </div>
         <div class="col-md-4"></div>
 
+    </div>
+
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Imprimindo</h4>
+                </div>
+                <div class="modal-body">
+                   <h3>
+                       <i class="fa fa-gear faa-spin animated"></i>
+                             Por favor, aguarde o término da impressão!
+                       <i class="fa fa-gear faa-spin animated"></i>
+
+                   </h3> 
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3">
+                    <button type="button" class="btn btn-lg btn-primary btn-block " data-dismiss="modal" onclick="location.href='/Pedidos/Default.aspx;" >Fechar</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 

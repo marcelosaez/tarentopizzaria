@@ -256,7 +256,7 @@
                          </div>--%>
                                         <asp:Button ID="cmdAtualizar" runat="server" Text="Atualizar" OnClick="cmdAtualizar_Click" CssClass="btn btn-lg btn-primary btn-block botaoAtualizar" Visible="false" />
 
-                                        <asp:Button ID="cmdFinalizar" runat="server" Text="Finalizar" OnClick="cmdFinalizar_Click" CssClass="btn btn-lg btn-success btn-block botaoFinalizar" />
+                                        <asp:Button ID="cmdFinalizar" runat="server" Text="Finalizar" OnClick="cmdFinalizar_Click" CssClass="btn btn-lg btn-success btn-block botaoFinalizar" Visible="false" />
 
                                     </div>
 
