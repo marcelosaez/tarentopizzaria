@@ -19,9 +19,18 @@
         }
 
         $('#myModal').on('show.bs.modal', function (e) {
+            backdrop: 'static';
+            keyboard: false;
             var loadurl = e.relatedTarget.data('load-url');
             $(this).find('.modal-body').load(loadurl);
         });
+
+        $('#myModal').on('hidden.bs.modal', function () {
+            alert('ok');
+
+        });
+
+       
 
     </script>
 
@@ -127,11 +136,11 @@
 
     </div>
 
-    <div id="myModal" class="modal fade">
+    <div id="myModal" class="modal fade" data-backdrop="static" >
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="modal-header btn-primary">
+                    <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>--%>
                     <h4 class="modal-title">Imprimindo</h4>
                 </div>
                 <div class="modal-body">
@@ -141,13 +150,13 @@
                        <i class="fa fa-gear faa-spin animated"></i>
 
                    </h3> 
-
+                    <br />
                 </div>
                 <div class="modal-footer">
                     <div class="col-md-9"></div>
                     <div class="col-md-3">
-                    <button type="button" class="btn btn-lg btn-primary btn-block " data-dismiss="modal" onclick="location.href='/Pedidos/Default.aspx;" >Fechar</button>
-
+                            <button type="button" class="btn btn-lg btn-primary btn-block " data-dismiss="modal"
+                                onclick="window.location.href='/Pedidos/Default.aspx'">Fechar</button>
                     </div>
 
                 </div>

@@ -51,11 +51,13 @@ namespace DAL.Pedidos
             query.Append(" select c.nome as cliente, c.endereco, c.numero,ISNULL(c.dddres,0) as dddres,ISNULL(c.telres,0) as telres, ");
             query.Append(" ISNULL(c.dddcel, 0) as dddcel, ISNULL(c.cel, 0) as cel, ");
             query.Append(" f.nome as funcionario, ");
-            query.Append(" tp.TipoPagamento ");
+            query.Append(" tp.TipoPagamento, ");
+            query.Append(" te.TipoEntrega ");
             query.Append(" from tb_cliente c  ");
             query.Append(" inner join tb_cliente_tem_pedido ctp on c.idtb_cliente = ctp.tb_cliente_idtb_cliente  ");
             query.Append(" inner join tb_funcionarios f on f.idtb_funcionario = ctp.tb_funcionario_idtb_funcionario  ");
             query.Append(" inner join tb_tipoPagamento tp on tp.idTipoPagamento = ctp.tb_tipoPagamento  ");
+            query.Append(" inner join tb_entrega te on te.idtbEntrega = ctp.idtbEntrega  ");
             query.Append(" where ctp.idPedido = "+idPedido);
 
             SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
@@ -71,6 +73,7 @@ namespace DAL.Pedidos
                cupom.cliente.cel = Convert.ToInt32(dr["cel"]);
                cupom.funcionario.nome = Convert.ToString(dr["funcionario"]);
                cupom.pagamento.TipoPagamento = Convert.ToString(dr["TipoPagamento"]);
+               cupom.entrega = Convert.ToString(dr["TipoEntrega"]);
             }
 
             dr.Close();
