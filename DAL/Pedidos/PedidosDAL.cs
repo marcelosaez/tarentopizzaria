@@ -42,6 +42,41 @@ namespace DAL.Pedidos
             return executeDataSet(query.ToString(), CommandType.Text, false);
         }
 
+        public DataSet obterDataSet(DateTime dataIni, DateTime dataFim)
+        {
+            List<Pedido_VO> lst = new List<Pedido_VO>();
+
+            //Verifico se a hora esta entre a 00:00 e as 04:00
+            if (DateTime.Now.Hour >= 0 && DateTime.Now.Hour <= 4)
+            //Caso sim, retiro um dia
+                dataIni = dataIni.AddDays(-1);
+
+            dataIni = new DateTime(dataIni.Year, dataIni.Month, dataIni.Day, 14, 59, 59);
+
+            //Se esta no mesmo dia, seto a data dos pedidos para as 23:59 do mesmo dia
+            if (dataIni.Day == dataFim.Day)
+                dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 23, 59, 59);
+            else
+                // senao, seto para as 4:59 da manha como horario limite
+                dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
+
+
+
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" SELECT ctp.idPedido, c.nome,st.statusPedido,dtPedido,f.nome as atendente, tipoEntrega as [Tipo Pedido]  ");
+            query.Append(" FROM[dbo].[tb_cliente_tem_pedido] ctp ");
+            query.Append(" INNER JOIN tb_statusPedido st on ctp.tb_status_idtb_statusPedido = st.idStatus  ");
+            query.Append(" INNER JOIN tb_cliente c on ctp.tb_cliente_idtb_cliente = c.idtb_cliente ");
+            query.Append(" INNER JOIN tb_funcionarios f on ctp.tb_funcionario_idtb_funcionario = f.idtb_funcionario ");
+            query.Append(" INNER JOIN tb_entrega e on ctp.idtb_entrega = e.idtb_entrega ");
+            query.Append(" WHERE dtPedido between '" + dataIni + "' and '" + dataFim + "'  ");
+            query.Append(" ORDER BY ctp.idPedido desc   ");
+
+            return executeDataSet(query.ToString(), CommandType.Text, false);
+        }
+
+
         public Cupom_VO obterDadosCupomFiscal(int idPedido)
         {
             Cupom_VO cupom = new Cupom_VO();
@@ -231,13 +266,14 @@ namespace DAL.Pedidos
         {
 
             StringBuilder query = new StringBuilder();
-            query.Append(" INSERT INTO tb_cliente_tem_pedido ([tb_cliente_idtb_cliente] ,[tb_funcionario_idtb_funcionario] ,[tb_status_idtb_statusPedido]) ");
-            query.Append(" VALUES ( @IdCliente, @idFuncionario, @IdStatus);");
+            query.Append(" INSERT INTO tb_cliente_tem_pedido ([tb_cliente_idtb_cliente] ,[tb_funcionario_idtb_funcionario] ,[tb_status_idtb_statusPedido],[dtPedido]) ");
+            query.Append(" VALUES ( @IdCliente, @idFuncionario, @IdStatus, @dtPedido);");
 
             //parametros
             SqlParameter[] parametros = {
                 createParametro("@IdCliente", SqlDbType.Int, Pedido.idCliente),
                 createParametro("@idFuncionario", SqlDbType.Int, Pedido.idFuncionario),
+                createParametro("@dtPedido", SqlDbType.DateTime, DateTime.Now),
                 createParametro("@IdStatus", SqlDbType.Int, 1) // Aberto
 
             };

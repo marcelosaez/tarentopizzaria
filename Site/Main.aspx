@@ -21,18 +21,16 @@
     <div class="content">
         <div class="row">
              <div class="col-lg-4"></div>
-             <a href="Pedidos/Default.aspx">
+             <a href="Pedidos/Main.aspx">
                 <div id="divPedidos" runat="server" class="col-lg-2 color-swatch bg-primary text-white text-center">
                      <div class="col-lg-12 iconMain"><i class="fa fa-cart-plus fa-5x" aria-hidden="true"></i> </div>
                      <div class="col-lg-12 iconMain"><span class="text-center"> PEDIDOS</span></div>
-                   
                 </div>
             </a>
                 <a href="Clientes/Default.aspx">
                 <div id="divClientes" runat="server"  class="col-lg-2 color-swatch bg-success text-white text-center">
                     <div class="col-lg-12 iconMain"><i class="fa fa-user fa-5x" aria-hidden="true"></i> </div>
                     <div class="col-lg-12 iconMain"><span class="text-center"> CLIENTES</span></div>
-
                 </div>
                 </a>
              <div class="col-lg-4"></div>
