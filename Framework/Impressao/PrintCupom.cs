@@ -141,7 +141,7 @@ namespace Framework.Impressao
             offset += 15;
             graphics.DrawString("END: "  + cupom.cliente.endereco.ToUpper(), regular, Brushes.Black, 10, offset);
             offset += 15;
-            graphics.DrawString("Nº: "   + cupom.cliente.numero, regular, Brushes.Black, 10, offset);
+            graphics.DrawString("N: "   + cupom.cliente.numero, regular, Brushes.Black, 10, offset);
             offset += 15;
             graphics.DrawString("TEL: "  + formataTelefone(cupom.cliente ), regular, Brushes.Black, 10, offset);
             offset += 15;
