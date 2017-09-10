@@ -15,5 +15,6 @@ namespace MODEL.Pedido
        public Funcionario_VO funcionario = new Funcionario_VO();
        public Cliente_VO cliente = new Cliente_VO();
        public Pagamento_VO pagamento = new Pagamento_VO();
+       public string entrega { get; set; }  
     }
 }

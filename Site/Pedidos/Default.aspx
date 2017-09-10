@@ -49,8 +49,15 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+   
     <div class="row voffset6">
-        <div class="col-md-3"></div>
+         <div class="col-md-1">
+           <a href="Main.aspx">
+               <i class="fa fa-arrow-circle-left fa-3x voltar" aria-hidden="true"></i>
+           </a>
+         </div>
+
+        <div class="col-md-2"></div>
         <div class="col-md-6">
             <h2 style="text-align: center;">Pesquisar Clientes</h2>
 

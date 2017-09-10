@@ -159,6 +159,7 @@
     <Content Include="Content\clientes.css" />
     <Content Include="Content\css.css" />
     <Content Include="Content\finalizar.css" />
+    <Content Include="Content\font-awesome-animation.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\funcionarios.css" />
@@ -170,6 +171,32 @@
     <Content Include="Funcionarios\Default.aspx" />
     <Content Include="Funcionarios\Editar.aspx" />
     <Content Include="Images\empty.png" />
+    <Content Include="Images\favicon\android-icon-144x144.png" />
+    <Content Include="Images\favicon\android-icon-192x192.png" />
+    <Content Include="Images\favicon\android-icon-36x36.png" />
+    <Content Include="Images\favicon\android-icon-48x48.png" />
+    <Content Include="Images\favicon\android-icon-72x72.png" />
+    <Content Include="Images\favicon\android-icon-96x96.png" />
+    <Content Include="Images\favicon\apple-icon-114x114.png" />
+    <Content Include="Images\favicon\apple-icon-120x120.png" />
+    <Content Include="Images\favicon\apple-icon-144x144.png" />
+    <Content Include="Images\favicon\apple-icon-152x152.png" />
+    <Content Include="Images\favicon\apple-icon-180x180.png" />
+    <Content Include="Images\favicon\apple-icon-57x57.png" />
+    <Content Include="Images\favicon\apple-icon-60x60.png" />
+    <Content Include="Images\favicon\apple-icon-72x72.png" />
+    <Content Include="Images\favicon\apple-icon-76x76.png" />
+    <Content Include="Images\favicon\apple-icon-precomposed.png" />
+    <Content Include="Images\favicon\apple-icon.png" />
+    <Content Include="Images\favicon\browserconfig.xml" />
+    <Content Include="Images\favicon\favicon-16x16.png" />
+    <Content Include="Images\favicon\favicon-32x32.png" />
+    <Content Include="Images\favicon\favicon-96x96.png" />
+    <Content Include="Images\favicon\favicon.ico" />
+    <Content Include="Images\favicon\ms-icon-144x144.png" />
+    <Content Include="Images\favicon\ms-icon-150x150.png" />
+    <Content Include="Images\favicon\ms-icon-310x310.png" />
+    <Content Include="Images\favicon\ms-icon-70x70.png" />
     <Content Include="Images\logo.jpg" />
     <Content Include="Images\logo_grande.jpg" />
     <Content Include="Login.aspx" />
@@ -178,9 +205,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Pedidos\All.aspx" />
     <Content Include="Pedidos\AutoComplete.asmx" />
     <Content Include="Pedidos\Default.aspx" />
     <Content Include="Pedidos\Finalizar.aspx" />
+    <Content Include="Pedidos\Main.aspx" />
     <Content Include="Pedidos\Pedidos2.aspx" />
     <Content Include="Produtos\Default.aspx" />
     <Content Include="Produtos\EditarProdutos.aspx" />
@@ -200,6 +229,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="App_Code\GlyphIcon.cshtml" />
+    <Content Include="Images\favicon\manifest.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -303,6 +333,13 @@
     <Compile Include="Main.aspx.designer.cs">
       <DependentUpon>Main.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pedidos\All.aspx.cs">
+      <DependentUpon>All.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pedidos\All.aspx.designer.cs">
+      <DependentUpon>All.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pedidos\AutoComplete.asmx.cs">
       <DependentUpon>AutoComplete.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -320,6 +357,13 @@
     </Compile>
     <Compile Include="Pedidos\Finalizar.aspx.designer.cs">
       <DependentUpon>Finalizar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedidos\Main.aspx.cs">
+      <DependentUpon>Main.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pedidos\Main.aspx.designer.cs">
+      <DependentUpon>Main.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pedidos\Pedidos2.aspx.cs">
       <DependentUpon>Pedidos2.aspx</DependentUpon>

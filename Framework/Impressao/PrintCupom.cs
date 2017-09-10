@@ -33,16 +33,26 @@ namespace Framework.Impressao
             this.idPedido = idPedido;
             this.empresa = new EmpresaBLL().obterDadosEmpresa(idEmp);
             this.pedidos = new PedidosBLL().obterDadosPedidos(idPedido);
-            //this.pedidos = new PedidosBLL().obterDadosPedidos(idPedido);
             this.cupom   = new PedidosBLL().obterDadosCupomFiscal(idPedido);
 
             PrinterSettings settings = new PrinterSettings();
-            
-            this.PrinterSettings.PrinterName = settings.PrinterName;
 
-            this.OriginAtMargins = false;
-            this.PrintPage += new PrintPageEventHandler(printPage);
-            this.Print();
+            try
+            {
+                this.PrinterSettings.PrinterName = settings.PrinterName;
+                this.PrinterSettings.Copies = 2;
+                this.OriginAtMargins = false;
+                this.PrintPage += new PrintPageEventHandler(printPage);
+                this.Print();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            
 
         }
 
@@ -115,7 +125,6 @@ namespace Framework.Impressao
             total = new PedidosBLL().totalPedido(this.idPedido);
 
             graphics.DrawString("TOTAL R$:"+total, bold, Brushes.Black, 20, offset);
-            //graphics.DrawString(FormataMonetario.format(total), bold, Brushes.Black, 230, offset);
             offset += 15;
 
             graphics.DrawLine(Pens.Black, 20, offset, 310, offset);
@@ -144,6 +153,8 @@ namespace Framework.Impressao
             graphics.DrawString("N: "   + cupom.cliente.numero, regular, Brushes.Black, 10, offset);
             offset += 15;
             graphics.DrawString("TEL: "  + formataTelefone(cupom.cliente ), regular, Brushes.Black, 10, offset);
+            offset += 15;
+            graphics.DrawString("             " +  cupom.entrega.ToUpper() + "       " , bold, Brushes.Black, 10, offset);
             offset += 15;
             graphics.DrawString("===========================================", bold, Brushes.Black, 10, offset);
 

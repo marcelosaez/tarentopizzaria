@@ -10,51 +10,33 @@
 namespace Site.Pedidos {
     
     
-    public partial class Finalizar {
+    public partial class All {
         
         /// <summary>
-        /// rptItems control.
+        /// ValidationSummary1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptItems;
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
         
         /// <summary>
-        /// ddlEntrega control.
+        /// gvListaPedidos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEntrega;
+        protected global::WizardGridView.WizardGridView gvListaPedidos;
         
         /// <summary>
-        /// ddlPagamento control.
+        /// SourceData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPagamento;
-        
-        /// <summary>
-        /// cmdVoltar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdVoltar;
-        
-        /// <summary>
-        /// cmdFinalizar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdFinalizar;
+        protected global::System.Web.UI.WebControls.ObjectDataSource SourceData;
     }
 }

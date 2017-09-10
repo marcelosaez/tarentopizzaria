@@ -29,6 +29,11 @@ namespace BLL.Pedidos
             return new PedidosDAL().obterDataSet();
         }
 
+        public DataSet obterDataSetData(DateTime dataIni, DateTime dataFim)
+        {
+            return new PedidosDAL().obterDataSet(dataIni, dataFim);
+        }
+
 
         public List<Cliente_VO> autoComplete(string text)
         {
