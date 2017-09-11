@@ -301,7 +301,10 @@ namespace Site.Pedidos
 
             if (!validaForm())
             {
-                ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Preencha todos os campos!');", true);
+                if(txtObs.Text.Length > 80)
+                    ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Campo obs deve ser menor que 80 caracteres');", true);
+                else
+                    ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Preencha todos os campos!');", true);
                 return;
             }
 
@@ -469,6 +472,9 @@ namespace Site.Pedidos
             if (fancyCheckBox.Checked == true)
                 if (ddlBorda.SelectedValue == "")
                     retorno = false;
+            if (txtObs.Text.Length > 80)
+                retorno = false;
+
             return retorno;
         }
 

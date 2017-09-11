@@ -40,7 +40,7 @@ namespace Framework.Impressao
             try
             {
                 this.PrinterSettings.PrinterName = settings.PrinterName;
-                this.PrinterSettings.Copies = 2;
+                //this.PrinterSettings.Copies = 2;
                 this.OriginAtMargins = false;
                 this.PrintPage += new PrintPageEventHandler(printPage);
                 this.Print();
@@ -59,28 +59,29 @@ namespace Framework.Impressao
         private void printPage(object send, PrintPageEventArgs e)
         {
             Graphics graphics = e.Graphics;
-            int offset = 155;
+            int offset = 135;
 
             //print header
             //graphics.DrawString(empresa.razaoSocial, bold, Brushes.Black, 20, 0);
             //graphics.DrawString(empresa.endereco.endereco + " Nº " + empresa.endereco.numero, regular, Brushes.Black, 100, 15);
-            graphics.DrawString("*******************************************", bold, Brushes.Black, 10, 0);
-            graphics.DrawString("" + empresa.NomeFantasia.ToUpper() + "", bold, Brushes.Black, 130, 15);
-            graphics.DrawString("" + empresa.Endereco.ToUpper() + " N-" +empresa.Numero+" - " + empresa.Bairro.ToUpper() + " " + empresa.Cidade.ToUpper() + " " + empresa.Estado.ToUpper() + "", regular, Brushes.Black, 10, 30);
-            graphics.DrawString("*******************************************", bold, Brushes.Black, 10, 45);
-            graphics.DrawLine(Pens.Black, 20, 30, 310, 50);
-            graphics.DrawString("************* CUPOM NÃO FISCAL ************", bold, Brushes.Black, 10, 55);
-            graphics.DrawLine(Pens.Black, 20, 50, 310, 80);
-            graphics.DrawString("PEDIDO:" + this.idPedido , regular, Brushes.Black, 10, 95);
+            graphics.DrawString("***********************************************************", regular, Brushes.Black, 0, 0);
+            graphics.DrawString("" + empresa.NomeFantasia.ToUpper() + "", regular, Brushes.Black, 65, 15);
+            graphics.DrawString("" + empresa.Endereco.ToUpper() + " - " +empresa.Numero+" - " + empresa.Bairro.ToUpper() + " " + empresa.Cidade.ToUpper() + " ", regular, Brushes.Black, 0, 30); //+ empresa.Estado.ToUpper() + ""
+            graphics.DrawString("***********************************************************", regular, Brushes.Black, 0, 45);
+            //graphics.DrawLine(Pens.Black, 20, 30, 310, 50);
+            graphics.DrawString("******** CUPOM NÃO FISCAL ************", bold, Brushes.Black, 0, 55);
+            //graphics.DrawLine(Pens.Black, 20, 50, 310, 80);
+            graphics.DrawString("PEDIDO:" + this.idPedido , bold, Brushes.Black, 0, 80);
 
-            graphics.DrawLine(Pens.Black, 20, 75, 310, 105);
+            //graphics.DrawLine(Pens.Black, 20, 75, 310, 105);
 
             //itens header
-            graphics.DrawString("QTD", regular, Brushes.Black, 10, 130);
-            graphics.DrawString("PRODUTO", regular, Brushes.Black, 60, 130);
+            graphics.DrawString("QTD", regular, Brushes.Black, 0, 110);
+            graphics.DrawString("PRODUTO", regular, Brushes.Black, 60, 110);
             //graphics.DrawString("OBS.", regular, Brushes.Black, 240, 130);
-            graphics.DrawString("TOTAL", regular, Brushes.Black, 380, 130);
-            graphics.DrawLine(Pens.Black, 20, 95, 310, 155);
+            graphics.DrawString("TOTAL", regular, Brushes.Black, 200, 110);
+
+            //graphics.DrawLine(Pens.Black, 20, 95, 310, 155);
 
             
             //itens de venda
@@ -91,83 +92,83 @@ namespace Framework.Impressao
                 string obs = pedido.obs;
 
 
-                graphics.DrawString(Convert.ToString(pedido.qtd), regularItens, Brushes.Black, 10, offset);
-                graphics.DrawString(tipo, regularItens, Brushes.Black, 60, offset);
-                graphics.DrawString("R$" + Convert.ToString(pedido.valor), regularItens, Brushes.Black, 380, offset);
+                graphics.DrawString(Convert.ToString(pedido.qtd), regular, Brushes.Black, 0, offset);
+                graphics.DrawString(tipo, regular, Brushes.Black, 60, offset);
+                graphics.DrawString("R$" + Convert.ToString(pedido.valor), regular, Brushes.Black, 200, offset);
 
 
                 offset += 20;
-                graphics.DrawString(produto.Length > 90 ? produto.Substring(0, 90) + "..." : produto, regularItens, Brushes.Black, 60, offset);
+                graphics.DrawString(produto.Length > 40 ? produto.Substring(0, 40) + "..." : produto, regular, Brushes.Black, 60, offset);
 
                 if (obs != "")
                 {
-                    offset += 20;
-                    if (obs.Length > 90)
+                    offset += 15;
+                    if (obs.Length > 40)
                     {
-                        graphics.DrawString("*" + obs.Substring(0, 90), regularItens, Brushes.Black, 60, offset);
-                        offset += 20;
-                        graphics.DrawString("" + obs.Substring(90, obs.Length), regularItens, Brushes.Black, 60, offset);
+                        graphics.DrawString("*" + obs.Substring(0, 40), regular, Brushes.Black, 60, offset);
+                        offset += 15;
+                        graphics.DrawString(" " + obs.Substring(40, obs.Length-40), regular, Brushes.Black, 60, offset);
                     }
                     else
-                        graphics.DrawString("*" + obs, regularItens, Brushes.Black, 60, offset);
+                        graphics.DrawString("*" + obs, regular, Brushes.Black, 60, offset);
 
 
                 }
 
-                offset += 30;
+                offset += 20;
             }
             
             //total
-            graphics.DrawLine(Pens.Black, 20, offset, 350, offset);
-            offset += 15;
+            //graphics.DrawLine(Pens.Black, 20, offset, 350, offset);
+            offset += 10;
             
             decimal total = 0;
             total = new PedidosBLL().totalPedido(this.idPedido);
 
-            graphics.DrawString("TOTAL R$:"+total, bold, Brushes.Black, 20, offset);
+            graphics.DrawString("TOTAL R$:"+total, bold, Brushes.Black, 0, offset);
             offset += 15;
 
-            graphics.DrawLine(Pens.Black, 20, offset, 310, offset);
+            //graphics.DrawLine(Pens.Black, 20, offset, 310, offset);
             offset += 15;
-            graphics.DrawString("*******************************************", bold, Brushes.Black, 10, offset);
+            graphics.DrawString("***********************************************************",  regular, Brushes.Black, 0, offset);
 
             offset += 15;
-            graphics.DrawString("**************** PAGAMENTO ****************", bold, Brushes.Black, 10, offset);
+            graphics.DrawString("******************** PAGAMENTO *********************", regular, Brushes.Black, 0, offset);
 
             offset += 15;
-            graphics.DrawString("*******************************************", bold, Brushes.Black, 10, offset);
+            graphics.DrawString("***********************************************************", regular, Brushes.Black, 0, offset);
 
             offset += 15;
-            graphics.DrawString("" + cupom.pagamento.TipoPagamento.ToUpper() + "", regular, Brushes.Black, 10, offset);
+            graphics.DrawString("" + cupom.pagamento.TipoPagamento.ToUpper() + "", bold, Brushes.Black, 0, offset);
 
 
             offset += 25;
-            graphics.DrawString("===========================================", bold, Brushes.Black, 10, offset);
+            graphics.DrawString("=======================================", regular, Brushes.Black, 0, offset);
             offset += 15;
-            graphics.DrawString("============== DADOS ENTREGA ==============", bold, Brushes.Black, 10, offset);
+            graphics.DrawString("=========== DADOS ENTREGA ============", regular, Brushes.Black, 0, offset);
             offset += 25;
-            graphics.DrawString("NOME: " + cupom.cliente.nome.ToUpper() , regular, Brushes.Black, 10, offset);
+            graphics.DrawString("NOME: " + cupom.cliente.nome.ToUpper() , regular, Brushes.Black, 0, offset);
             offset += 15;
-            graphics.DrawString("END: "  + cupom.cliente.endereco.ToUpper(), regular, Brushes.Black, 10, offset);
+            graphics.DrawString("END: "  + cupom.cliente.endereco.ToUpper(), regular, Brushes.Black, 0, offset);
             offset += 15;
-            graphics.DrawString("N: "   + cupom.cliente.numero, regular, Brushes.Black, 10, offset);
+            graphics.DrawString("N: "   + cupom.cliente.numero, regular, Brushes.Black, 0, offset);
             offset += 15;
-            graphics.DrawString("TEL: "  + formataTelefone(cupom.cliente ), regular, Brushes.Black, 10, offset);
+            graphics.DrawString("TEL: "  + formataTelefone(cupom.cliente ), regular, Brushes.Black, 0, offset);
             offset += 15;
-            graphics.DrawString("             " +  cupom.entrega.ToUpper() + "       " , bold, Brushes.Black, 10, offset);
+            graphics.DrawString("TIPO: " +  cupom.entrega.ToUpper() + "       " , bold, Brushes.Black, 0, offset);
             offset += 15;
-            graphics.DrawString("===========================================", bold, Brushes.Black, 10, offset);
+            graphics.DrawString("=======================================", regular, Brushes.Black, 0, offset);
 
 
             //bottom
             offset += 15;
 
             string nomeFunc = cupom.funcionario.nome.Length > 10 ? cupom.funcionario.nome.Substring(0,10) + "" : cupom.funcionario.nome;
-            graphics.DrawString("ATEND: " + nomeFunc, regularItens, Brushes.Black, 10, offset);
+            graphics.DrawString("ATEND: " + nomeFunc, regularItens, Brushes.Black, 0, offset);
 
             offset += 15;
-            graphics.DrawString("DATA: " + DateTime.Now.ToString("dd/MM/yyyy"), regularItens, Brushes.Black, 10, offset);
-            graphics.DrawString("HORA: " + DateTime.Now.ToString("HH:mm:ss"), regularItens, Brushes.Black, 230, offset);
+            graphics.DrawString("DATA: " + DateTime.Now.ToString("dd/MM/yyyy"), regularItens, Brushes.Black, 0, offset);
+            graphics.DrawString("HORA: " + DateTime.Now.ToString("HH:mm:ss"), regularItens, Brushes.Black, 200, offset);
             
             e.HasMorePages = false;
 

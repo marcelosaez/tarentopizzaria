@@ -121,7 +121,9 @@ namespace Site.Pedidos
                 pagamento.idPedido = idPedido;
                 pagamento.idEntrega = Convert.ToInt32(ddlEntrega.SelectedValue);
                 pedido.atualizaPagamento(pagamento);
-                //imprimirCupom(idPedido);
+                imprimirCupom(idPedido);
+                //imprime 2 via
+                imprimirCupom(idPedido);
 
             }
         }

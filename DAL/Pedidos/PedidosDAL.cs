@@ -51,7 +51,7 @@ namespace DAL.Pedidos
             //Caso sim, retiro um dia
                 dataIni = dataIni.AddDays(-1);
 
-            dataIni = new DateTime(dataIni.Year, dataIni.Month, dataIni.Day, 14, 59, 59);
+            dataIni = new DateTime(dataIni.Year, dataIni.Month, dataIni.Day, 05, 00, 00);
 
             //Se esta no mesmo dia, seto a data dos pedidos para as 23:59 do mesmo dia
             if (dataIni.Day == dataFim.Day)
@@ -64,6 +64,7 @@ namespace DAL.Pedidos
 
             // query
             StringBuilder query = new StringBuilder();
+            query.Append(" set dateformat dmy;");
             query.Append(" SELECT ctp.idPedido, c.nome,st.statusPedido,dtPedido,f.nome as atendente, tipoEntrega as [Tipo Pedido]  ");
             query.Append(" FROM[dbo].[tb_cliente_tem_pedido] ctp ");
             query.Append(" INNER JOIN tb_statusPedido st on ctp.tb_status_idtb_statusPedido = st.idStatus  ");
@@ -92,7 +93,7 @@ namespace DAL.Pedidos
             query.Append(" inner join tb_cliente_tem_pedido ctp on c.idtb_cliente = ctp.tb_cliente_idtb_cliente  ");
             query.Append(" inner join tb_funcionarios f on f.idtb_funcionario = ctp.tb_funcionario_idtb_funcionario  ");
             query.Append(" inner join tb_tipoPagamento tp on tp.idTipoPagamento = ctp.tb_tipoPagamento  ");
-            query.Append(" inner join tb_entrega te on te.idtbEntrega = ctp.idtbEntrega  ");
+            query.Append(" inner join tb_entrega te on te.idtb_Entrega = ctp.idtb_Entrega  ");
             query.Append(" where ctp.idPedido = "+idPedido);
 
             SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);

@@ -236,7 +236,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <asp:TextBox ID="txtObs" runat="server" CssClass="form-control espaco" Width="340px" placeholder="Obs:" TextMode="MultiLine"></asp:TextBox>
+                                            <asp:TextBox ID="txtObs" runat="server" CssClass="form-control espaco" Width="340px" placeholder="Obs:" TextMode="MultiLine" MaxLength="80" ></asp:TextBox>
                                         </div>
                                     </div>
 
