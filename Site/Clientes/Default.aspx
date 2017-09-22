@@ -11,7 +11,7 @@
                 </h3>
 
               <Wizard:WizardGridView ID="gvListaClientes" runat="server" DataSourceID="SourceData" DataKeyNames="id" OnRowCommand="gvListaClientes_RowCommand" 
-        EmptyDataText="Não há clientes cadastrados até o momento." OnRowDataBound="gvListaClientes_RowDataBound" AutoGenerateColumns="true"  CssClass="table table-hover"   ClientIDMode="Static" AutoGenerateEditButton="true" PageSize="20" AllowPaging="true"  >
+        EmptyDataText="Não há clientes cadastrados até o momento." OnRowDataBound="gvListaClientes_RowDataBound" AutoGenerateColumns="true"  CssClass="table table-hover"   ClientIDMode="Static" AutoGenerateEditButton="true" PageSize="20" AllowPaging="true"   >
         <%--<Columns>
             <Wizard:WizardBoundField HeaderText="Nome" DataField="Nome">
                 <HeaderStyle HorizontalAlign="Left" />

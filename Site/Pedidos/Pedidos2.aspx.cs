@@ -1,4 +1,5 @@
-﻿using BLL;
+﻿using AjaxControlToolkit;
+using BLL;
 using BLL.Pedidos;
 using BLL.Produto;
 using MODEL.Funcionario;
@@ -635,6 +636,8 @@ namespace Site.Pedidos
 
         private void carregaSabor(DropDownList ddl, int idSabor)
         {
+           
+
             ddl.Visible = true;
             List<Produto_VO> lstSabores = new ProdutoBLL().obterSabores(Convert.ToInt32(ddlTipoProdutos.SelectedValue));
             ddl.Items.Clear();

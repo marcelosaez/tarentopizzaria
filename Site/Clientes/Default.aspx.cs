@@ -19,7 +19,7 @@ namespace Site.Clientes
 
         private void carregaInformacoes()
         {
-            AutenticacaoBLL.checaPermissao();
+            //AutenticacaoBLL.checaPermissao();
 
         }
 

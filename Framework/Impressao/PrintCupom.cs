@@ -12,6 +12,7 @@ using System.IO;
 using MODEL.Empresa;
 using BLL.Empresa;
 using MODEL.Cliente;
+using System.Security.Principal;
 
 namespace Framework.Impressao
 {
@@ -28,26 +29,66 @@ namespace Framework.Impressao
         List<Pedido_VO> pedidos = new List<Pedido_VO>();
         
 
-        public void ImprimeVendaVista(List<Pedido_VO> venda, int idEmp, int idPedido)
+        public void ImprimeVendaVista(List<Pedido_VO> venda, int idEmp, int idPedido, decimal valorEntrega)
         {
             this.idPedido = idPedido;
             this.empresa = new EmpresaBLL().obterDadosEmpresa(idEmp);
             this.pedidos = new PedidosBLL().obterDadosPedidos(idPedido);
             this.cupom   = new PedidosBLL().obterDadosCupomFiscal(idPedido);
 
+            this.cupom.valorEntrega = valorEntrega;
+
+
+
             PrinterSettings settings = new PrinterSettings();
 
             try
             {
+                //this.PrinterSettings.PrinterName = "\\\\CAIXA\\Diebold Procomp IM453HP_B";  
                 this.PrinterSettings.PrinterName = settings.PrinterName;
-                //this.PrinterSettings.Copies = 2;
-                this.OriginAtMargins = false;
-                this.PrintPage += new PrintPageEventHandler(printPage);
-                this.Print();
+                
+                if (PrinterSettings.IsValid)
+                {
+                    using (WindowsIdentity.GetCurrent().Impersonate())
+                    {
+                        //this.PrinterSettings.Copies = 2;
+                        this.OriginAtMargins = false;
+                        this.PrintPage += new PrintPageEventHandler(printPage);
+                        this.Print();
+                    }
+                }
+                else
+                {
+                    using (StreamWriter writer = new StreamWriter("C:\\inetpub\\wwwroot\\tarento\\logs\\erro" +  DateTime.Now.ToString("_ddMMyyyy_HHmmss") + ".txt", true))
 
+                    {
+                        writer.WriteLine("sistema: Impressora");
+                        writer.WriteLine("erro: Impressora invalida!");
+
+                    }
+
+                }
+            }
+            catch (InvalidPrinterException exc)
+            {
+                // handle your errors here.
+                using (StreamWriter writer = new StreamWriter("C:\\inetpub\\wwwroot\\tarento\\logs\\erro" + DateTime.Now.ToString("_ddMMyyyy_HHmmss") + ".txt", true))
+
+                {
+                    writer.WriteLine("sistema: Impressão Exceção");
+                    writer.WriteLine("erro: " + exc.Message);
+
+                }
             }
             catch (Exception ex)
             {
+                using (StreamWriter writer = new StreamWriter("C:\\inetpub\\wwwroot\\tarento\\logs\\erro"+DateTime.Now.ToString("_ddMMyyyy_HHmmss") +".txt", true))
+                   
+                {
+                    writer.WriteLine("sistema: Impressora");
+                    writer.WriteLine("erro: "+ex.Message);
+                    
+                }
 
                 throw;
             }
@@ -124,6 +165,9 @@ namespace Framework.Impressao
             
             decimal total = 0;
             total = new PedidosBLL().totalPedido(this.idPedido);
+
+            if (cupom.entrega == "Entrega")
+                total = total + this.cupom.valorEntrega;
 
             graphics.DrawString("TOTAL R$:"+total, bold, Brushes.Black, 0, offset);
             offset += 15;

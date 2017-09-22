@@ -94,7 +94,7 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <asp:DropDownList ID="ddlEntrega" runat="server" CssClass="form-control espaco">
+            <asp:DropDownList ID="ddlEntrega" runat="server" CssClass="form-control espaco" OnSelectedIndexChanged="ddlPagamento_SelectedIndexChanged" AutoPostBack="true">
             </asp:DropDownList>
         </div>
         <div class="col-md-4"></div>
@@ -107,7 +107,7 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <asp:DropDownList ID="ddlPagamento" runat="server" CssClass="form-control espaco">
+            <asp:DropDownList ID="ddlPagamento" runat="server" CssClass="form-control espaco" >
             </asp:DropDownList>
         </div>
         <div class="col-md-4"></div>

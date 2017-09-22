@@ -6,6 +6,7 @@ using System.Web;
 using MODEL;
 using BLL;
 using MODEL.Funcionario;
+using System.IO;
 
 namespace Site
 
@@ -51,6 +52,15 @@ namespace Site
                     erro.IP = Request.ServerVariables["REMOTE_ADDR"].ToString();
 
                 //new ErroBLL().salvar(erro);
+                using (StreamWriter writer = new StreamWriter("C:\\inetpub\\wwwroot\\tarento\\erro" + DateTime.Now.ToString() + ".txt", true))
+
+                {
+                    writer.WriteLine("sistema: Impressora");
+                    writer.WriteLine("erro: " + erro.Mensagem);
+                    writer.WriteLine("StackTrace: " + erro.StackTrace);
+
+                }
+
 
             }
             catch (Exception)

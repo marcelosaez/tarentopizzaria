@@ -177,7 +177,7 @@ namespace DAL.Produto
             query.Append(" SELECT [idtb_produtos] , [nome] , [valor] ");
             query.Append(" FROM[dbo].[tb_produtos] p ");
             query.Append(" WHERE ativo =1 and tb_tipo_idtb_tipo = " + idTipo);
-
+            query.Append(" ORDER BY [nome] ");
             Produto_VO registro = null;
 
             //executa

@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 
 namespace Site.Pedidos
 {
-    public partial class Default : BaseWebForm
+    public partial class Default : BaseWebFormAutenticado
     {
         protected override void Page_Load(object sender, EventArgs e)
         {

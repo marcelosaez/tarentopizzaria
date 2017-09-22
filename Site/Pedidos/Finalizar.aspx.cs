@@ -15,6 +15,9 @@ namespace Site.Pedidos
 {
     public partial class Finalizar : BaseWebFormAutenticado
     {
+
+        int idEmp = Convert.ToInt32(ConfigurationManager.AppSettings["idEmpresa"]);
+        decimal valorEntrega = Convert.ToDecimal(ConfigurationManager.AppSettings["valorEntrega"]);
         protected override void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
@@ -92,7 +95,12 @@ namespace Site.Pedidos
                 //Finding the FooterTemplate and access its controls
                 Control FooterTemplate = rptItems.Controls[rptItems.Controls.Count - 1].Controls[0];
                 Label lblFooter = FooterTemplate.FindControl("lblTotal") as Label;
-                lblFooter.Text = new PedidosBLL().totalPedido(idDetPed).ToString();
+                
+
+                //if (this.ddlEntrega.SelectedIndex == -1)
+                    lblFooter.Text = (new PedidosBLL().totalPedido(idDetPed)+ valorEntrega).ToString();
+                //else
+                //    lblFooter.Text = new PedidosBLL().totalPedido(idDetPed).ToString();
 
             }
 
@@ -124,15 +132,31 @@ namespace Site.Pedidos
                 imprimirCupom(idPedido);
                 //imprime 2 via
                 imprimirCupom(idPedido);
-
             }
         }
 
         private void imprimirCupom(int idPedido)
         {
-            int idEmp = Convert.ToInt32(ConfigurationManager.AppSettings["idEmpresa"]);
+            
             //TO DO
-            new PrintCupom().ImprimeVendaVista(this.lst, idEmp, idPedido);
+            new PrintCupom().ImprimeVendaVista(this.lst, idEmp, idPedido, valorEntrega);
+        }
+
+        protected void ddlPagamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idPedido = 0;
+            int.TryParse(Session["idPedido"].ToString(), out idPedido);
+
+            Label lbl = (Label)rptItems.FindControl("lblTotal");
+
+            //Finding the FooterTemplate and access its controls
+            Control FooterTemplate = rptItems.Controls[rptItems.Controls.Count - 1].Controls[0];
+            Label lblFooter = FooterTemplate.FindControl("lblTotal") as Label;
+
+            if (this.ddlEntrega.SelectedIndex == 0)
+                lblFooter.Text = (new PedidosBLL().totalPedido(idPedido) + valorEntrega).ToString();
+            else
+                lblFooter.Text = (new PedidosBLL().totalPedido(idPedido)).ToString();
         }
     }
 }

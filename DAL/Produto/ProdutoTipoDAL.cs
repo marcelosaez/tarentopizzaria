@@ -54,7 +54,7 @@ namespace DAL.Produto
             StringBuilder query = new StringBuilder();
             query.Append(" SELECT idtb_tipo as id , tipo ");
             query.Append(" FROM tb_tipoProduto ");
-            query.Append(" WHERE ativo  = 1");
+            query.Append(" WHERE ativo  = 1 order by tipo asc");
 
             //executa
             SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
