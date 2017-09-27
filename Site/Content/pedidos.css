@@ -131,16 +131,38 @@ form[role=login] {
     border-color: #563d7c;
 }
 
-    .botaoAtualizar:hover, .botaoAtualizar:focus, .botaoAtualizar:active, .botaoAtualizar.active {
+
+.botaoAtualizar:hover, .botaoAtualizar:focus, .botaoAtualizar:active, .botaoAtualizar.active {
+    color: #fff;
+    background-color: #391e63;
+    border-color: #391e63; /*set the color you want here*/
+}
+
+.botaoAdicional {
+    background-color: #fbbc05;
+    border-color: #fbbc05;
+}
+
+
+    .botaoAdicional:hover, .botaoAdicional:focus, .botaoAdicional:active, .botaoAdicional.active {
         color: #fff;
-        background-color: #391e63;
-        border-color: #391e63; /*set the color you want here*/
+        background-color: #fcb304;
+        border-color: #fcb304; /*set the color you want here*/
     }
 
 .cbxCliente {
     padding:20px;
     font-size:16px;
 }
+
+.cblEspaco label {
+    margin-left: 4px;
+}
+
+.cblEspaco input[type="checkbox"] {
+    margin-top: 4px;
+}
+
 
 .cbxCliente > input {
     padding:8px;

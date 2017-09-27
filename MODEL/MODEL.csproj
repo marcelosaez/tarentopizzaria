@@ -52,6 +52,7 @@
     <Compile Include="Pedido\Pedido_VO.cs" />
     <Compile Include="Produto\BordaProduto_VO.cs" />
     <Compile Include="Produto\OpcaoProduto_VO.cs" />
+    <Compile Include="Produto\Opcional_VO.cs" />
     <Compile Include="Produto\Produto_VO.cs" />
     <Compile Include="Produto\TipoProduto_VO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

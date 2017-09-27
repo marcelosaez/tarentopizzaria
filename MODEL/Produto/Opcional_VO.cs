@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace MODEL.Produto
 {
-    public class Produto_VO
+    public class Opcional_VO
     {
+        public string label { get; set; }
         public bool temCadastro { get; set; }
-        public int idProduto { get; set; }
-        public int idTipoProduto { get; set; }
+        public int idOpcional { get; set; }
         public string nome { get; set; }
-        public string ingredientes { get; set; }
         public decimal valor { get; set; }
         public bool ativo { get; set; }
-        public string tipo { get; set; }
     }
 }

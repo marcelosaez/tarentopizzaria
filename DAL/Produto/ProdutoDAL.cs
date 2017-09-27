@@ -24,6 +24,42 @@ namespace DAL.Produto
             return executeDataSet(query.ToString(), CommandType.Text, false);
         }
 
+        public DataSet obterDataSetOpcionais()
+        {
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" select [idtb_opcionais] as id, [nome],  ");
+            query.Append(" [valor], p.[ativo]  ");
+            query.Append(" from tb_opcionais (nolock) p ");
+            query.Append(" ORDER BY nome");
+            return executeDataSet(query.ToString(), CommandType.Text, false);
+        }
+
+        public Opcional_VO obterRegistroOpcional(int codigo)
+        {
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" select [idtb_opcionais] as id, [nome] ");
+            query.Append(" ,[valor], [ativo] FROM[dbo].[tb_opcionais] ");
+            query.Append(" WHERE idtb_opcionais = " + codigo);
+
+            Opcional_VO registro = null;
+
+            //executa
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+
+            while (dr.Read())
+            {
+                registro = new Opcional_VO();
+                registro.idOpcional = Convert.ToInt32(dr["id"]);
+                registro.nome = Convert.ToString(dr["nome"]);
+                registro.valor = Convert.ToDecimal(dr["valor"]);
+                registro.ativo = Convert.ToBoolean(dr["ativo"]);
+            }
+
+            return registro;
+        }
+
         public void salvar(Produto_VO Produto)
         {
             StringBuilder query = new StringBuilder();
@@ -70,6 +106,63 @@ namespace DAL.Produto
             return lstBordas;
         }
 
+        public bool verificaOpcional(string opcional)
+        {
+            Opcional_VO registro = new Opcional_VO();
+            registro.temCadastro = false;
+
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" SELECT idtb_opcionais as id ");
+            query.Append(" FROM tb_opcionais ");
+            query.Append(" WHERE nome = '" + opcional + "'");
+
+            //executa
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+
+            while (dr.Read())
+            {
+                registro.idOpcional = Convert.ToInt32(dr["id"]);
+                registro.temCadastro = true;
+            }
+
+            return registro.temCadastro;
+        }
+
+        public void alterarOpcional(Opcional_VO opcional)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append(" UPDATE TB_OPCIONAIS SET nome=@Nome, valor =@valor, ativo=@ativo ");
+            query.Append("WHERE idtb_opcionais = @idOpcional ");
+
+            //parametros
+            SqlParameter[] parametros = {
+                createParametro("@Ativo", SqlDbType.Bit, opcional.ativo),
+                createParametro("@idOpcional", SqlDbType.Int, opcional.idOpcional),
+                createParametro("@Nome", SqlDbType.VarChar, opcional.nome),
+                createParametro("@Valor", SqlDbType.Decimal, opcional.valor)
+            };
+
+            //executa
+            executeNonQuery(query.ToString(), CommandType.Text, null, null, parametros, false);
+        }
+
+        public void salvarOpcional(Opcional_VO opcional)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append(" INSERT INTO TB_OPCIONAIS ( [nome] ,[valor] ,[ativo]) ");
+            query.Append(" VALUES (@Nome, @Valor, @Ativo) ");
+
+            //parametros
+            SqlParameter[] parametros = {
+                createParametro("@Nome", SqlDbType.VarChar, opcional.nome),
+                createParametro("@Valor", SqlDbType.Decimal, opcional.valor),
+                createParametro("@Ativo", SqlDbType.Bit, opcional.ativo)
+            };
+
+            //executa
+            executeNonQuery(query.ToString(), CommandType.Text, null, null, parametros, false);
+        }
 
         public decimal obterValorBorda(int idBorda)
 

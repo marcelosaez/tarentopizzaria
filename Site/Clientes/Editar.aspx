@@ -47,7 +47,7 @@
                     <asp:RequiredFieldValidator ID="reqEndereco" runat="server" ControlToValidate="txtEndereco" ErrorMessage="Informe o endereço" EnableClientScript="True" Display="Dynamic">* Endereço Obrigatório</asp:RequiredFieldValidator>
                 </div>
                 <div class="col-md-12">
-                    <asp:TextBox ID="txtNumero" runat="server" EnableTheming="True" MaxLength="50"  CssClass="form-control input-lg espaco" placeholder="Número" ></asp:TextBox>
+                    <asp:TextBox ID="txtNumero" TextMode="Number"  runat="server" EnableTheming="True" MaxLength="50"  CssClass="form-control input-lg espaco" placeholder="Número"  ></asp:TextBox>
                     <asp:RequiredFieldValidator ID="reqNumero" runat="server" ControlToValidate="txtNumero" ErrorMessage="Informe o número" EnableClientScript="True" Display="Dynamic">*</asp:RequiredFieldValidator>
                 </div>
                 <div class="col-md-12">

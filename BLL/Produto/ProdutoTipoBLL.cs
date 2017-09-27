@@ -41,5 +41,10 @@ namespace BLL.Produto
         {
             return new ProdutoTipoDAL().obterTipos();
         }
+
+        public List<Opcional_VO> obterOpcionais()
+        {
+            return new ProdutoTipoDAL().obterOpcionais();
+        }
     }
 }

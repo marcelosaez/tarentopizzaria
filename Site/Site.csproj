@@ -215,6 +215,8 @@
     <Content Include="Produtos\Default.aspx" />
     <Content Include="Produtos\EditarProdutos.aspx" />
     <Content Include="Produtos\EditarProdutoTipos.aspx" />
+    <Content Include="Produtos\opcionais.aspx" />
+    <Content Include="Produtos\OpcionaisMain.aspx" />
     <Content Include="Produtos\Produtos.aspx" />
     <Content Include="Produtos\Tipos.aspx" />
     <Content Include="Sair.aspx" />
@@ -394,6 +396,20 @@
     </Compile>
     <Compile Include="Produtos\EditarProdutoTipos.aspx.designer.cs">
       <DependentUpon>EditarProdutoTipos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Produtos\opcionais.aspx.cs">
+      <DependentUpon>opcionais.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Produtos\opcionais.aspx.designer.cs">
+      <DependentUpon>opcionais.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Produtos\OpcionaisMain.aspx.cs">
+      <DependentUpon>OpcionaisMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Produtos\OpcionaisMain.aspx.designer.cs">
+      <DependentUpon>OpcionaisMain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Produtos\Produtos.aspx.cs">
       <DependentUpon>Produtos.aspx</DependentUpon>

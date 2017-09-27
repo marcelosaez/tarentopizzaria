@@ -39,5 +39,28 @@
                 </a>
              <div class="col-lg-4"></div>
         </div>
+
+         <div class="row">
+             <div class="col-lg-4"></div>
+             <a href="opcionaisMain.aspx">
+                <div id="div1" runat="server" class="col-lg-2 color-swatch bg-warning text-white text-center">
+                     <div class="col-lg-12 iconMain">
+                         
+                         <span class="fa fa-plus fa-5x" aria-hidden="true"></span>
+
+                     </div>
+                    <div class="col-lg-12 iconMain"><span class="text-center "> OPCIONAIS</span></div>
+                     
+                     
+                   
+                </div>
+            </a>
+                <div id="div2" runat="server"  class="col-lg-2">
+                <!-- ANOTHER ITEM-->      
+
+                </div>
+             <div class="col-lg-4"></div>
+        </div>
+
     </div>
 </asp:Content>

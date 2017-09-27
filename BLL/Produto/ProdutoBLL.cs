@@ -17,6 +17,11 @@ namespace BLL.Produto
             return new ProdutoDAL().obterDataSet();
         }
 
+        public DataSet obterDataSetOpcionais()
+        {
+            return new ProdutoDAL().obterDataSetOpcionais();
+        }
+
         public void alterar(Produto_VO Produto)
         {
             new ProdutoDAL().alterar(Produto);
@@ -35,6 +40,11 @@ namespace BLL.Produto
         public Produto_VO obterRegistro(int codigo)
         {
             return new ProdutoDAL().obterRegistro(codigo);
+        }
+
+        public Opcional_VO obterRegistroOpcional(int codigo)
+        {
+            return new ProdutoDAL().obterRegistroOpcional(codigo);
         }
 
         public List<Produto_VO> obterSabores(int idTipo)
@@ -71,6 +81,21 @@ namespace BLL.Produto
         public decimal obterValorBorda(int idBorda)
         {
             return new ProdutoDAL().obterValorBorda(idBorda);
+        }
+
+        public bool verificaOpcional(string opcional)
+        {
+            return new ProdutoDAL().verificaOpcional(opcional);
+        }
+
+        public void alterarOpcional(Opcional_VO opcional)
+        {
+            new ProdutoDAL().alterarOpcional(opcional);
+        }
+
+        public void salvarOpcional(Opcional_VO opcional)
+        {
+            new ProdutoDAL().salvarOpcional(opcional);
         }
     }
 }

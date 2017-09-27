@@ -10,42 +10,33 @@
 namespace Site.Produtos {
     
     
-    public partial class Default {
+    public partial class OpcionaisMain {
         
         /// <summary>
-        /// divPedidos control.
+        /// ValidationSummary1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPedidos;
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
         
         /// <summary>
-        /// divClientes control.
+        /// gvListaOpcionais control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divClientes;
+        protected global::WizardGridView.WizardGridView gvListaOpcionais;
         
         /// <summary>
-        /// div1 control.
+        /// SourceData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div1;
-        
-        /// <summary>
-        /// div2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div2;
+        protected global::System.Web.UI.WebControls.ObjectDataSource SourceData;
     }
 }

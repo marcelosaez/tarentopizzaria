@@ -46,6 +46,34 @@ namespace DAL.Produto
             return registro;
         }
 
+        public List<Opcional_VO> obterOpcionais()
+        {
+            List<Opcional_VO> lstTipos = new List<Opcional_VO>();
+
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" SELECT idtb_opcionais as id , nome, valor, nome + ' - ' + CAST(valor as varchar) as label ");
+            query.Append(" FROM tb_opcionais ");
+            query.Append(" WHERE ativo  = 1 order by nome asc");
+
+            //executa
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+            Opcional_VO registro = null;
+
+            while (dr.Read())
+            {
+                registro = new Opcional_VO();
+
+                registro.idOpcional = Convert.ToInt32(dr["id"]);
+                registro.nome = Convert.ToString(dr["nome"]);
+                registro.valor = Convert.ToDecimal(dr["valor"]);
+                registro.label = Convert.ToString(dr["label"]);
+                lstTipos.Add(registro);
+            }
+
+            return lstTipos;
+        }
+
         public List<TipoProduto_VO> obterTipos()
         {
             List<TipoProduto_VO> lstTipos = new List<TipoProduto_VO> ();

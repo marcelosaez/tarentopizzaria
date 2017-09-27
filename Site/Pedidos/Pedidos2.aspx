@@ -90,6 +90,10 @@
             return false;
         }
 
+        function openModal() {
+            $('#myModal').modal('show');
+        }
+
 
     </script>
 
@@ -234,14 +238,23 @@
                                         <asp:DropDownList ID="ddlBorda" runat="server" CssClass="form-control espaco" Width="340px" AutoPostBack="true" Visible="false" OnSelectedIndexChanged="ddlBorda_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
+
+
+
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <asp:TextBox ID="txtObs" runat="server" CssClass="form-control espaco" Width="340px" placeholder="Obs:" TextMode="MultiLine" MaxLength="80" ></asp:TextBox>
+                                            <asp:TextBox ID="txtObs" runat="server" CssClass="form-control espaco" Width="340px" placeholder="Obs:" TextMode="MultiLine" MaxLength="80"></asp:TextBox>
                                         </div>
                                     </div>
 
 
+                                    <div class="col-md-12 " style="margin-bottom: 30px;">
+                                        <div class="btn btn-lg btn-success btn-block botaoAdicional" data-toggle="modal" data-load-url="" data-target="#myModal">Opcionais</div>
+
+                                    </div>
+
                                     <div class="col-md-12">
+
                                         <div class="col-md-6">
                                             <asp:Button ID="cmdVoltar" runat="server" Text="Voltar" OnClick="cmdVoltar_Click" CssClass="btn btn-lg btn-danger btn-block botaoVoltar2" CausesValidation="false" UseSubmitBehavior="false" />&nbsp;
                                         </div>
@@ -251,9 +264,7 @@
 
                                     </div>
                                     <div class="col-md-12">
-                                        <%--<div class="col-md-6">
-                            <asp:Button ID="Button1" runat="server" Text="Voltar" OnClick="cmdVoltar_Click" CssClass="btn btn-lg btn-danger btn-block botaoVoltar" CausesValidation="false" UseSubmitBehavior="false" />&nbsp;
-                         </div>--%>
+
                                         <asp:Button ID="cmdAtualizar" runat="server" Text="Atualizar" OnClick="cmdAtualizar_Click" CssClass="btn btn-lg btn-primary btn-block botaoAtualizar" Visible="false" />
 
                                         <asp:Button ID="cmdFinalizar" runat="server" Text="Finalizar" OnClick="cmdFinalizar_Click" CssClass="btn btn-lg btn-success btn-block botaoFinalizar" Visible="false" />
@@ -262,6 +273,25 @@
 
                                     <div class="row">
                                     </div>
+
+
+                                    <div id="myModal" class="modal fade">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title">Adicionar Opcionais</h4>
+                                                </div>
+                                                    <asp:CheckBoxList ID="cblOpcionais" runat="server" RepeatDirection="Horizontal" RepeatColumns="4" CssClass="cblEspaco" OnSelectedIndexChanged="cblOpcionais_SelectedIndexChanged" AutoPostBack="true"></asp:CheckBoxList>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                                    <%--<button type="submit" class="btn btn-primary">Save changes</button>--%>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                 </ContentTemplate>
                             </asp:UpdatePanel>

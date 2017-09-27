@@ -8,6 +8,7 @@ using MODEL.Produto;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -56,6 +57,18 @@ namespace Site.Pedidos
 
             //Carrego os tipos dos produtos
             carregarTiposProdutos();
+
+            carregarOpcionais();
+
+        }
+
+        private void carregarOpcionais()
+        {
+            List<Opcional_VO> opcionais = new ProdutoTipoBLL().obterOpcionais();
+            cblOpcionais.DataSource = opcionais;
+            cblOpcionais.DataTextField = "label";
+            cblOpcionais.DataValueField = "idOpcional";
+            cblOpcionais.DataBind();
         }
 
         private void editarPedido(int idDetPed)
@@ -847,16 +860,7 @@ namespace Site.Pedidos
                 decimal pedido = (decimal)ViewState["Preco"];
                 decimal pedidoTotal = pedido + total;
 
-                //ViewState["Preco"] = pedidoTotal;
-
-                /*if (ViewState["BordaValor"] != null)
-                {
-                    bordaValor = (decimal)ViewState["BordaValor"];
-                    ViewState["Preco"] = (decimal)ViewState["Preco"] + (bordaValor * Convert.ToInt32(ddlQtd.SelectedValue));
-
-                }*/
-
-
+           
                 ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newSucess('R$ " + pedidoTotal + "');", true);
 
 
@@ -899,6 +903,39 @@ namespace Site.Pedidos
         protected void lnkDelete_Click(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "confirmDelete(" + sender + ");", true);
+
+        }
+
+        protected void cblOpcionais_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            decimal valor = 0;
+            string [] valorEscolhido;
+
+            foreach (ListItem Item in cblOpcionais.Items)
+            {
+                if (Item.Selected)
+                {
+
+                    valorEscolhido = Item.Text.Split('-');
+
+                    valor += decimal.Parse(valorEscolhido[1], CultureInfo.InvariantCulture); //decimal.Parse(valorEscolhido[1]);
+                    //do some work 
+                }
+                else
+                {
+                    //do something else 
+                }
+            }
+
+            
+            decimal pedido = (decimal)ViewState["Preco"];
+            decimal pedidoTotal = pedido + valor;
+
+
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "Pop", "openModal();", true);
+            //ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newSucess('R$ " + pedidoTotal + "');", true);
+
+
 
         }
     }
