@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MODEL.Produto;
 
 namespace MODEL.Pedido
 {
     public class Pedido_VO
     {
+        public List<Opcional_VO> opcionais { get; set; }
+
         public int idCliente { get; set; }
         public int idTipo    { get; set; }
         public int idBorda   { get; set; }

@@ -9,6 +9,7 @@ using System.Data;
 using MODEL.Pedido;
 using System.Data.SqlClient;
 using MODEL.Pagamento;
+using MODEL.Produto;
 
 namespace DAL.Pedidos
 {
@@ -17,7 +18,7 @@ namespace DAL.Pedidos
         public DataSet obterDataSet()
         {
             List<Pedido_VO> lst = new List<Pedido_VO>();
-            
+
 
             // query
             StringBuilder query = new StringBuilder();
@@ -48,7 +49,7 @@ namespace DAL.Pedidos
 
             //Verifico se a hora esta entre a 00:00 e as 04:00
             if (DateTime.Now.Hour >= 0 && DateTime.Now.Hour <= 4)
-            //Caso sim, retiro um dia
+                //Caso sim, retiro um dia
                 dataIni = dataIni.AddDays(-1);
 
             dataIni = new DateTime(dataIni.Year, dataIni.Month, dataIni.Day, 05, 00, 00);
@@ -59,8 +60,6 @@ namespace DAL.Pedidos
             else
                 // senao, seto para as 4:59 da manha como horario limite
                 dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
-
-
 
             // query
             StringBuilder query = new StringBuilder();
@@ -94,22 +93,22 @@ namespace DAL.Pedidos
             query.Append(" inner join tb_funcionarios f on f.idtb_funcionario = ctp.tb_funcionario_idtb_funcionario  ");
             query.Append(" inner join tb_tipoPagamento tp on tp.idTipoPagamento = ctp.tb_tipoPagamento  ");
             query.Append(" inner join tb_entrega te on te.idtb_Entrega = ctp.idtb_Entrega  ");
-            query.Append(" where ctp.idPedido = "+idPedido);
+            query.Append(" where ctp.idPedido = " + idPedido);
 
             SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
 
             while (dr.Read())
             {
-               cupom.cliente.nome = Convert.ToString(dr["cliente"]);
-               cupom.cliente.endereco = Convert.ToString(dr["endereco"]);
-               cupom.cliente.numero = Convert.ToInt32(dr["numero"]);
-               cupom.cliente.dddres = Convert.ToInt32(dr["dddres"]);
-               cupom.cliente.telres = Convert.ToInt32(dr["telres"]);
-               cupom.cliente.dddcel = Convert.ToInt32(dr["dddcel"]);
-               cupom.cliente.cel = Convert.ToInt32(dr["cel"]);
-               cupom.funcionario.nome = Convert.ToString(dr["funcionario"]);
-               cupom.pagamento.TipoPagamento = Convert.ToString(dr["TipoPagamento"]);
-               cupom.entrega = Convert.ToString(dr["TipoEntrega"]);
+                cupom.cliente.nome = Convert.ToString(dr["cliente"]);
+                cupom.cliente.endereco = Convert.ToString(dr["endereco"]);
+                cupom.cliente.numero = Convert.ToInt32(dr["numero"]);
+                cupom.cliente.dddres = Convert.ToInt32(dr["dddres"]);
+                cupom.cliente.telres = Convert.ToInt32(dr["telres"]);
+                cupom.cliente.dddcel = Convert.ToInt32(dr["dddcel"]);
+                cupom.cliente.cel = Convert.ToInt32(dr["cel"]);
+                cupom.funcionario.nome = Convert.ToString(dr["funcionario"]);
+                cupom.pagamento.TipoPagamento = Convert.ToString(dr["TipoPagamento"]);
+                cupom.entrega = Convert.ToString(dr["TipoEntrega"]);
             }
 
             dr.Close();
@@ -149,7 +148,7 @@ namespace DAL.Pedidos
             StringBuilder query = new StringBuilder();
             query.Append(" SELECT idtipoPagamento, tipoPagamento ");
             query.Append(" FROM[dbo].[tb_tipoPagamento] order by tipoPagamento ");
-            
+
             SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
 
             while (dr.Read())
@@ -181,9 +180,10 @@ namespace DAL.Pedidos
                 executeNonQuery(query.ToString(), CommandType.Text, null, null, parametros, false);
                 retorno = true;
 
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
-                
+
             }
             return retorno;
         }
@@ -194,7 +194,7 @@ namespace DAL.Pedidos
             try
             {
                 StringBuilder query = new StringBuilder();
-                query.Append(" SELECT SUM(VALOR) as total FROM tb_detalhaPedido WHERE idPedido="+ idPedido);
+                query.Append(" SELECT SUM(VALOR) as total FROM tb_detalhaPedido WHERE idPedido=" + idPedido);
 
                 SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
 
@@ -260,7 +260,6 @@ namespace DAL.Pedidos
 
             dr.Close();
             return lst;
-            //return executeDataSet(query.ToString(), CommandType.Text, false);
         }
 
         public Pedido_VO adicionaPedidosInicial(Pedido_VO Pedido)
@@ -281,9 +280,6 @@ namespace DAL.Pedidos
 
             executeNonQuery(query.ToString(), CommandType.Text, null, null, parametros, false);
 
-            //SqlParameter IDParameter = new SqlParameter("@ID", SqlDbType.Int);
-            //IDParameter.Direction = ParameterDirection.Output;
-            //cmd.Parameters.Add(IDParameter);
             int id = 0;
             StringBuilder queryID = new StringBuilder();
             queryID.Append("select top 1 idPedido as ID from tb_cliente_tem_pedido order by idPedido desc");
@@ -295,14 +291,14 @@ namespace DAL.Pedidos
                 id = Convert.ToInt32(dr["id"]);
             }
 
-  
             Pedido.idPedido = id;
-            Pedido =  adicionaPedidos(Pedido);
+
+            Pedido = adicionaPedidos(Pedido);
             dr.Close();
             return Pedido;
         }
 
-        public Pedido_VO adicionaPedidos(Pedido_VO Pedido)
+        /*public Pedido_VO adicionaOpcionais(Pedido_VO Pedido)
         {
             StringBuilder query = new StringBuilder();
             query.Append(" INSERT INTO tb_detalhaPedido ([idPedido],[idOpcao],[idSabor1_idtb_produtos],[idSabor2_idtb_produtos],[idSabor3_idtb_produtos],[quantidade],[valor],[idBorda],[Obs]) ");
@@ -323,9 +319,78 @@ namespace DAL.Pedidos
                 createParametro("@Obs", SqlDbType.VarChar, Pedido.obs)
             };
 
-           
+
             //executa
             executeNonQuery(query.ToString(), CommandType.Text, null, null, parametros, false);
+
+
+            
+
+            return Pedido;
+        }*/
+
+        public Pedido_VO adicionaPedidos(Pedido_VO Pedido)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append(" INSERT INTO tb_detalhaPedido ([idPedido],[idOpcao],[idSabor1_idtb_produtos],[idSabor2_idtb_produtos],[idSabor3_idtb_produtos],[quantidade],[valor],[idBorda],[Obs]) ");
+            query.Append(" VALUES ( @IdPedido, @idOpcao, @IdSabor1, @IdSabor2, @IdSabor3, @Qtd, @Valor,@IdBorda,@Obs) ");
+
+            //parametros
+            SqlParameter[] parametros = {
+                createParametro("@IdPedido", SqlDbType.Int, Pedido.idPedido),
+                createParametro("@idOpcao", SqlDbType.Int, Pedido.idOpcao),
+                createParametro("@IdSabor1", SqlDbType.Int, Pedido.idSabor1),
+                createParametro("@IdSabor2", SqlDbType.Int, Pedido.idSabor2),
+                createParametro("@IdSabor3", SqlDbType.Int, Pedido.idSabor3),
+                createParametro("@Qtd", SqlDbType.Int, Pedido.qtd),
+                createParametro("@Valor", SqlDbType.Decimal, Pedido.valor),
+                createParametro("@IdBorda", SqlDbType.Int, Pedido.idBorda),
+                createParametro("@Obs", SqlDbType.VarChar, Pedido.obs)
+            };
+
+
+            //executa
+            executeNonQuery(query.ToString(), CommandType.Text, null, null, parametros, false);
+
+            if (Pedido.opcionais != null)
+            {
+
+                int idDetPedido = 0;
+                StringBuilder queryIdDetalha = new StringBuilder();
+                queryIdDetalha.Append("select top 1 idDetalhaPedido from tb_detalhaPedido where idPedido = " + Pedido.idPedido + " order by idDetalhaPedido desc");
+
+                SqlDataReader drd = executeDataReader(queryIdDetalha.ToString(), CommandType.Text, false);
+
+                while (drd.Read())
+                {
+                    idDetPedido = Convert.ToInt32(drd["idDetalhaPedido"]);
+                }
+
+                Pedido.idDetPed = idDetPedido;
+
+
+                foreach (Opcional_VO opc in Pedido.opcionais)
+                {
+
+                    StringBuilder queryOpc = new StringBuilder();
+
+
+                    queryOpc.Append(" INSERT INTO tb_pedido_tem_opcionais ([idDetalhaPedido],[idOpcional],[Data])");
+                    queryOpc.Append(" VALUES ( @IdDetalhaPedido, @IdOpcional, @Data) ");
+                    //parametros
+                    SqlParameter[] parametrosOpc = {
+                    createParametro("@IdDetalhaPedido", SqlDbType.Int, Pedido.idDetPed),
+                    createParametro("@IdOpcional", SqlDbType.Int, opc.idOpcional),
+                    createParametro("@Data", SqlDbType.DateTime, DateTime.Now)
+
+                    };
+
+                    //executa
+                    executeNonQuery(queryOpc.ToString(), CommandType.Text, null, null, parametrosOpc, false);
+
+                }
+            }
+
             return Pedido;
         }
 
@@ -334,8 +399,6 @@ namespace DAL.Pedidos
             StringBuilder query = new StringBuilder();
             query.Append(" UPDATE tb_detalhaPedido SET [idPedido]=@IdPedido,[idOpcao]=@idOpcao,[idSabor1_idtb_produtos]=@IdSabor1,[idSabor2_idtb_produtos]=@IdSabor2,[idSabor3_idtb_produtos]=@IdSabor3,[quantidade]=@Qtd,[valor]=@Valor,[idBorda]=@idBorda,[Obs]=@Obs ");
             query.Append(" WHERE idDetalhaPedido = @idDetPedido ");
-
-            //Pedido.idOpcao = Pedido.idOpcao == 0 ? null : Pedido.idOpcao;
 
             //parametros
             SqlParameter[] parametros = {
@@ -400,7 +463,7 @@ namespace DAL.Pedidos
                 pedido.idTipo = Convert.ToInt32(dr["idtb_tipo"]);
 
                 if (dr["idSabor1"] != DBNull.Value) pedido.idSabor1 = Convert.ToInt32(dr["idSabor1"]);
-                if (dr["idSabor2"] != DBNull.Value ) pedido.idSabor2 = Convert.ToInt32(dr["idSabor2"]);
+                if (dr["idSabor2"] != DBNull.Value) pedido.idSabor2 = Convert.ToInt32(dr["idSabor2"]);
                 if (dr["idSabor3"] != DBNull.Value) pedido.idSabor3 = Convert.ToInt32(dr["idSabor3"]);
 
 
@@ -414,7 +477,6 @@ namespace DAL.Pedidos
 
             fecharTodasConexoes(dr);
             return lst;
-            //return executeDataSet(query.ToString(), CommandType.Text, false);
         }
 
     }

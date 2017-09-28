@@ -95,6 +95,78 @@
         }
 
 
+
+
+        /**
+ * Module for displaying "Waiting for..." dialog using Bootstrap
+ *
+ * @author Eugene Maslovich <ehpc@em42.ru>
+ */
+
+        var waitingDialog = waitingDialog || (function ($) {
+            'use strict';
+
+            // Creating modal dialog's DOM
+            var $dialog = $(
+                '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
+                '<div class="modal-dialog modal-m">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header"><h3 style="margin:0;"></h3></div>' +
+                '<div class="modal-body">' +
+                '<div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>' +
+                '</div>' +
+                '</div></div></div>');
+
+            return {
+                /**
+                 * Opens our dialog
+                 * @param message Custom message
+                 * @param options Custom options:
+                 * 				  options.dialogSize - bootstrap postfix for dialog size, e.g. "sm", "m";
+                 * 				  options.progressType - bootstrap postfix for progress bar type, e.g. "success", "warning".
+                 */
+                show: function (message, options) {
+                    // Assigning defaults
+                    if (typeof options === 'undefined') {
+                        options = {};
+                    }
+                    if (typeof message === 'undefined') {
+                        message = 'Loading';
+                    }
+                    var settings = $.extend({
+                        dialogSize: 'm',
+                        progressType: '',
+                        onHide: null // This callback runs after the dialog was hidden
+                    }, options);
+
+                    // Configuring dialog
+                    $dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
+                    $dialog.find('.progress-bar').attr('class', 'progress-bar');
+                    if (settings.progressType) {
+                        $dialog.find('.progress-bar').addClass('progress-bar-' + settings.progressType);
+                    }
+                    $dialog.find('h3').text(message);
+                    // Adding callbacks
+                    if (typeof settings.onHide === 'function') {
+                        $dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
+                            settings.onHide.call($dialog);
+                        });
+                    }
+                    // Opening dialog
+                    $dialog.modal();
+                },
+                /**
+                 * Closes dialog
+                 */
+                hide: function () {
+                    $dialog.modal('hide');
+                }
+            };
+
+        })(jQuery);
+
+
+
     </script>
 
 </asp:Content>
@@ -248,7 +320,7 @@
                                     </div>
 
 
-                                    <div class="col-md-12 " style="margin-bottom: 30px;">
+                                    <div id="divOpcionais" runat="server" class="col-md-12 " style="margin-bottom: 30px;" visible="false">
                                         <div class="btn btn-lg btn-success btn-block botaoAdicional" data-toggle="modal" data-load-url="" data-target="#myModal">Opcionais</div>
 
                                     </div>
@@ -274,29 +346,38 @@
                                     <div class="row">
                                     </div>
 
-
-                                    <div id="myModal" class="modal fade">
+                                    <div id="myModal" class="modal fade" data-backdrop="static">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                                     <h4 class="modal-title">Adicionar Opcionais</h4>
                                                 </div>
-                                                    <asp:CheckBoxList ID="cblOpcionais" runat="server" RepeatDirection="Horizontal" RepeatColumns="4" CssClass="cblEspaco" OnSelectedIndexChanged="cblOpcionais_SelectedIndexChanged" AutoPostBack="true"></asp:CheckBoxList>
-
+                                                    <asp:CheckBoxList ID="cblOpcionais" runat="server" RepeatDirection="Horizontal" RepeatColumns="4" CssClass="cblEspaco" ></asp:CheckBoxList>
+                                                <%--OnSelectedIndexChanged="cblOpcionais_SelectedIndexChanged" AutoPostBack="true"--%>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                                    <%--<button type="button" class="btn btn-default" data-dismiss="modal" runat="server">Fechar</button>--%>
                                                     <%--<button type="submit" class="btn btn-primary">Save changes</button>--%>
+                                                    <asp:Button ID="btnFechar" runat="server" OnClick="btnFechar_Click"  UseSubmitBehavior="false"  class="btn btn-default" data-dismiss="modal" Text="Fechar" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                   
 
 
                                 </ContentTemplate>
                             </asp:UpdatePanel>
 
                         </asp:Panel>
+
+                        <asp:UpdatePanel ID="updPainel2" runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                     
+
+                                </ContentTemplate>
+                        </asp:UpdatePanel>
 
                     </section>
                 </div>

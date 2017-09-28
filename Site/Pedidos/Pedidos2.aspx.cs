@@ -459,6 +459,8 @@ namespace Site.Pedidos
 
             NovoPedido.valor = (decimal)ViewState["Preco"];
 
+            if(Session["listaOpc"] != null)
+                NovoPedido.opcionais = (List<Opcional_VO>)Session["listaOpc"]; 
 
             PedidosBLL pedido = new PedidosBLL();
             NovoPedido = pedido.adicionaPedido(NovoPedido);
@@ -517,6 +519,8 @@ namespace Site.Pedidos
 
         protected void ddlTipoProdutos_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "waitingDialog.show('Carregando as opções...');", true);
+
             ddlOpcao.Visible = false;
             ddlQtd.Visible = false;
             limpaTudo();
@@ -538,6 +542,8 @@ namespace Site.Pedidos
                 if (ddlTipoProdutos.SelectedValue != "")
                     carregaSabor(Convert.ToInt32(ddlTipoProdutos.SelectedValue), 0);
             }
+
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message1", "waitingDialog.hide();", true);
 
 
         }
@@ -568,7 +574,10 @@ namespace Site.Pedidos
             this.ddlQtd.Visible = false;
             ViewState["Sabores"] = null;
             escondeBordas();
+            escondeOpcionais();
             txtObs.Text = "";
+            //ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "clearTotal", "newSucess('R$ 0,00 ');", true);
+
 
         }
 
@@ -611,6 +620,8 @@ namespace Site.Pedidos
 
         protected void ddlOpcao_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "openOpcao", "waitingDialog.show('Carregando os sabores...');", true);
+
             ddlSabor1.Visible = false;
             ddlSabor2.Visible = false;
             ddlSabor3.Visible = false;
@@ -645,6 +656,9 @@ namespace Site.Pedidos
 
             if (ddlQtd.SelectedIndex > 0)
                 ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newSucess('R$ 0,00');", true);
+
+
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "closeOpcao", "waitingDialog.hide();", true);
         }
 
         private void carregaSabor(DropDownList ddl, int idSabor)
@@ -692,6 +706,11 @@ namespace Site.Pedidos
 
         protected void ddlQtd_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            divOpcionais.Visible = false;
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "openQtd", "waitingDialog.show('Carregando a quantidade');", true);
+
+
             int qtdSabores = 0;
             int qtd = 0;
 
@@ -717,16 +736,20 @@ namespace Site.Pedidos
 
             total += valorBorda;
 
-            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newSucess('R$ " + total + "');", true);
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "closeQtd", "newSucess('R$ " + total + "');", true);
 
-            if ((ddlQtd.SelectedValue != "0") && (ddlTipoProdutos.SelectedValue == "1"))
+            if ((ddlQtd.SelectedValue != "0") && ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO"))))
             {
                 carregarBorda();
 
                 fancyCheckBox.Checked = false;
                 divBorda.Visible = true;
                 ddlBorda.SelectedIndex = 0;
+                divOpcionais.Visible = true;
             }
+
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "waitingDialog.hide();", true);
+
         }
 
         protected void ddlSabor_SelectedIndexChanged(object sender, EventArgs e)
@@ -894,6 +917,11 @@ namespace Site.Pedidos
             ddlSabor.Visible = false;
         }
 
+        protected void escondeOpcionais()
+        {
+            this.divOpcionais.Visible = false;
+        }
+
         protected void lnkEditar_Click(object sender, CommandEventArgs e)
         {
 
@@ -906,7 +934,7 @@ namespace Site.Pedidos
 
         }
 
-        protected void cblOpcionais_SelectedIndexChanged(object sender, EventArgs e)
+        /*protected void cblOpcionais_SelectedIndexChanged(object sender, EventArgs e)
         {
             decimal valor = 0;
             string [] valorEscolhido;
@@ -927,16 +955,67 @@ namespace Site.Pedidos
                 }
             }
 
-            
             decimal pedido = (decimal)ViewState["Preco"];
             decimal pedidoTotal = pedido + valor;
 
-
-            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "Pop", "openModal();", true);
+            //ScriptManager.RegisterStartupScript(updPainel2, updPainel2.GetType(), "Pop", "openModal();", true);
             //ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newSucess('R$ " + pedidoTotal + "');", true);
 
+        }
+        */
+        protected void btnFechar_Click(object sender, EventArgs e)
+        {
+            decimal valor = 0;
+            string[] valorEscolhido;
+
+            List<Opcional_VO> listaOpc = new List<Opcional_VO>();
+
+           // Session["pedido"]
+            Session["listaOpc"] = null;
+
+            if (ViewState["OpcionaisValor"] != null)
+                ViewState["Preco"] = (decimal)ViewState["Preco"] - (decimal)ViewState["OpcionaisValor"];
+
+            foreach (ListItem Item in cblOpcionais.Items)
+            {
+                if (Item.Selected)
+                {
+                    Opcional_VO opc = new Opcional_VO();
+
+                    valorEscolhido = Item.Text.Split('-');
+
+                    valor += decimal.Parse(valorEscolhido[1], CultureInfo.InvariantCulture); //decimal.Parse(valorEscolhido[1]);
+
+                    opc.idOpcional = Convert.ToInt32(Item.Value);
+
+                    listaOpc.Add(opc);
+                    //do some work 
+                }
+                else
+                {
+                    //do something else 
+                }
+            }
 
 
+            Session["listaOpc"] = listaOpc;
+
+            int qtd = 1;
+            if (Convert.ToInt32(ddlQtd.SelectedValue) > 1)
+            {
+                qtd = Convert.ToInt32(ddlQtd.SelectedValue);
+                valor = qtd * valor;
+            }
+
+            ViewState["OpcionaisValor"] = valor;
+
+
+            decimal pedido = (decimal)ViewState["Preco"];
+            decimal pedidoTotal = pedido + valor;
+
+            ViewState["Preco"] = pedidoTotal;
+
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "closeQtd2", "newSucess('R$ " + pedidoTotal + "');", true);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace MODEL.Produto
 {
     public class Opcional_VO
     {
+        public List<Opcional_VO> opcionais { get; set; }
         public string label { get; set; }
         public bool temCadastro { get; set; }
         public int idOpcional { get; set; }
