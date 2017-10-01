@@ -255,8 +255,32 @@ namespace DAL.Pedidos
                     pedido.obs = Convert.ToString(dr["obs"]);
 
 
+
+                // query
+                StringBuilder queryOpc = new StringBuilder();
+                queryOpc.Append(" SELECT nome FROM tb_pedido_tem_opcionais pto INNER JOIN tb_opcionais  op ");
+                queryOpc.Append(" on pto.idOpcional = op.idtb_opcionais where idDetalhaPedido = " + pedido.idDetPed);
+
+                SqlDataReader drOpc = executeDataReader(queryOpc.ToString(), CommandType.Text, false);
+
+                List<Opcional_VO> listaOpc = new List<Opcional_VO>();
+                bool temOpc = false;
+                while (drOpc.Read())
+                {
+                    temOpc = true;
+                    Opcional_VO opc = new Opcional_VO();
+                    opc.idOpcional = Convert.ToInt32(drOpc["idOpcional"]);
+                    listaOpc.Add(opc);
+                }
+                if (temOpc)
+                    pedido.opcionais = listaOpc;
+
+
                 lst.Add(pedido);
             }
+
+            
+
 
             dr.Close();
             return lst;
@@ -396,29 +420,75 @@ namespace DAL.Pedidos
 
         public Pedido_VO atualizaPedidos(Pedido_VO Pedido)
         {
-            StringBuilder query = new StringBuilder();
-            query.Append(" UPDATE tb_detalhaPedido SET [idPedido]=@IdPedido,[idOpcao]=@idOpcao,[idSabor1_idtb_produtos]=@IdSabor1,[idSabor2_idtb_produtos]=@IdSabor2,[idSabor3_idtb_produtos]=@IdSabor3,[quantidade]=@Qtd,[valor]=@Valor,[idBorda]=@idBorda,[Obs]=@Obs ");
-            query.Append(" WHERE idDetalhaPedido = @idDetPedido ");
 
-            //parametros
-            SqlParameter[] parametros = {
-                createParametro("@IdPedido", SqlDbType.Int, Pedido.idPedido),
-                createParametro("@idOpcao", SqlDbType.Int, Pedido.idOpcao),
-                createParametro("@IdSabor1", SqlDbType.Int, Pedido.idSabor1),
-                createParametro("@IdSabor2", SqlDbType.Int, Pedido.idSabor2),
-                createParametro("@IdSabor3", SqlDbType.Int, Pedido.idSabor3),
-                createParametro("@Qtd", SqlDbType.Int, Pedido.qtd),
-                createParametro("@Valor", SqlDbType.Decimal, Pedido.valor),
-                createParametro("@idDetPedido", SqlDbType.Decimal, Pedido.idDetPed),
-                createParametro("@IdBorda", SqlDbType.Int, Pedido.idBorda),
-                createParametro("@Obs", SqlDbType.VarChar, Pedido.obs)
+            try
+            {
 
 
-            };
+                StringBuilder query = new StringBuilder();
+                query.Append(" UPDATE tb_detalhaPedido SET [idPedido]=@IdPedido,[idOpcao]=@idOpcao,[idSabor1_idtb_produtos]=@IdSabor1,[idSabor2_idtb_produtos]=@IdSabor2,[idSabor3_idtb_produtos]=@IdSabor3,[quantidade]=@Qtd,[valor]=@Valor,[idBorda]=@idBorda,[Obs]=@Obs ");
+                query.Append(" WHERE idDetalhaPedido = @idDetPedido ");
+
+                //parametros
+                SqlParameter[] parametros = {
+                    createParametro("@IdPedido", SqlDbType.Int, Pedido.idPedido),
+                    createParametro("@idOpcao", SqlDbType.Int, Pedido.idOpcao),
+                    createParametro("@IdSabor1", SqlDbType.Int, Pedido.idSabor1),
+                    createParametro("@IdSabor2", SqlDbType.Int, Pedido.idSabor2),
+                    createParametro("@IdSabor3", SqlDbType.Int, Pedido.idSabor3),
+                    createParametro("@Qtd", SqlDbType.Int, Pedido.qtd),
+                    createParametro("@Valor", SqlDbType.Decimal, Pedido.valor),
+                    createParametro("@idDetPedido", SqlDbType.Decimal, Pedido.idDetPed),
+                    createParametro("@IdBorda", SqlDbType.Int, Pedido.idBorda),
+                    createParametro("@Obs", SqlDbType.VarChar, Pedido.obs)
 
 
-            //executa
-            executeNonQuery(query.ToString(), CommandType.Text, null, null, parametros, false);
+                };
+
+
+                //executa
+                executeNonQuery(query.ToString(), CommandType.Text, null, null, parametros, false);
+
+                if (Pedido.opcionais != null)
+                {
+                    StringBuilder queryDel = new StringBuilder();
+                    queryDel.Append(" DELETE FROM tb_pedido_tem_opcionais WHERE idDetalhaPedido= @idDetPed");
+
+                    //parametros
+                    SqlParameter[] parametrosDel = {
+                        createParametro("@idDetPed", SqlDbType.Int, Pedido.idDetPed)
+                    };
+
+                    //executa
+                    executeNonQuery(queryDel.ToString(), CommandType.Text, null, null, parametrosDel, false);
+
+
+
+                    foreach (Opcional_VO opc in Pedido.opcionais)
+                    {
+
+                        StringBuilder queryOpc = new StringBuilder();
+
+
+                        queryOpc.Append(" INSERT INTO tb_pedido_tem_opcionais ([idDetalhaPedido],[idOpcional],[Data])");
+                        queryOpc.Append(" VALUES ( @IdDetalhaPedido, @IdOpcional, @Data) ");
+                        //parametros
+                        SqlParameter[] parametrosOpc = {
+                        createParametro("@IdDetalhaPedido", SqlDbType.Int, Pedido.idDetPed),
+                        createParametro("@IdOpcional", SqlDbType.Int, opc.idOpcional),
+                        createParametro("@Data", SqlDbType.DateTime, DateTime.Now)
+
+                        };
+
+                        //executa
+                        executeNonQuery(queryOpc.ToString(), CommandType.Text, null, null, parametrosOpc, false);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
             return Pedido;
         }
 
@@ -450,10 +520,11 @@ namespace DAL.Pedidos
             query.Append(" WHERE dt.idDetalhaPedido = " + idDetPedido);
 
             SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+            Pedido_VO pedido = new Pedido_VO();
+
 
             while (dr.Read())
             {
-                Pedido_VO pedido = new Pedido_VO();
                 pedido.idDetPed = Convert.ToInt32(dr["idDet"]);
                 pedido.idPedido = Convert.ToInt32(dr["idPedido"]);
                 pedido.idOpcao = Convert.ToInt32(dr["idOpcao"]);
@@ -474,6 +545,24 @@ namespace DAL.Pedidos
                 pedido.StatusPedido = Convert.ToString(dr["statusPedido"]);
                 lst.Add(pedido);
             }
+
+            // query
+            StringBuilder queryOpc = new StringBuilder();
+            queryOpc.Append(" SELECT idOpcional from tb_pedido_tem_opcionais where idDetalhaPedido = " + idDetPedido);
+            SqlDataReader drOpc = executeDataReader(queryOpc.ToString(), CommandType.Text, false);
+
+            List<Opcional_VO> listaOpc = new List<Opcional_VO>();
+            bool temOpc = false;
+            while (drOpc.Read())
+            {
+                temOpc = true;
+                Opcional_VO opc = new Opcional_VO();
+                opc.idOpcional = Convert.ToInt32(drOpc["idOpcional"]);
+                listaOpc.Add(opc);
+            }
+            if (temOpc)
+                pedido.opcionais = listaOpc;
+
 
             fecharTodasConexoes(dr);
             return lst;
