@@ -69,6 +69,34 @@ namespace Site.Pedidos
             cblOpcionais.DataTextField = "label";
             cblOpcionais.DataValueField = "idOpcional";
             cblOpcionais.DataBind();
+            ViewState["OpcionaisValor"] = null;
+        }
+
+        private decimal carregarOpcionais(List<Opcional_VO> lstOpc)
+        {
+            List<Opcional_VO> opcionais = new ProdutoTipoBLL().obterOpcionais();
+            int i = 0;
+            decimal valor = 0;
+
+            this.cblOpcionais.Items.Clear();
+
+            foreach (Opcional_VO opc in opcionais)
+            {
+                cblOpcionais.Items.Add(new ListItem(opc.label, Convert.ToString(opc.idOpcional)));
+
+                var opcionalSelecionado = lstOpc.Find(x => x.idOpcional == opc.idOpcional);
+
+                if (opcionalSelecionado != null)
+                {
+                    cblOpcionais.Items[i].Selected = true;
+                    valor += opc.valor;
+                }
+
+                i++;
+            }
+
+            return valor;
+
         }
 
         private void editarPedido(int idDetPed)
@@ -85,7 +113,9 @@ namespace Site.Pedidos
         {
             limpaTudo();
             cmdAtualizar.Visible = true;
-            ddlTipoProdutos.SelectedIndex = pedido[0].idTipo;
+            //ddlTipoProdutos.SelectedIndex = pedido[0].idTipo;
+
+            carregarTiposProdutos(pedido[0].idTipo);
 
             if (pedido[0].idTipo == 1)
             {
@@ -143,6 +173,24 @@ namespace Site.Pedidos
                 txtObs.Text = pedido[0].obs;
             }
 
+            if (pedido[0].opcionais != null)
+            {
+                decimal valorOpc = 0;
+                divOpcionais.Visible = true;
+                valorOpc = carregarOpcionais(pedido[0].opcionais);
+
+                if (valorOpc > 0)
+                {
+                    valorOpc = pedido[0].qtd * valorOpc;
+
+                    ViewState["OpcionaisValor"] = valorOpc;
+
+                }
+            }
+            else
+            {
+                divOpcionais.Visible = true;
+            }
 
             updPainel1.Update();
             //throw new NotImplementedException();
@@ -191,7 +239,7 @@ namespace Site.Pedidos
                     this.ddlBorda.Items.Add(new ListItem(tpBorda.borda.ToString(), tpBorda.idBordaProduto.ToString()));
 
                     //if (tpBorda.idBordaProduto == tipoID)
-                    //    ddlTipoProdutos.SelectedIndex = tipoID;
+                    //    ddlTipoProdutos.SelectedIndex = tipoID;   
                 }
             }
             //ddlQtd.SelectedIndex = 0;
@@ -274,6 +322,7 @@ namespace Site.Pedidos
 
             this.ddlTipoProdutos.Items.Clear();
             this.ddlTipoProdutos.Items.Add(new ListItem("Selecione o produto", ""));
+            int i = 1;
 
             if (produtos != null)
             {
@@ -282,7 +331,8 @@ namespace Site.Pedidos
                     this.ddlTipoProdutos.Items.Add(new ListItem(tpProd.tipo, tpProd.idTipoProduto.ToString()));
 
                     if (tpProd.idTipoProduto == tipoID)
-                        ddlTipoProdutos.SelectedIndex = tipoID;
+                        ddlTipoProdutos.SelectedIndex = i;
+                    i++;
                 }
             }
         }
@@ -369,6 +419,9 @@ namespace Site.Pedidos
             {
                 PedidoAtualizado.idOpcao = Convert.ToInt32(ddlOpcao.SelectedValue);
             }
+
+            if (Session["listaOpc"] != null)
+                PedidoAtualizado.opcionais = (List<Opcional_VO>)Session["listaOpc"];
 
             PedidoAtualizado.idDetPed = idDetPed;
             if (idDetPed != 0)
@@ -746,6 +799,8 @@ namespace Site.Pedidos
                 divBorda.Visible = true;
                 ddlBorda.SelectedIndex = 0;
                 divOpcionais.Visible = true;
+                carregarOpcionais();
+                
             }
 
             ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "waitingDialog.hide();", true);

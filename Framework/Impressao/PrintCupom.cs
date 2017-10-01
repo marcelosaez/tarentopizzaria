@@ -13,6 +13,7 @@ using MODEL.Empresa;
 using BLL.Empresa;
 using MODEL.Cliente;
 using System.Security.Principal;
+using MODEL.Produto;
 
 namespace Framework.Impressao
 {
@@ -128,6 +129,7 @@ namespace Framework.Impressao
             //itens de venda
             foreach (Pedido_VO pedido in pedidos)
             {
+                int i = 0;
                 string tipo = pedido.tipo;
                 string produto = pedido.sabor;
                 string obs = pedido.obs;
@@ -142,7 +144,7 @@ namespace Framework.Impressao
                 graphics.DrawString(produto.Length > 40 ? produto.Substring(0, 40) + "..." : produto, regular, Brushes.Black, 60, offset);
 
                 if (obs != "")
-                {
+                { 
                     offset += 15;
                     if (obs.Length > 40)
                     {
@@ -153,8 +155,14 @@ namespace Framework.Impressao
                     else
                         graphics.DrawString("*" + obs, regular, Brushes.Black, 60, offset);
 
-
                 }
+
+                foreach (Opcional_VO opc in pedidos[i].opcionais)
+                {
+                    offset += 15;
+                    graphics.DrawString(" + " +opc.nome , regular, Brushes.Black, 60, offset);
+                }
+
 
                 offset += 20;
             }

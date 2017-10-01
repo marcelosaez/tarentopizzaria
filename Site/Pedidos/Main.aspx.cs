@@ -7,11 +7,15 @@ using System.Web.UI.WebControls;
 
 namespace Site.Pedidos
 {
-    public partial class Main : System.Web.UI.Page
+    public partial class Main : BaseWebFormAutenticado
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected override void Page_Load(object sender, EventArgs e)
         {
-
+            base.Page_Load(sender, e);
+            if (!IsPostBack)
+            {
+                // TO DO
+            }
         }
     }
 }
