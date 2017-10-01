@@ -125,18 +125,22 @@ namespace Framework.Impressao
 
             //graphics.DrawLine(Pens.Black, 20, 95, 310, 155);
 
-            
+            int i = 0;
+
             //itens de venda
             foreach (Pedido_VO pedido in pedidos)
             {
-                int i = 0;
                 string tipo = pedido.tipo;
                 string produto = pedido.sabor;
                 string obs = pedido.obs;
+                string borda = "";
+
+                if (pedido.borda != null && pedido.borda.Trim() !="")
+                    borda = " - Borda: " + pedido.borda;
 
 
                 graphics.DrawString(Convert.ToString(pedido.qtd), regular, Brushes.Black, 0, offset);
-                graphics.DrawString(tipo, regular, Brushes.Black, 60, offset);
+                graphics.DrawString(tipo +  borda, regular, Brushes.Black, 60, offset);
                 graphics.DrawString("R$" + Convert.ToString(pedido.valor), regular, Brushes.Black, 200, offset);
 
 
@@ -156,14 +160,17 @@ namespace Framework.Impressao
                         graphics.DrawString("*" + obs, regular, Brushes.Black, 60, offset);
 
                 }
-
-                foreach (Opcional_VO opc in pedidos[i].opcionais)
+                if (pedidos[i].opcionais != null)
                 {
-                    offset += 15;
-                    graphics.DrawString(" + " +opc.nome , regular, Brushes.Black, 60, offset);
+                    foreach (Opcional_VO opc in pedidos[i].opcionais)
+                    {
+                        offset += 15;
+                        graphics.DrawString(" + " + opc.nome, regular, Brushes.Black, 60, offset);
+                    }
                 }
+                
 
-
+                i++;
                 offset += 20;
             }
             

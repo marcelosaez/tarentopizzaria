@@ -189,7 +189,8 @@ namespace Site.Pedidos
             }
             else
             {
-                divOpcionais.Visible = true;
+                if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO")))
+                    divOpcionais.Visible = true;
             }
 
             updPainel1.Update();
@@ -522,6 +523,7 @@ namespace Site.Pedidos
 
             Session["Pedido"] = NovoPedido.idPedido;
             Session["NovoPedido"] = lstPedido;
+            Session["listaOpc"] = null;
 
             cmdAtualizar.Visible = false;
             Response.Redirect("Pedidos2.aspx");

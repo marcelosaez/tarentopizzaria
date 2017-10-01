@@ -9,11 +9,13 @@ namespace MODEL.Pedido
 {
     public class Pedido_VO
     {
+
         public List<Opcional_VO> opcionais { get; set; }
 
         public int idCliente { get; set; }
         public int idTipo    { get; set; }
         public int idBorda   { get; set; }
+        public string borda { get; set; }
         public string obs    { get; set; }
 
         public int qtd { get; set; }

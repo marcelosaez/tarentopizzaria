@@ -223,7 +223,7 @@ namespace DAL.Pedidos
             query.Append("  WHEN op.idOpcao = 3 THEN pr.nome + ' | ' + pr2.nome + ' | ' + pr3.nome ");
             query.Append("  ELSE pr.nome ");
             query.Append("  END as sabor, ");
-            query.Append(" dt.quantidade, dt.valor, st.statusPedido, dt.obs ");
+            query.Append(" dt.quantidade, dt.valor, st.statusPedido, dt.obs, bp.borda ");
             query.Append(" FROM[dbo].[tb_cliente_tem_pedido] ctp ");
             query.Append(" INNER JOIN tb_detalhaPedido dt on dt.idPedido = ctp.idPedido ");
             query.Append(" LEFT JOIN tb_opcao op on dt.idOpcao = op.idOpcao ");
@@ -231,6 +231,7 @@ namespace DAL.Pedidos
             query.Append(" INNER JOIN tb_produtos pr on dt.idSabor1_idtb_produtos = pr.idtb_produtos ");
             query.Append(" LEFT JOIN tb_produtos pr2 on dt.idSabor2_idtb_produtos = pr2.idtb_produtos ");
             query.Append(" LEFT JOIN tb_produtos pr3 on dt.idSabor3_idtb_produtos = pr3.idtb_produtos ");
+            query.Append(" LEFT JOIN tb_BordaProduto bp on dt.idBorda = bp.idtb_borda ");
             query.Append(" INNER JOIN tb_tipoProduto tp on tp.idtb_tipo = pr.tb_tipo_idtb_tipo  ");
             query.Append(" WHERE dt.idPedido = " + idPedido);
 
@@ -247,6 +248,8 @@ namespace DAL.Pedidos
                 pedido.qtd = Convert.ToInt32(dr["quantidade"]);
                 pedido.valor = Convert.ToDecimal(dr["valor"]);
                 pedido.StatusPedido = Convert.ToString(dr["statusPedido"]);
+                pedido.borda = Convert.ToString(dr["borda"]);
+
                 //pedido.obs = Convert.ToString(dr["obs"]);
 
                 if (dr["obs"] == DBNull.Value)
@@ -269,7 +272,7 @@ namespace DAL.Pedidos
                 {
                     temOpc = true;
                     Opcional_VO opc = new Opcional_VO();
-                    opc.idOpcional = Convert.ToInt32(drOpc["idOpcional"]);
+                    opc.nome = Convert.ToString(drOpc["nome"]);
                     listaOpc.Add(opc);
                 }
                 if (temOpc)
