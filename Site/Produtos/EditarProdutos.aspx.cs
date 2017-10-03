@@ -50,12 +50,14 @@ namespace Site.Produtos
 
             if (produtos != null)
             {
+                int i = 1;
                 foreach (TipoProduto_VO tpProd in produtos)
                 {
                     this.ddlTipoProdutos.Items.Add(new ListItem(tpProd.tipo, tpProd.idTipoProduto.ToString()));
 
                     if (tpProd.idTipoProduto == tipoID)
-                        ddlTipoProdutos.SelectedIndex = tipoID;
+                        ddlTipoProdutos.SelectedIndex = i;
+                    i++;
                 }
             }
         }

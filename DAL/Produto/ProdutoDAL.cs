@@ -215,7 +215,7 @@ namespace DAL.Produto
             StringBuilder query = new StringBuilder();
             query.Append(" select [idtb_produtos] ,[tb_tipo_idtb_tipo], [nome] ");
             query.Append(" ,[ingredientes],[valor], p.[ativo], tp.tipo FROM[dbo].[tb_produtos] p ");
-            query.Append(" inner join tb_tipoProduto tp on p.idtb_produtos = tp.idtb_tipo ");
+            query.Append(" inner join tb_tipoProduto tp on p.tb_tipo_idtb_tipo = tp.idtb_tipo ");
             query.Append(" WHERE p.idtb_produtos = " + codigo);
 
             Produto_VO registro = null;

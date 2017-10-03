@@ -21,7 +21,7 @@ namespace Site.Clientes
             {
                 
                 //Verifico a permissao
-                AutenticacaoBLL.checaPermissao();
+                //AutenticacaoBLL.checaPermissao();
 
                 // edicao de dados?
                 if (Request["idCliente"] != null)
