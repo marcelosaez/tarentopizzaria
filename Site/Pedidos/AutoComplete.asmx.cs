@@ -33,7 +33,7 @@ namespace Site.Pedidos
 
             foreach (var cliente in clientes)
             {
-                tel = (!string.IsNullOrEmpty(cliente.dddcel.ToString())) ? cliente.dddcel.ToString() + ' ' + cliente.cel.ToString() : cliente.dddres.ToString() + ' ' + cliente.telres.ToString();
+                tel = (!string.IsNullOrEmpty(cliente.dddcel.ToString()) && cliente.dddcel.ToString() != "0") ? cliente.dddcel.ToString() + ' ' + cliente.cel.ToString() : cliente.dddres.ToString() + ' ' + cliente.telres.ToString();
 
                 //if((!string.IsNullOrEmpty(cliente.dddcel.ToString())) 
                 //    &&((!string.IsNullOrEmpty(cliente.dddres.ToString()) 

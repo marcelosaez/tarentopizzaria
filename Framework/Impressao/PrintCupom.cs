@@ -119,7 +119,7 @@ namespace Framework.Impressao
 
             //itens header
             graphics.DrawString("QTD", regular, Brushes.Black, 0, 110);
-            graphics.DrawString("PRODUTO", regular, Brushes.Black, 60, 110);
+            graphics.DrawString("PRODUTO", regular, Brushes.Black, 40, 110);
             //graphics.DrawString("OBS.", regular, Brushes.Black, 240, 130);
             graphics.DrawString("TOTAL", regular, Brushes.Black, 200, 110);
 
@@ -140,24 +140,25 @@ namespace Framework.Impressao
 
 
                 graphics.DrawString(Convert.ToString(pedido.qtd), regular, Brushes.Black, 0, offset);
-                graphics.DrawString(tipo +  borda, regular, Brushes.Black, 60, offset);
+                //graphics.DrawString(tipo +  borda, regular, Brushes.Black, 60, offset);
+                graphics.DrawString(tipo.ToUpper() + borda.ToUpper() + "", bold, Brushes.Black, 40, offset);
                 graphics.DrawString("R$" + Convert.ToString(pedido.valor), regular, Brushes.Black, 200, offset);
 
 
                 offset += 20;
-                graphics.DrawString(produto.Length > 40 ? produto.Substring(0, 40) + "..." : produto, regular, Brushes.Black, 60, offset);
+                graphics.DrawString(produto.Length > 40 ? produto.Substring(0, 40).ToUpper() + "..." : produto.ToUpper(), regular, Brushes.Black, 40, offset);
 
                 if (obs != "")
                 { 
                     offset += 15;
                     if (obs.Length > 40)
                     {
-                        graphics.DrawString("*" + obs.Substring(0, 40), regular, Brushes.Black, 60, offset);
+                        graphics.DrawString("*" + obs.Substring(0, 40).ToUpper(), regular, Brushes.Black, 40, offset);
                         offset += 15;
-                        graphics.DrawString(" " + obs.Substring(40, obs.Length-40), regular, Brushes.Black, 60, offset);
+                        graphics.DrawString(" " + obs.Substring(40, obs.Length-40).ToUpper(), regular, Brushes.Black, 40, offset);
                     }
                     else
-                        graphics.DrawString("*" + obs, regular, Brushes.Black, 60, offset);
+                        graphics.DrawString("*" + obs.ToUpper(), regular, Brushes.Black, 40, offset);
 
                 }
                 if (pedidos[i].opcionais != null)
@@ -165,7 +166,7 @@ namespace Framework.Impressao
                     foreach (Opcional_VO opc in pedidos[i].opcionais)
                     {
                         offset += 15;
-                        graphics.DrawString(" + " + opc.nome, regular, Brushes.Black, 60, offset);
+                        graphics.DrawString(" + " + opc.nome.ToUpper(), regular, Brushes.Black, 40, offset);
                     }
                 }
                 
