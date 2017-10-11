@@ -189,7 +189,7 @@ namespace Site.Pedidos
             }
             else
             {
-                if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO")))
+                if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
                     divOpcionais.Visible = true;
             }
 
@@ -581,7 +581,8 @@ namespace Site.Pedidos
             limpaTudo();
             carregarQuantidade();
 
-            if (ddlTipoProdutos.SelectedValue == "1")
+            //if (ddlTipoProdutos.SelectedValue == "1")
+            if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
             {
 
                 carregaOpcao();
@@ -793,7 +794,7 @@ namespace Site.Pedidos
 
             ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "closeQtd", "newSucess('R$ " + total + "');", true);
 
-            if ((ddlQtd.SelectedValue != "0") && ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO"))))
+            if ((ddlQtd.SelectedValue != "0") && ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE"))))
             {
                 carregarBorda();
 
