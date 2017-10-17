@@ -379,7 +379,8 @@ namespace Site.Pedidos
 
             PedidoAtualizado.idTipoProdutos = Convert.ToInt32(ddlTipoProdutos.SelectedValue);
 
-            if (ddlTipoProdutos.SelectedValue == "1")
+            //if (ddlTipoProdutos.SelectedValue == "1")
+            if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
             {
                 PedidoAtualizado.idOpcao = Convert.ToInt32(ddlOpcao.SelectedValue);
             }
@@ -416,7 +417,8 @@ namespace Site.Pedidos
 
             PedidoAtualizado.idTipoProdutos = Convert.ToInt32(ddlTipoProdutos.SelectedValue);
 
-            if (ddlTipoProdutos.SelectedValue == "1")
+            //if (ddlTipoProdutos.SelectedValue == "1")
+            if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
             {
                 PedidoAtualizado.idOpcao = Convert.ToInt32(ddlOpcao.SelectedValue);
             }
@@ -480,7 +482,8 @@ namespace Site.Pedidos
 
             NovoPedido.idTipoProdutos = Convert.ToInt32(ddlTipoProdutos.SelectedValue);
 
-            if (ddlTipoProdutos.SelectedValue == "1")
+            //if (ddlTipoProdutos.SelectedValue == "1")
+            if ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
             {
                 NovoPedido.idOpcao = Convert.ToInt32(ddlOpcao.SelectedValue);
             }
@@ -703,7 +706,8 @@ namespace Site.Pedidos
 
             }
             fancyCheckBox.Checked = false;
-            if (ddlTipoProdutos.SelectedValue == "1")
+            //if (ddlTipoProdutos.SelectedValue == "1")
+            if ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
             {
                 //carregarBorda();
                 //ddlBorda.Visible = true;
@@ -770,8 +774,9 @@ namespace Site.Pedidos
             int qtdSabores = 0;
             int qtd = 0;
 
-            if ((ddlSabor1.SelectedValue != "") && (ddlTipoProdutos.SelectedValue != "1"))
-                ViewState["Sabores"] = 1;
+            //if ((ddlSabor1.SelectedValue != "") && (ddlTipoProdutos.SelectedValue != "1"))
+            if (!(ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
+                    ViewState["Sabores"] = 1;
 
             if (ViewState["Sabores"] != null)
                 qtdSabores = (int)ViewState["Sabores"];
@@ -813,7 +818,8 @@ namespace Site.Pedidos
         protected void ddlSabor_SelectedIndexChanged(object sender, EventArgs e)
         {
             carregarQuantidade();
-            if ((ddlSabor1.SelectedValue != "") && (ddlTipoProdutos.SelectedValue != "1"))
+            //if ((ddlSabor1.SelectedValue != "") && (ddlTipoProdutos.SelectedValue != "1"))
+            if ((ddlSabor1.SelectedValue != "") && (!(ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE"))))
                 ViewState["Sabores"] = 1;
 
         }
@@ -1034,6 +1040,10 @@ namespace Site.Pedidos
             if (ViewState["OpcionaisValor"] != null)
                 ViewState["Preco"] = (decimal)ViewState["Preco"] - (decimal)ViewState["OpcionaisValor"];
 
+
+            //if (ViewState["BordaValor"] != null)
+                //ViewState["Preco"] = (decimal)ViewState["Preco"] - (decimal)ViewState["BordaValor"];
+
             foreach (ListItem Item in cblOpcionais.Items)
             {
                 if (Item.Selected)
@@ -1067,9 +1077,20 @@ namespace Site.Pedidos
 
             ViewState["OpcionaisValor"] = valor;
 
-
             decimal pedido = (decimal)ViewState["Preco"];
-            decimal pedidoTotal = pedido + valor;
+            decimal bordaValor = 0;
+
+            if (ViewState["BordaValor"] != null)
+            {
+                //bordaValor = (decimal)ViewState["BordaValor"];
+
+                //pedidoTotal += bordaValor;
+                //ViewState["Preco"] = (decimal)ViewState["Preco"] + (bordaValor * Convert.ToInt32(ddlQtd.SelectedValue));
+                //PedidoAtualizado.idBorda = Convert.ToInt32(ddlBorda.SelectedValue);
+
+            }
+
+            decimal pedidoTotal = pedido + valor + bordaValor;
 
             ViewState["Preco"] = pedidoTotal;
 
