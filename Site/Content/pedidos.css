@@ -160,13 +160,13 @@ form[role=login] {
 }
 
 .cblEspaco input[type="checkbox"] {
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 
 .cbxCliente > input {
-    padding:8px;
-    margin-right:10px;
+    padding:4px;
+    margin-right:7px;
 }
 
 .voffset  { margin-top: 2px; }
@@ -276,8 +276,9 @@ tfoot tr:hover {
 table th, table td {
     color: #000;
     border: 0px solid #eee;
-    padding: 12px 35px;
+    padding: 12px 25px;
     border-collapse: collapse;
+    text-align:left;
 
 }
 

@@ -128,6 +128,7 @@ namespace Site.Pedidos
                 pagamento.idStatusPedido = (int)StatusPagamento.Finalizado;
                 pagamento.idPedido = idPedido;
                 pagamento.idEntrega = Convert.ToInt32(ddlEntrega.SelectedValue);
+                pagamento.obs = txtObs.Text;
                 pedido.atualizaPagamento(pagamento);
                 imprimirCupom(idPedido);
                 //imprime 2 via

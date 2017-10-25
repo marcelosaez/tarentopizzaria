@@ -22,12 +22,12 @@ namespace Framework.Impressao
         private int idPedido;
         private Empresa_VO empresa;
         private Cupom_VO cupom;
-        private List<Pedido_VO> venda;
+        //private List<Pedido_VO> venda;
         private Font bold = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold);
-        private Font regular = new Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular);
+        private Font regular = new Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular); 
         private Font regularItens = new Font(FontFamily.GenericSansSerif, 6, FontStyle.Regular);
         Pedido_VO Pedido = new Pedido_VO();
-        List<Pedido_VO> pedidos = new List<Pedido_VO>();
+        List<Pedido_VO> pedidos = new List<Pedido_VO>(); 
         
 
         public void ImprimeVendaVista(List<Pedido_VO> venda, int idEmp, int idPedido, decimal valorEntrega)
@@ -121,7 +121,7 @@ namespace Framework.Impressao
             graphics.DrawString("QTD", regular, Brushes.Black, 0, 110);
             graphics.DrawString("PRODUTO", regular, Brushes.Black, 40, 110);
             //graphics.DrawString("OBS.", regular, Brushes.Black, 240, 130);
-            graphics.DrawString("TOTAL", regular, Brushes.Black, 200, 110);
+            graphics.DrawString("TOTAL", regular, Brushes.Black, 210, 110);
 
             //graphics.DrawLine(Pens.Black, 20, 95, 310, 155);
 
@@ -134,31 +134,81 @@ namespace Framework.Impressao
                 string produto = pedido.sabor;
                 string obs = pedido.obs;
                 string borda = "";
+                string opcao = pedido.opcao;
 
                 if (pedido.borda != null && pedido.borda.Trim() !="")
-                    borda = " - Borda: " + pedido.borda;
+                    borda = " Borda: " + pedido.borda;
 
 
                 graphics.DrawString(Convert.ToString(pedido.qtd), regular, Brushes.Black, 0, offset);
                 //graphics.DrawString(tipo +  borda, regular, Brushes.Black, 60, offset);
-                graphics.DrawString(tipo.ToUpper() + borda.ToUpper() + "", bold, Brushes.Black, 40, offset);
-                graphics.DrawString("R$" + Convert.ToString(pedido.valor), regular, Brushes.Black, 200, offset);
+
+                if (opcao.Trim() != "")
+                    opcao = " - " + opcao.ToUpper();
+
+                    /*if(opcao.Trim() != "")
+                    {
+                        if (pedido.opcao.ToUpper() == "INTEIRA")
+                            opcao = "";
+                        if (pedido.opcao.ToUpper() == "MEIO A MEIO")
+                            opcao = " - 1/2 - ";
+                        if (pedido.opcao.ToUpper() == "TRÊS PEDAÇOS")
+                            opcao = " - 1/3 - ";
+                    }*/
+
+
+                graphics.DrawString(tipo.ToUpper() +  opcao + "", regular, Brushes.Black, 40, offset);
+
+
+                graphics.DrawString("R$ " + Convert.ToString(pedido.valor), regular, Brushes.Black, 210, offset);
 
 
                 offset += 20;
-                graphics.DrawString(produto.Length > 40 ? produto.Substring(0, 40).ToUpper() + "..." : produto.ToUpper(), regular, Brushes.Black, 40, offset);
+                //graphics.DrawString(produto.Length > 40 ? produto.Substring(0, 40).ToUpper() + "..." : produto.ToUpper(), regular, Brushes.Black, 40, offset);
+
+
+                if (produto.Length > 40)
+                {
+                    graphics.DrawString( produto.Substring(0, 40).ToUpper(), regular, Brushes.Black, 40, offset);
+                    offset += 15;
+                    graphics.DrawString( produto.Substring(40,  produto.Length-40).ToUpper(), regular, Brushes.Black, 40, offset);
+
+                    //produto.Length > 40 ? produto.Substring(0, 40).ToUpper() + "..."
+
+                } else
+                    graphics.DrawString(produto.ToUpper(), regular, Brushes.Black, 40, offset);
+
+
 
                 if (obs != "")
-                { 
+                {
+                    obs = obs.Replace('\n', ' ');
                     offset += 15;
-                    if (obs.Length > 40)
+                    if (obs.Length > 30)
                     {
-                        graphics.DrawString("*" + obs.Substring(0, 40).ToUpper(), regular, Brushes.Black, 40, offset);
-                        offset += 15;
-                        graphics.DrawString(" " + obs.Substring(40, obs.Length-40).ToUpper(), regular, Brushes.Black, 40, offset);
+
+                        int div = obs.Length / 30;
+
+                        int pos = 0;
+
+                        for (int j = 0; j < div;)
+                        {
+                            graphics.DrawString("*" + obs.Substring(j, 30).ToUpper(), regular, Brushes.Black, 40, offset);
+                            offset += 15;
+                            j += 30;
+                            pos = j;
+                        }
+
+                        int resto = obs.Length % 30;
+
+                        if (resto > 0)
+                        {
+                            graphics.DrawString(" " + obs.Substring(pos, resto).ToUpper(), regular, Brushes.Black, 40, offset);
+                            //offset += 15;
+                        }
                     }
                     else
-                        graphics.DrawString("*" + obs.ToUpper(), regular, Brushes.Black, 40, offset);
+                        graphics.DrawString("*" + obs.ToUpper(), regular, Brushes.Black, 50, offset);
 
                 }
                 if (pedidos[i].opcionais != null)
@@ -169,10 +219,17 @@ namespace Framework.Impressao
                         graphics.DrawString(" + " + opc.nome.ToUpper(), regular, Brushes.Black, 40, offset);
                     }
                 }
+
+                if (borda != null)
+                {
+                    offset += 15;
+                    graphics.DrawString(" * " + borda.ToUpper(), bold, Brushes.Black, 40, offset);
+                }
                 
 
-                i++;
-                offset += 20;
+
+               i++;
+                offset += 25;
             }
             
             //total
@@ -200,6 +257,12 @@ namespace Framework.Impressao
 
             offset += 15;
             graphics.DrawString("" + cupom.pagamento.TipoPagamento.ToUpper() + "", bold, Brushes.Black, 0, offset);
+
+            if (cupom.pagamento.obs.Trim() != "")
+            {
+                offset += 15;
+                graphics.DrawString("OBS: " + cupom.pagamento.obs.ToUpper() + "", bold, Brushes.Black, 0, offset);
+            }
 
 
             offset += 25;

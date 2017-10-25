@@ -356,6 +356,7 @@
                                                     <asp:CheckBoxList ID="cblOpcionais" runat="server" RepeatDirection="Horizontal" RepeatColumns="4" CssClass="cblEspaco" ></asp:CheckBoxList>
                                                 <%--OnSelectedIndexChanged="cblOpcionais_SelectedIndexChanged" AutoPostBack="true"--%>
                                                 <div class="modal-footer">
+                                                    <p class="text-left"><strong>* Não será tarifado valores para pastel montado</strong></p>
                                                     <%--<button type="button" class="btn btn-default" data-dismiss="modal" runat="server">Fechar</button>--%>
                                                     <%--<button type="submit" class="btn btn-primary">Save changes</button>--%>
                                                     <asp:Button ID="btnFechar" runat="server" OnClick="btnFechar_Click"  UseSubmitBehavior="false"  class="btn btn-default" data-dismiss="modal" Text="Fechar" />

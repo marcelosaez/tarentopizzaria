@@ -25,8 +25,8 @@ namespace DAL.Pedidos
             query.Append(" SELECT idDetalhaPedido as idDet, ctp.idPedido, tp.tipo, ");
             query.Append(" ISNULL(op.Opcao, '') as Opcao, ");
             query.Append(" CASE ");
-            query.Append("  WHEN op.idOpcao = 2 THEN pr.nome + ' | ' + pr2.nome ");
-            query.Append("  WHEN op.idOpcao = 3 THEN pr.nome + ' | ' + pr2.nome + ' | ' + pr3.nome ");
+            query.Append("  WHEN op.idOpcao = 2 THEN '1/2 ' + pr.nome + '   |   ' + pr2.nome ");
+            query.Append("  WHEN op.idOpcao = 3 THEN '1/3 ' + pr.nome + '   |   ' + pr2.nome + '   |   ' + pr3.nome ");
             query.Append("  ELSE pr.nome ");
             query.Append("  END as sabor, ");
             query.Append(" dt.quantidade, dt.valor, st.statusPedido, dt.obs ");
@@ -87,7 +87,8 @@ namespace DAL.Pedidos
             query.Append(" ISNULL(c.dddcel, 0) as dddcel, ISNULL(c.cel, 0) as cel, ");
             query.Append(" f.nome as funcionario, ");
             query.Append(" tp.TipoPagamento, ");
-            query.Append(" te.TipoEntrega ");
+            query.Append(" te.TipoEntrega, ");
+            query.Append(" ctp.obsPagto ");
             query.Append(" from tb_cliente c  ");
             query.Append(" inner join tb_cliente_tem_pedido ctp on c.idtb_cliente = ctp.tb_cliente_idtb_cliente  ");
             query.Append(" inner join tb_funcionarios f on f.idtb_funcionario = ctp.tb_funcionario_idtb_funcionario  ");
@@ -108,6 +109,7 @@ namespace DAL.Pedidos
                 cupom.cliente.cel = Convert.ToInt32(dr["cel"]);
                 cupom.funcionario.nome = Convert.ToString(dr["funcionario"]);
                 cupom.pagamento.TipoPagamento = Convert.ToString(dr["TipoPagamento"]);
+                cupom.pagamento.obs = Convert.ToString(dr["obsPagto"]);
                 cupom.entrega = Convert.ToString(dr["TipoEntrega"]);
             }
 
@@ -118,7 +120,7 @@ namespace DAL.Pedidos
         public void atualizaPagamento(Pagamento_VO pagamento)
         {
             StringBuilder query = new StringBuilder();
-            query.Append(" UPDATE [tb_cliente_tem_pedido] SET [tb_TipoPagamento]=@idPagamento, tb_status_idtb_statusPedido=@statusPedido, idtb_entrega=@idEntrega");
+            query.Append(" UPDATE [tb_cliente_tem_pedido] SET [tb_TipoPagamento]=@idPagamento, tb_status_idtb_statusPedido=@statusPedido, idtb_entrega=@idEntrega, obsPagto=@obsPagto ");
             query.Append(" WHERE idPedido = @idPedido ");
 
             //parametros
@@ -126,7 +128,8 @@ namespace DAL.Pedidos
                 createParametro("@idPagamento", SqlDbType.Int, pagamento.idTipoPagamento),
                 createParametro("@idPedido", SqlDbType.Int, pagamento.idPedido),
                 createParametro("@statusPedido", SqlDbType.Int, pagamento.idStatusPedido),
-                createParametro("@idEntrega", SqlDbType.Int, pagamento.idEntrega)
+                createParametro("@idEntrega", SqlDbType.Int, pagamento.idEntrega),
+                createParametro("@obsPagto", SqlDbType.VarChar, pagamento.obs )
             };
 
             //executa
@@ -136,7 +139,7 @@ namespace DAL.Pedidos
             }
             catch (Exception e)
             {
-
+                throw e;
             }
         }
 
@@ -183,7 +186,7 @@ namespace DAL.Pedidos
             }
             catch (Exception e)
             {
-
+               throw e;
             }
             return retorno;
         }
@@ -205,6 +208,7 @@ namespace DAL.Pedidos
             }
             catch (Exception e)
             {
+                throw e;
 
             }
             return valor;
@@ -217,10 +221,10 @@ namespace DAL.Pedidos
             // query
             StringBuilder query = new StringBuilder();
             query.Append(" SELECT idDetalhaPedido as idDet, ctp.idPedido, tp.tipo, ");
-            query.Append(" ISNULL(op.Opcao, '') as Opcao, ");
+            query.Append(" ISNULL(op.Opcao, '') as Opcao,  op.idOpcao,  ");
             query.Append(" CASE ");
-            query.Append("  WHEN op.idOpcao = 2 THEN pr.nome + ' | ' + pr2.nome ");
-            query.Append("  WHEN op.idOpcao = 3 THEN pr.nome + ' | ' + pr2.nome + ' | ' + pr3.nome ");
+            query.Append("  WHEN op.idOpcao = 2 THEN '1/2 ' + pr.nome + '   |  ' + pr2.nome ");
+            query.Append("  WHEN op.idOpcao = 3 THEN '1/3 ' + pr.nome + '   |  ' + pr2.nome + '  |  ' + pr3.nome ");
             query.Append("  ELSE pr.nome ");
             query.Append("  END as sabor, ");
             query.Append(" dt.quantidade, dt.valor, st.statusPedido, dt.obs, bp.borda ");
@@ -242,6 +246,7 @@ namespace DAL.Pedidos
                 Pedido_VO pedido = new Pedido_VO();
                 pedido.idDetPed = Convert.ToInt32(dr["idDet"]);
                 pedido.idPedido = Convert.ToInt32(dr["idPedido"]);
+                //pedido.idOpcao = Convert.ToInt32(dr["idOpcao"]);
                 pedido.tipo = Convert.ToString(dr["tipo"]);
                 pedido.opcao = Convert.ToString(dr["opcao"]);
                 pedido.sabor = Convert.ToString(dr["sabor"]);
@@ -490,6 +495,7 @@ namespace DAL.Pedidos
             }
             catch (Exception e)
             {
+                throw e;
 
             }
             return Pedido;
@@ -507,8 +513,8 @@ namespace DAL.Pedidos
             query.Append(" ISNULL(op.Opcao, '') as Opcao, tp.idtb_tipo, ");
             query.Append(" pr.idtb_produtos as idSabor1, pr2.idtb_produtos as idSabor2, pr3.idtb_produtos as idSabor3, ");
             query.Append(" CASE ");
-            query.Append("  WHEN op.idOpcao = 2 THEN pr.nome + ' | ' + pr2.nome ");
-            query.Append("  WHEN op.idOpcao = 3 THEN pr.nome + ' | ' + pr2.nome + ' | ' + pr3.nome ");
+            query.Append("  WHEN op.idOpcao = 2 THEN '1/2 ' + pr.nome + ' | ' + pr2.nome ");
+            query.Append("  WHEN op.idOpcao = 3 THEN '1/3 ' + pr.nome + ' | ' + pr2.nome + ' | ' + pr3.nome ");
             query.Append("  ELSE pr.nome ");
             query.Append("  END as sabor, ");
             query.Append(" dt.quantidade, dt.valor, st.statusPedido, dt.idOpcao, dt.idBorda, dt.Obs ");

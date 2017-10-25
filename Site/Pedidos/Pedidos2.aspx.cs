@@ -189,7 +189,7 @@ namespace Site.Pedidos
             }
             else
             {
-                if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
+                if ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
                     divOpcionais.Visible = true;
             }
 
@@ -366,12 +366,34 @@ namespace Site.Pedidos
 
             if (!validaForm())
             {
-                if(txtObs.Text.Length > 80)
+                if (txtObs.Text.Length > 80)
                     ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Campo obs deve ser menor que 80 caracteres');", true);
                 else
                     ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Preencha todos os campos!');", true);
                 return;
             }
+
+            if (ddlSabor1.SelectedItem.Value == "1272")
+            {
+                int selCount = 0;
+                for (int i = 0; i < cblOpcionais.Items.Count; i++)
+                    if (cblOpcionais.Items[i].Selected)
+                        selCount++;
+
+                if (selCount == 0)
+                {
+                    ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Escolha ao menos um opcional!');", true);
+                    return;
+                }
+
+
+                if (selCount > 4)
+                {
+                    ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Escolha somente até 4 opcionais!');", true);
+                    return;
+                }
+            }
+
 
 
             PedidosBLL pedido = new PedidosBLL();
@@ -380,7 +402,7 @@ namespace Site.Pedidos
             PedidoAtualizado.idTipoProdutos = Convert.ToInt32(ddlTipoProdutos.SelectedValue);
 
             //if (ddlTipoProdutos.SelectedValue == "1")
-            if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
+            if ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
             {
                 PedidoAtualizado.idOpcao = Convert.ToInt32(ddlOpcao.SelectedValue);
             }
@@ -418,7 +440,7 @@ namespace Site.Pedidos
             PedidoAtualizado.idTipoProdutos = Convert.ToInt32(ddlTipoProdutos.SelectedValue);
 
             //if (ddlTipoProdutos.SelectedValue == "1")
-            if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
+            if ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
             {
                 PedidoAtualizado.idOpcao = Convert.ToInt32(ddlOpcao.SelectedValue);
             }
@@ -465,11 +487,35 @@ namespace Site.Pedidos
 
             if (!validaForm())
             {
-                ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Preencha todos os campos!');", true);
+                if (txtObs.Text.Length > 80)
+                    ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Campo obs deve ser menor que 80 caracteres');", true);
+                else
+                    ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Preencha todos os campos!');", true);
                 return;
             }
 
-            if (Session["NovoPedido"] != null)
+            if (ddlSabor1.SelectedItem.Value == "1272")
+            {
+                int selCount = 0;
+                for (int i = 0; i < cblOpcionais.Items.Count; i++)
+                    if (cblOpcionais.Items[i].Selected)
+                        selCount++;
+
+                if (selCount == 0)
+                {
+                    ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Escolha ao menos um opcional!');", true);
+                    return;
+                }
+                
+
+                if(selCount > 4)
+                {
+                    ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Escolha somente até 4 opcionais!');", true);
+                    return;
+                }
+            }
+
+                if (Session["NovoPedido"] != null)
             {
 
                 lstPedido = (List<Pedido_VO>)Session["NovoPedido"];
@@ -516,8 +562,8 @@ namespace Site.Pedidos
 
             NovoPedido.valor = (decimal)ViewState["Preco"];
 
-            if(Session["listaOpc"] != null)
-                NovoPedido.opcionais = (List<Opcional_VO>)Session["listaOpc"]; 
+            if (Session["listaOpc"] != null)
+                NovoPedido.opcionais = (List<Opcional_VO>)Session["listaOpc"];
 
             PedidosBLL pedido = new PedidosBLL();
             NovoPedido = pedido.adicionaPedido(NovoPedido);
@@ -547,7 +593,10 @@ namespace Site.Pedidos
                 if (ddlBorda.SelectedValue == "")
                     retorno = false;
             if (txtObs.Text.Length > 80)
+            {
+
                 retorno = false;
+            }
 
             return retorno;
         }
@@ -585,7 +634,7 @@ namespace Site.Pedidos
             carregarQuantidade();
 
             //if (ddlTipoProdutos.SelectedValue == "1")
-            if((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
+            if ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
             {
 
                 carregaOpcao();
@@ -723,7 +772,7 @@ namespace Site.Pedidos
 
         private void carregaSabor(DropDownList ddl, int idSabor)
         {
-           
+
 
             ddl.Visible = true;
             List<Produto_VO> lstSabores = new ProdutoBLL().obterSabores(Convert.ToInt32(ddlTipoProdutos.SelectedValue));
@@ -776,7 +825,7 @@ namespace Site.Pedidos
 
             //if ((ddlSabor1.SelectedValue != "") && (ddlTipoProdutos.SelectedValue != "1"))
             if (!(ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE")))
-                    ViewState["Sabores"] = 1;
+                ViewState["Sabores"] = 1;
 
             if (ViewState["Sabores"] != null)
                 qtdSabores = (int)ViewState["Sabores"];
@@ -799,6 +848,8 @@ namespace Site.Pedidos
 
             ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "closeQtd", "newSucess('R$ " + total + "');", true);
 
+
+
             if ((ddlQtd.SelectedValue != "0") && ((ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA BROTO") || ddlTipoProdutos.SelectedItem.ToString().ToUpper().Equals("PIZZA DOCE"))))
             {
                 carregarBorda();
@@ -808,7 +859,13 @@ namespace Site.Pedidos
                 ddlBorda.SelectedIndex = 0;
                 divOpcionais.Visible = true;
                 carregarOpcionais();
-                
+
+            }
+            else
+                if (ddlSabor1.SelectedItem.Value == "1272")
+            {
+                divOpcionais.Visible = true;
+                carregarOpcionais();
             }
 
             ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "waitingDialog.hide();", true);
@@ -884,7 +941,7 @@ namespace Site.Pedidos
                 lst = new PedidosBLL().obterDadosPedidos(lst[0].idPedido);
                 gvListaPedidos.DataSource = lst;
 
-                if(lst.Count > 0)
+                if (lst.Count > 0)
                     cmdFinalizar.Visible = true;
                 else
                     cmdFinalizar.Visible = false;
@@ -900,7 +957,7 @@ namespace Site.Pedidos
                 ddlBorda.Visible = true;
             else
             {
-                decimal valorBorda = 0;
+                //decimal valorBorda = 0;
 
                 //if (ViewState["BordaValor"] != null)
                 //valorBorda = (decimal)ViewState["BordaValor"] * Convert.ToInt32(ddlQtd.SelectedValue);
@@ -947,7 +1004,7 @@ namespace Site.Pedidos
                 decimal pedido = (decimal)ViewState["Preco"];
                 decimal pedidoTotal = pedido + total;
 
-           
+
                 ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newSucess('R$ " + pedidoTotal + "');", true);
 
 
@@ -1034,15 +1091,19 @@ namespace Site.Pedidos
 
             List<Opcional_VO> listaOpc = new List<Opcional_VO>();
 
-           // Session["pedido"]
+            // Session["pedido"]
             Session["listaOpc"] = null;
 
+            
+                
+
             if (ViewState["OpcionaisValor"] != null)
-                ViewState["Preco"] = (decimal)ViewState["Preco"] - (decimal)ViewState["OpcionaisValor"];
+                if (ddlSabor1.SelectedItem.Value != "1272")
+                    ViewState["Preco"] = (decimal)ViewState["Preco"] - (decimal)ViewState["OpcionaisValor"];
 
 
             //if (ViewState["BordaValor"] != null)
-                //ViewState["Preco"] = (decimal)ViewState["Preco"] - (decimal)ViewState["BordaValor"];
+            //ViewState["Preco"] = (decimal)ViewState["Preco"] - (decimal)ViewState["BordaValor"];
 
             foreach (ListItem Item in cblOpcionais.Items)
             {
@@ -1053,6 +1114,9 @@ namespace Site.Pedidos
                     valorEscolhido = Item.Text.Split('-');
 
                     valor += decimal.Parse(valorEscolhido[1], CultureInfo.InvariantCulture); //decimal.Parse(valorEscolhido[1]);
+
+                    if (ddlSabor1.SelectedItem.Value == "1272")
+                        valor = 0;
 
                     opc.idOpcional = Convert.ToInt32(Item.Value);
 

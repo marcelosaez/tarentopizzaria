@@ -50,6 +50,8 @@ namespace Site.Pedidos
                 clientePedido.idCliente = Convert.ToInt32(idCliente);
                 Session["pedido"] = clientePedido;
                 Session["NovoPedido"] = null;
+                Session["listaOpc"] = null;
+                Session["DetPedido"] = null;
                 Response.Redirect("Pedidos2.aspx");
             }
             
