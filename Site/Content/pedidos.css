@@ -4,26 +4,25 @@ over-ride "Weak" message, show font in dark grey
 
 .progress-bar {
     color: #333;
-} 
+}
 
 
 * {
     -webkit-box-sizing: border-box;
-	   -moz-box-sizing: border-box;
-	        box-sizing: border-box;
-	outline: none;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
 }
 
-    .form-control {
-	  position: relative;
-	  font-size: 16px;
-	  height: auto;
-	  padding: 10px;
-		
-	}
+.form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+}
 
 body {
-	background: #fff no-repeat center center fixed;
+    background: #fff no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -31,75 +30,75 @@ body {
 }
 
 .login-form {
-	margin-top: 60px;
+    margin-top: 60px;
 }
 
 form[role=login] {
-	color: #5d5d5d;
-	background: #f2f2f2;
-	padding: 26px;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
+    color: #5d5d5d;
+    background: #f2f2f2;
+    padding: 26px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
-	form[role=login] img {
-		display: block;
-		margin: 0 auto;
-		margin-bottom: 35px;
-	}
-	form[role=login] input,
-	form[role=login] button {
-		font-size: 18px;
-		margin: 16px 0;
-	}
-	form[role=login] > div {
-		text-align: center;
-	}
-	
+
+    form[role=login] img {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 35px;
+    }
+
+    form[role=login] input,
+    form[role=login] button {
+        font-size: 18px;
+        margin: 16px 0;
+    }
+
+    form[role=login] > div {
+        text-align: center;
+    }
+
 .form-links {
-	text-align: center;
-	margin-top: 1em;
-	margin-bottom: 50px;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 50px;
 }
-	.form-links a {
-		color: #fff;
-	}
+
+    .form-links a {
+        color: #fff;
+    }
 
 .borda {
-    padding:3px;
+    padding: 3px;
 }
 
-.espaco
-{
-    margin-bottom:15px;
-
+.espaco {
+    margin-bottom: 15px;
 }
 
 .formulario {
-	color: #5d5d5d;
-	background: #f2f2f2;
-    width:420px;
-	padding: 26px;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;    
+    color: #5d5d5d;
+    background: #f2f2f2;
+    width: 420px;
+    padding: 26px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 
-.botaoVoltar
-{
-    display:block; 
-    margin-left:-16px;
+.botaoVoltar {
+    display: block;
+    margin-left: -16px;
     padding: 5px 10px;
-    text-decoration:none;
+    text-decoration: none;
 }
 
-.botaoSalvar
-{
-    display:block; 
-    margin-left:12px;
+.botaoSalvar {
+    display: block;
+    margin-left: 12px;
     padding: 5px 10px;
     margin-right: 10px;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 .botaoVoltar2 {
@@ -117,13 +116,12 @@ form[role=login] {
     text-decoration: none;
 }
 
-.botaoFinalizar
-{
-    display:block; 
-    margin-left:1px;
+.botaoFinalizar {
+    display: block;
+    margin-left: 1px;
     padding: 5px 10px;
-    text-decoration:none;
-    margin-right:20px;
+    text-decoration: none;
+    margin-right: 20px;
 }
 
 .botaoAtualizar {
@@ -132,11 +130,11 @@ form[role=login] {
 }
 
 
-.botaoAtualizar:hover, .botaoAtualizar:focus, .botaoAtualizar:active, .botaoAtualizar.active {
-    color: #fff;
-    background-color: #391e63;
-    border-color: #391e63; /*set the color you want here*/
-}
+    .botaoAtualizar:hover, .botaoAtualizar:focus, .botaoAtualizar:active, .botaoAtualizar.active {
+        color: #fff;
+        background-color: #391e63;
+        border-color: #391e63; /*set the color you want here*/
+    }
 
 .botaoAdicional {
     background-color: #fbbc05;
@@ -151,8 +149,8 @@ form[role=login] {
     }
 
 .cbxCliente {
-    padding:20px;
-    font-size:16px;
+    padding: 20px;
+    font-size: 16px;
 }
 
 .cblEspaco label {
@@ -165,89 +163,116 @@ form[role=login] {
 
 
 .cbxCliente > input {
-    padding:4px;
-    margin-right:7px;
+    padding: 4px;
+    margin-right: 7px;
 }
 
-.voffset  { margin-top: 2px; }
-.voffset1 { margin-top: 5px; }
-.voffset2 { margin-top: 10px; }
-.voffset3 { margin-top: 15px; }
-.voffset4 { margin-top: 30px; }
-.voffset5 { margin-top: 40px; }
-.voffset6 { margin-top: 60px; }
-.voffset7 { margin-top: 80px; }
-.voffset8 { margin-top: 100px; }
-.voffset9 { margin-top: 150px; }
+.voffset {
+    margin-top: 2px;
+}
+
+.voffset1 {
+    margin-top: 5px;
+}
+
+.voffset2 {
+    margin-top: 10px;
+}
+
+.voffset3 {
+    margin-top: 15px;
+}
+
+.voffset4 {
+    margin-top: 30px;
+}
+
+.voffset5 {
+    margin-top: 40px;
+}
+
+.voffset6 {
+    margin-top: 60px;
+}
+
+.voffset7 {
+    margin-top: 80px;
+}
+
+.voffset8 {
+    margin-top: 100px;
+}
+
+.voffset9 {
+    margin-top: 150px;
+}
 
 .completionList {
-border:solid 1px #444444;
-margin:0px;
-padding:2px;
-height: 100px;
-overflow:auto;
-background-color: #FFFFFF;
-font-size:18px;
-border-bottom:solid 1px #000; 
-font-weight:bold;
+    border: solid 1px #444444;
+    margin: 0px;
+    padding: 2px;
+    height: 100px;
+    overflow: auto;
+    background-color: #FFFFFF;
+    font-size: 18px;
+    border-bottom: solid 1px #000;
+    font-weight: bold;
 }
 
 .listItem {
-color: #1C1C1C;
+    color: #1C1C1C;
 }
 
 .itemHighlighted {
     background-color: #dbe5fc;
-    cursor:pointer;
+    cursor: pointer;
 }
+
 .semUnderline {
-    text-decoration:none;
+    text-decoration: none;
 }
 
 .form-group input[type="checkbox"] {
     display: none;
-
 }
 
-.form-group input[type="checkbox"] + .btn-group > label span {
-    width: 20px;
-    padding:4px;
+    .form-group input[type="checkbox"] + .btn-group > label span {
+        width: 20px;
+        padding: 4px;
+    }
 
+        .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+            display: none;
+        }
 
-}
+        .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+            display: inline-block;
+            padding: 4px;
+        }
 
-.form-group input[type="checkbox"] + .btn-group > label span:first-child {
-    display: none;
-}
-.form-group input[type="checkbox"] + .btn-group > label span:last-child {
-    display: inline-block;  
-    padding:4px;
+    .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+        display: inline-block;
+        padding: 7px;
+    }
 
-     
-}
+    .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+        display: none;
+    }
 
-.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
-    display: inline-block;
-    padding:7px;
-
-
-}
-.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-    display: none;   
-}
 .tamanhoCheckBox {
-width:292px;
-background-color:#f9f9f9;
-padding:10px;
+    width: 292px;
+    background-color: #f9f9f9;
+    padding: 10px;
 }
 
 .rodape {
     background-color: #006DCC;
-    color:#000;
-    font-weight:bold;
+    color: #000;
+    font-weight: bold;
 }
+
 .btn {
-    height:45px;
+    height: 45px;
 }
 
 
@@ -278,8 +303,7 @@ table th, table td {
     border: 0px solid #eee;
     padding: 12px 25px;
     border-collapse: collapse;
-    text-align:left;
-
+    text-align: left;
 }
 
 table th {
@@ -342,10 +366,47 @@ table tr td {
 }
 
 .imgLimpar {
-    margin-left:-30px;
-    margin-top:67px; 
+    margin-left: -30px;
+    margin-top: 67px;
 }
+
 .voltar {
-    background-color:#fff;
+    background-color: #fff;
     color: #428bca;
 }
+
+.tooltipAdicionais {
+    cursor: pointer;
+}
+
+.tooltip {
+    display: inline;
+    position: relative;
+    cursor: pointer;
+    font-size:15px;
+}
+
+    .tooltip:hover:after {
+        background: #333;
+        background: rgba(0,0,0,.8);
+        border-radius: 5px;
+        bottom: 26px;
+        color: #fff;
+        content: attr(title);
+        left: 20%;
+        padding: 5px 15px;
+        position: absolute;
+        z-index: 98;
+        width: 220px;
+    }
+
+    .tooltip:hover:before {
+        border: solid;
+        border-color: #333 transparent;
+        border-width: 6px 6px 0 6px;
+        bottom: 20px;
+        content: "";
+        left: 50%;
+        position: absolute;
+        z-index: 99;
+    }

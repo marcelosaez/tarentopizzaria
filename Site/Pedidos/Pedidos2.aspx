@@ -218,6 +218,13 @@
                                         <asp:Label ID="lblSabor" Width="250px" runat="server" Text='<%#Eval("sabor") %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
+
+                                <asp:TemplateField  HeaderText="Adicionais" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblAdicionais" Width="250px" runat="server" Text='<%# DataBinder.Eval( Container.DataItem, "opcionais[0].TxtAdicionais") %>' CssClass="tooltipAdicionais " ToolTip='<%# DataBinder.Eval( Container.DataItem, "opcionais[0].lstAdicionais") %>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
                                 <asp:TemplateField HeaderText="Qtd">
                                     <ItemTemplate>
                                         <asp:Label ID="lblQtd" Width="30px" runat="server" Text='<%#Eval("qtd") %>' />

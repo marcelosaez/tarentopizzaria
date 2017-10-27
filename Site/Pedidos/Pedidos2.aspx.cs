@@ -904,7 +904,7 @@ namespace Site.Pedidos
                 if (qtdSabores == 3)
                 {
                     if ((ddlSabor1.SelectedValue != "") && (ddlSabor2.SelectedValue != "") && (ddlSabor3.SelectedValue != ""))
-                        return new ProdutoBLL().obterValor(Convert.ToInt32(ddlSabor1.SelectedValue), Convert.ToInt32(ddlSabor2.SelectedValue), Convert.ToInt32(ddlSabor3.SelectedValue));
+                        return new ProdutoBLL().obterValorMaximo();
                     else
                         ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "newAlert('Preencha todos os sabores!');", true);
                 }

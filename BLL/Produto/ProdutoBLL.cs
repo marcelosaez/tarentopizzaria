@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MODEL.Produto;
 using MODEL.Pagamento;
+using System.Configuration;
 
 namespace BLL.Produto
 {
@@ -67,6 +68,14 @@ namespace BLL.Produto
 
             return new ProdutoDAL().obterValor(idSabor);
         }
+
+        public decimal obterValorMaximo()
+        {
+            decimal valorMaximo = Convert.ToDecimal(ConfigurationManager.AppSettings["valorMaximoPizza"]);
+
+            return valorMaximo;
+        }
+
 
         public List<BordaProduto_VO> obterTipos()
         {

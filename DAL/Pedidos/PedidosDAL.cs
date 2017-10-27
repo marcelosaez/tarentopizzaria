@@ -272,16 +272,25 @@ namespace DAL.Pedidos
                 SqlDataReader drOpc = executeDataReader(queryOpc.ToString(), CommandType.Text, false);
 
                 List<Opcional_VO> listaOpc = new List<Opcional_VO>();
+                string lstAdicionais = "";
+                string txtAdicionais = "";
+
                 bool temOpc = false;
                 while (drOpc.Read())
                 {
                     temOpc = true;
                     Opcional_VO opc = new Opcional_VO();
                     opc.nome = Convert.ToString(drOpc["nome"]);
+                    lstAdicionais += Convert.ToString(drOpc["nome"]) + " | ";
                     listaOpc.Add(opc);
                 }
                 if (temOpc)
+                {
+                    txtAdicionais = " Adicionais ";
                     pedido.opcionais = listaOpc;
+                    pedido.opcionais[0].lstAdicionais = lstAdicionais;
+                    pedido.opcionais[0].TxtAdicionais = txtAdicionais;
+                }
 
 
                 lst.Add(pedido);
