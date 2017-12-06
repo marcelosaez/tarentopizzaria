@@ -31,6 +31,15 @@ namespace Site {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divClientes;
         
         /// <summary>
+        /// divFinanceiro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFinanceiro;
+        
+        /// <summary>
         /// divProdutos control.
         /// </summary>
         /// <remarks>

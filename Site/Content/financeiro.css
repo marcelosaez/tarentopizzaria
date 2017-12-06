@@ -1,0 +1,13 @@
+﻿
+.rodape {
+    background-color: #006DCC;
+    color: #000;
+    font-weight: bold;
+}
+
+.table > tfoot > tr > th {
+    background-color: #006DCC;
+    color: #fff;
+    font-weight: bold;
+    text-align:center;
+}

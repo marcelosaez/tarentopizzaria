@@ -46,7 +46,7 @@ namespace Site
         private void addScripts()
         {
             int cont = 0;
-            this.Page.Header.Controls.AddAt(cont, new LiteralControl("<script type=\"text/javascript\" src=\"" + ResolveUrl("~/Scripts/jquery-1.9.0.min.js") + "\"></script>"));
+            this.Page.Header.Controls.AddAt(cont, new LiteralControl("<script type=\"text/javascript\" src=\"" + ResolveUrl("~/Scripts/jquery-1.9.1.min.js") + "\"></script>"));
             cont++;
 
 

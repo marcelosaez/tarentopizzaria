@@ -833,10 +833,14 @@ namespace Site.Pedidos
             decimal valor = ObterValor(qtdSabores);
             decimal total = 0;
             decimal valorBorda = 0;
-            if (ddlQtd.SelectedValue != "")
+            if (ddlQtd.SelectedValue != "" && ddlSabor1.SelectedValue !="")
                 qtd = Convert.ToInt32(ddlQtd.SelectedValue);
             else
+            {
+                escondeBordas();
+                ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "messageQTD", "waitingDialog.hide();", true);
                 return;
+            }
             total = (qtd * valor);
 
             if (ViewState["BordaValor"] != null)
@@ -868,7 +872,7 @@ namespace Site.Pedidos
                 carregarOpcionais();
             }
 
-            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "message", "waitingDialog.hide();", true);
+            ScriptManager.RegisterStartupScript(updPainel1, updPainel1.GetType(), "messageQTD2", "waitingDialog.hide();", true);
 
         }
 

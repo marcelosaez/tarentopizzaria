@@ -15,8 +15,13 @@ namespace DAL
 
         public Contexto()
         {
-           MinhaConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["TarentoConn"].ConnectionString);
-           MinhaConexao.Open();
+            MinhaConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["TarentoConn"].ConnectionString);
+            MinhaConexao.Open();
+
+            /*using (SqlConnection MinhaConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["TarentoConn"].ConnectionString))
+            {
+
+            }*/
         }
 
 
@@ -37,6 +42,8 @@ namespace DAL
                 CommandType = CommandType.Text,
                 Connection = MinhaConexao
             };
+
+
 
             cmdComando.ExecuteNonQuery();
             closeConexao(MinhaConexao);
@@ -131,6 +138,8 @@ namespace DAL
                 conexao = this.createConexao();
 
             SqlCommand comando = this.createComando(query, cmdType, parametros);
+
+            comando.CommandTimeout = 200;
             comando.Connection = conexao;
             if (transacao != null)
                 comando.Transaction = transacao;

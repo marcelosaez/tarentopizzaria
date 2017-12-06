@@ -10,6 +10,7 @@ using MODEL.Pedido;
 using System.Data.SqlClient;
 using MODEL.Pagamento;
 using MODEL.Produto;
+using MODEL.Financeiro;
 
 namespace DAL.Pedidos
 {
@@ -39,6 +40,193 @@ namespace DAL.Pedidos
             query.Append(" LEFT JOIN tb_produtos pr3 on dt.idSabor3_idtb_produtos = pr3.idtb_produtos ");
             query.Append(" INNER JOIN tb_tipoProduto tp on tp.idtb_tipo = pr.tb_tipo_idtb_tipo  ");
             query.Append(" WHERE dt.idPedido = 0");
+
+            return executeDataSet(query.ToString(), CommandType.Text, false);
+        }
+
+        
+        public Financeiro_VO obterDadosFechamentoResumoTotalEntregas(DateTime dataIni, DateTime dataFim, string fechamento)
+        {
+
+            Financeiro_VO ResultadoTotal = new Financeiro_VO();
+            if (fechamento == "dia")
+            {
+                //Verifico se a hora esta entre a 00:00 e as 04:00
+                if (DateTime.Now.Hour >= 0 && DateTime.Now.Hour <= 4)
+                    //Caso sim, retiro um dia
+                    dataIni = dataIni.AddDays(-1);
+
+                dataIni = new DateTime(dataIni.Year, dataIni.Month, dataIni.Day, 05, 00, 00);
+
+                //Se esta no mesmo dia, seto a data dos pedidos para as 23:59 do mesmo dia
+                if (dataIni.Day == dataFim.Day)
+                    dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 23, 59, 59);
+                else
+                    // senao, seto para as 4:59 da manha como horario limite
+                    dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
+            }
+            else
+            {
+                dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
+                dataFim = dataFim.AddDays(1);
+            }
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" set dateformat dmy;");
+            query.Append(" select  COUNT(*) as Total, e.tipoEntrega from tb_cliente_tem_pedido(nolock) ctp");
+            query.Append(" inner join tb_funcionarios f on f.idtb_funcionario=ctp.tb_funcionario_idtb_funcionario");
+            query.Append(" inner join tb_cliente c on c.idtb_cliente = ctp.tb_cliente_idtb_cliente");
+            query.Append(" inner join tb_statusPedido sp on sp.idStatus = ctp.tb_status_idtb_statusPedido");
+            query.Append(" inner join tb_tipoPagamento tp on tp.idTipoPagamento = ctp.tb_tipoPagamento");
+            query.Append(" inner join tb_entrega e on e.idtb_entrega = ctp.idtb_entrega");
+            query.Append(" where CAST(dtPedido as datetime) Between '" + dataIni + "' and '" + dataFim + "' and e.idtb_entrega=1 ");
+            query.Append(" group by e.tipoEntrega ");
+
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+
+            while (dr.Read())
+            {
+                ResultadoTotal.qtdTotal = Convert.ToDecimal(dr["Total"]);
+                ResultadoTotal.tipo = Convert.ToString(dr["tipoEntrega"]);
+            }
+            ResultadoTotal.DataIni = dataIni;
+            dr.Close();
+            return ResultadoTotal;
+        }
+        public Financeiro_VO obterDadosFechamentoResumoTotal(DateTime dataIni, DateTime dataFim, string fechamento)
+        {
+
+            Financeiro_VO ResultadoTotal = new Financeiro_VO();
+            if (fechamento == "dia")
+            {
+                //Verifico se a hora esta entre a 00:00 e as 04:00
+                if (DateTime.Now.Hour >= 0 && DateTime.Now.Hour <= 4)
+                    //Caso sim, retiro um dia
+                    dataIni = dataIni.AddDays(-1);
+
+                dataIni = new DateTime(dataIni.Year, dataIni.Month, dataIni.Day, 05, 00, 00);
+
+                //Se esta no mesmo dia, seto a data dos pedidos para as 23:59 do mesmo dia
+                if (dataIni.Day == dataFim.Day)
+                    dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 23, 59, 59);
+                else
+                    // senao, seto para as 4:59 da manha como horario limite
+                    dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
+            }
+            else
+            {
+                dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
+                dataFim = dataFim.AddDays(1);
+            }
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" set dateformat dmy;");
+            query.Append(" select  isnull(Sum(qtd),0) as qtdTotal, isnull(Sum(Total),0) as valorTotal from");
+            query.Append("(select tp.tipo, sum(CASE WHEN dp.valor > 0 THEN quantidade ELSE 0 END) as qtd, ");
+            query.Append(" SUM(dp.valor) as Total ");
+            query.Append(" from tb_tipoProduto tp");
+            query.Append(" inner join tb_produtos p on p.tb_tipo_idtb_tipo = tp.idtb_tipo");
+            query.Append(" inner join tb_detalhaPedido dp on dp.idSabor1_idtb_produtos = p.idtb_produtos");
+            query.Append(" inner join tb_cliente_tem_pedido ctp on ctp.idPedido = dp.idPedido");
+            query.Append(" inner join tb_entrega e on e.idtb_entrega = ctp.idtb_entrega");
+            query.Append(" where CAST(dtPedido as datetime) Between '" + dataIni + "' and '" + dataFim + "' ");
+            query.Append(" group by tp.tipo, e.idtb_entrega,dp.idPedido) a ");
+
+            SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
+
+            while (dr.Read())
+            {
+                ResultadoTotal.qtdTotal = Convert.ToDecimal(dr["qtdTotal"]);
+                ResultadoTotal.valorTotal = Convert.ToDecimal(dr["valorTotal"]);
+            }
+            ResultadoTotal.DataIni = dataIni;
+            dr.Close();
+            return ResultadoTotal;
+        }
+
+        public object obterDadosFechamentoResumo(DateTime dataIni, DateTime dataFim, string fechamento)
+        {
+            if (fechamento == "dia")
+            {
+                //Verifico se a hora esta entre a 00:00 e as 04:00
+                if (DateTime.Now.Hour >= 0 && DateTime.Now.Hour <= 4)
+                    //Caso sim, retiro um dia
+                    dataIni = dataIni.AddDays(-1);
+
+                dataIni = new DateTime(dataIni.Year, dataIni.Month, dataIni.Day, 05, 00, 00);
+
+                //Se esta no mesmo dia, seto a data dos pedidos para as 23:59 do mesmo dia
+                if (dataIni.Day == dataFim.Day)
+                    dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 23, 59, 59);
+                else
+                    // senao, seto para as 4:59 da manha como horario limite
+                    dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
+            } else
+            {
+                dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
+                dataFim = dataFim.AddDays(1);
+            }
+
+            
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" set dateformat dmy;");
+            query.Append(" select tipo, Sum(qtd) as Qtd, Sum(Total) as Total from");  
+            query.Append("(select tp.tipo, sum(CASE WHEN dp.valor > 0 THEN quantidade ELSE 0 END) as qtd, ");
+            query.Append(" SUM(dp.valor) as Total ");
+            query.Append(" from tb_tipoProduto tp");
+            query.Append(" inner join tb_produtos p on p.tb_tipo_idtb_tipo = tp.idtb_tipo");
+            query.Append(" inner join tb_detalhaPedido dp on dp.idSabor1_idtb_produtos = p.idtb_produtos");
+            query.Append(" inner join tb_cliente_tem_pedido ctp on ctp.idPedido = dp.idPedido");
+            query.Append(" inner join tb_entrega e on e.idtb_entrega = ctp.idtb_entrega");
+            query.Append(" where CAST(dtPedido as datetime) Between '" + dataIni + "' and '" + dataFim + "' ");
+            query.Append(" group by tp.tipo, e.idtb_entrega,dp.idPedido) a ");
+            query.Append(" group by a.tipo ");
+
+            return executeDataSet(query.ToString(), CommandType.Text, false);
+        }
+
+        public object obterDadosFechamentoPagtoResumo(DateTime dataIni, DateTime dataFim, string fechamento)
+        {
+            if (fechamento == "dia")
+            {
+                //Verifico se a hora esta entre a 00:00 e as 04:00
+                if (DateTime.Now.Hour >= 0 && DateTime.Now.Hour <= 4)
+                    //Caso sim, retiro um dia
+                    dataIni = dataIni.AddDays(-1);
+
+                dataIni = new DateTime(dataIni.Year, dataIni.Month, dataIni.Day, 05, 00, 00);
+
+                //Se esta no mesmo dia, seto a data dos pedidos para as 23:59 do mesmo dia
+                if (dataIni.Day == dataFim.Day)
+                    dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 23, 59, 59);
+                else
+                    // senao, seto para as 4:59 da manha como horario limite
+                    dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
+            }
+            else
+            {
+                dataFim = new DateTime(dataFim.Year, dataFim.Month, dataFim.Day, 4, 59, 59);
+                dataFim = dataFim.AddDays(1);
+            }
+            // query
+            StringBuilder query = new StringBuilder();
+            query.Append(" set dateformat dmy;");
+            query.Append(" select TipoPagamento, Sum(qtd) as Qtd, Sum(Total) as Total from");
+            query.Append("(select tpg.TipoPagamento, COUNT(*) as qtd, ");
+            query.Append(" CASE WHEN e.idtb_entrega = 1 THEN ");
+            query.Append(" SUM(dp.valor) + 2 ");
+            query.Append(" ELSE ");
+            query.Append(" SUM(dp.valor) ");
+            query.Append(" END as Total from tb_tipoProduto tp");
+            query.Append(" inner join tb_produtos p on p.tb_tipo_idtb_tipo = tp.idtb_tipo");
+            query.Append(" inner join tb_detalhaPedido dp on dp.idSabor1_idtb_produtos = p.idtb_produtos");
+            query.Append(" inner join tb_cliente_tem_pedido ctp on ctp.idPedido = dp.idPedido");
+            query.Append(" inner join tb_tipoPagamento tpg on tpg.idTipoPagamento = ctp.tb_tipoPagamento");
+            query.Append(" inner join tb_entrega e on e.idtb_entrega = ctp.idtb_entrega");
+            query.Append(" where CAST(dtPedido as datetime) Between '" + dataIni + "' and '" + dataFim + "' ");
+            query.Append(" group by tpg.TipoPagamento,e.idtb_entrega,dp.idPedido) a ");
+            query.Append(" group by a.TipoPagamento ");
 
             return executeDataSet(query.ToString(), CommandType.Text, false);
         }
@@ -186,7 +374,7 @@ namespace DAL.Pedidos
             }
             catch (Exception e)
             {
-               throw e;
+                throw e;
             }
             return retorno;
         }
@@ -296,7 +484,7 @@ namespace DAL.Pedidos
                 lst.Add(pedido);
             }
 
-            
+
 
 
             dr.Close();

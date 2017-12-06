@@ -37,6 +37,7 @@ namespace Site
         {
             divFuncionarios.Visible = false;
             divProdutos.Visible = false;
+            divFinanceiro.Visible = false;
         }
 
         private void mensagem()

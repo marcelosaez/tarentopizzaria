@@ -9,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MODEL.Financeiro;
 
 namespace BLL.Pedidos
 {
@@ -22,6 +23,27 @@ namespace BLL.Pedidos
         public List<Pedido_VO> obterDadosDetPedido(int idDetPedido)
         {
             return new PedidosDAL().obterDadosDetPedido(idDetPedido);
+        }
+
+        public object obterDadosFechamentoResumo(DateTime dataIni, DateTime dataFim, string fechamento)
+        {
+            return new PedidosDAL().obterDadosFechamentoResumo(dataIni, dataFim, fechamento);
+        }
+
+        public object obterDadosFechamentoPagtoResumo(DateTime dataIni, DateTime dataFim, string fechamento)
+        {
+            return new PedidosDAL().obterDadosFechamentoPagtoResumo(dataIni, dataFim, fechamento);
+        }
+
+        public Financeiro_VO obterDadosFechamentoResumoTotal(DateTime dataIni, DateTime dataFim, string fechamento)
+        {
+            return new PedidosDAL().obterDadosFechamentoResumoTotal(dataIni, dataFim, fechamento);
+        }
+
+        
+        public Financeiro_VO obterDadosFechamentoResumoTotalEntregas(DateTime dataIni, DateTime dataFim, string fechamento)
+        {
+            return new PedidosDAL().obterDadosFechamentoResumoTotalEntregas(dataIni, dataFim, fechamento);
         }
 
         public DataSet obterDataSet()
