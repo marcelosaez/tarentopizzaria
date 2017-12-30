@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="content">
+    <div class="container">
         <div class="row voffset6">
             <div class="col-md-4"></div>
             <a href="/Pedidos/Default.aspx">

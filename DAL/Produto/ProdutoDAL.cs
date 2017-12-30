@@ -12,7 +12,7 @@ namespace DAL.Produto
 {
     public class ProdutoDAL : Contexto
     {
-        public DataSet obterDataSet()
+        public DataSet obterDataSet(string busca)
         {
             // query
             StringBuilder query = new StringBuilder();
@@ -21,8 +21,21 @@ namespace DAL.Produto
             query.Append(" from tb_produtos (nolock) p ");
             query.Append(" inner join tb_tipoProduto(nolock) tp ");
             query.Append(" on p.tb_tipo_idtb_tipo = tp.idtb_tipo ");
+            
+            //Se esta buscando um cliente especifico
+            if (busca != null && busca.Length > 0)
+                query.Append("WHERE [nome] like @Busca or [tipo] like @Busca ");
             query.Append(" ORDER BY nome");
-            return executeDataSet(query.ToString(), CommandType.Text, false);
+
+            //parametros
+            SqlParameter[] parametros = {
+                createParametro("@Busca", SqlDbType.VarChar, "%" + busca + "%")
+            };
+            if (busca != null && busca.Length > 0)
+                return executeDtSet(query.ToString(), CommandType.Text, null, null, parametros, false);
+            else
+                return executeDataSet(query.ToString(), CommandType.Text, false);
+
         }
 
         public DataSet obterDataSetOpcionais()

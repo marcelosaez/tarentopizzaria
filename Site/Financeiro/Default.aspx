@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="content">
+    <div class="container">
         <div class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">
@@ -11,7 +11,7 @@
             <div class="col-lg-4"></div>
         </div>
     </div>
-    <div class="content">
+    <div class="container">
         <div class="row">
              <div class="col-lg-4"></div>
              <a href="Fechamento.aspx?fechamento=dia">

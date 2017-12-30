@@ -11,7 +11,7 @@ namespace DAL.Cliente
 {
     public class ClienteDAL : Contexto
     {
-        public DataSet obterDataSet()
+        public DataSet obterDataSet(string busca)
         {
             // query
             StringBuilder query = new StringBuilder();
@@ -21,8 +21,21 @@ namespace DAL.Cliente
             query.Append(" CASE WHEN[dddres] <> 0 THEN[dddres] END as dddres, ");
             query.Append(" CASE WHEN[telres] <> 0 THEN[telres] END as telres  ");
             query.Append(" FROM tb_cliente ");
+            //Se esta buscando um cliente especifico
+            if (busca != null && busca.Length > 0)
+                query.Append("WHERE [nome] like @Busca or [cel] like @Busca or [telres] like @Busca ");
+
             query.Append(" ORDER BY nome");
-            return executeDataSet(query.ToString(), CommandType.Text, false);
+
+            //parametros
+            SqlParameter[] parametros = {
+                createParametro("@Busca", SqlDbType.VarChar, "%" + busca + "%")
+            };
+            if (busca != null && busca.Length > 0)
+                return executeDtSet(query.ToString(), CommandType.Text, null,null, parametros, false);
+            else
+                return executeDataSet(query.ToString(), CommandType.Text, false);
+
         }
 
         public void alterar(Cliente_VO cliente)
@@ -77,7 +90,7 @@ namespace DAL.Cliente
                 if (cel != 0)
                     query.Append(" AND cel = " + cel);
             }
-               
+
 
             //executa
             SqlDataReader dr = executeDataReader(query.ToString(), CommandType.Text, false);
@@ -202,13 +215,13 @@ namespace DAL.Cliente
                     registro.telres = Convert.ToInt32(dr["telres"]);
                 }
 
-                
+
                 listaClientes.Add(registro);
 
 
             }
 
-            
+
             dr.Close();
 
             return listaClientes;

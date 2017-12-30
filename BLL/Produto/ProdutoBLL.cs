@@ -13,9 +13,14 @@ namespace BLL.Produto
 {
     public class ProdutoBLL
     {
+        public DataSet obterDataSet(string busca)
+        {
+            return new ProdutoDAL().obterDataSet(busca);
+        }
+
         public DataSet obterDataSet()
         {
-            return new ProdutoDAL().obterDataSet();
+            return new ProdutoDAL().obterDataSet("");
         }
 
         public DataSet obterDataSetOpcionais()

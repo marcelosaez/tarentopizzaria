@@ -123,12 +123,12 @@
                 <div class="col-lg-4"></div>
                 <div class="col-lg-4">
                     <div class="row">
-                        <div class="col-lg-10">
+                        <div class="col-lg-11">
                             <h3>
                         <asp:Label ID="lblData" runat="server"></asp:Label>
                             </h3>
                         </div>
-                        <div class="col-lg-2" style="vertical-align: middle">
+                        <div class="col-lg-1 text-right" style="vertical-align: middle">
                             <a href="#;" id="btnExport" title="Baixar Excel">
                                 <i class="fa fa-file-excel-o fa-2x" aria-hidden="true" style="padding-left: 15px; padding-top: 20px; text-align: left;"></i>
                             </a>

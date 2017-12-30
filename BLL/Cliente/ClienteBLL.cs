@@ -11,9 +11,14 @@ namespace BLL.Cliente
 {
     public class ClienteBLL
     {
+        public DataSet obterDataSet(string busca)
+        {
+            return new ClienteDAL().obterDataSet(busca);
+        }
+
         public DataSet obterDataSet()
         {
-            return new ClienteDAL().obterDataSet();
+            return new ClienteDAL().obterDataSet("");
         }
 
         public bool checaLogin(string login)

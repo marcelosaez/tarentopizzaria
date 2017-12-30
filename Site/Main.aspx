@@ -9,7 +9,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="content">
+    <div class="container">
         <div class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div class="content">
+    <div class="container">
         <div class="row">
             <div class="col-lg-3"></div>
             <a href="Pedidos/Main.aspx">
@@ -44,7 +44,7 @@
 
             <div class="col-lg-3"></div>
         </div>
-        <div class="row ">
+        <div class="row">
             <div class="col-lg-3"></div>
             <a href="Produtos/Default.aspx">
                 <div id="divProdutos" runat="server" class="col-lg-2 color-swatch bg-warning text-white text-center">

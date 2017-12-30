@@ -23,6 +23,16 @@ namespace Site.Clientes
 
         }
 
+        protected void cmdBusca_OnClick(object sender, EventArgs e)
+        {
+            this.setDataSource();
+        }
+
+        protected void setDataSource()
+        {
+            this.SourceData.SelectParameters.Clear();
+            this.SourceData.SelectParameters.Add(new Parameter("busca", System.Data.DbType.String, txtBusca.Text.Trim()));
+        }
         protected void gvListaClientes_RowCommand(Object src, GridViewCommandEventArgs e)
         {
             int index = 0;

@@ -85,10 +85,10 @@ namespace DAL
 
         public DataSet executeDataSet(String query, CommandType cmdType, Boolean makelog)
         {
-            return this.executeDataSet(query, cmdType, null, null, null, makelog);
+            return this.executeDtSet(query, cmdType, null, null, null, makelog);
         }
 
-        public DataSet executeDataSet(String query, CommandType cmdType, SqlConnection conexao, SqlTransaction transacao, SqlParameter[] parametros, Boolean makelog)
+        public DataSet executeDtSet(String query, CommandType cmdType, SqlConnection conexao, SqlTransaction transacao, SqlParameter[] parametros, Boolean makelog)
         {
             // Conectar, se necessário
             bool fecharConexao = false;
