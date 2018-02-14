@@ -5,11 +5,11 @@
     <link href="/Content/finalizar.css" rel="stylesheet" />
     <%--<link href="/Content/font-awesome-animation.min.css" rel="stylesheet">--%>
 
-    <script src="/Scripts/jquery-1.9.0.min.js"></script>
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
     <script src="/Scripts/jquery.maskMoney.js"></script>
     <script src="/Scripts/bootbox.min.js"></script>
-    <script src="/Scripts/jquery-1.9.0.min.js"></script>
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript">
 

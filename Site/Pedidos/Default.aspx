@@ -3,11 +3,12 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    
+
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
     <link href="/Content/bootstrap.css" rel="stylesheet" />
     <link href="/Content/pedidos.css" rel="stylesheet" />
-
-    <script src="/Scripts/jquery-1.9.0.min.js"></script>
-    <script src="/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript">
         window.alert = function () { };
         var defaultCSS = document.getElementById('bootstrap-css');
@@ -33,7 +34,20 @@
         $('#myModal').on('show.bs.modal', function (e) {
             var loadurl = e.relatedTarget.data('load-url');
             $(this).find('.modal-body').load(loadurl);
+           // alert('teste');
+           
+
         });
+
+        
+        
+
+        /*var loadingModal = $("#myModal");
+
+        $("#divNovoCliente").click(function () {
+            loadingModal.modal("show");
+            $(this).find('.modal-body').load(loadurl);
+        });*/
 
         function OnContactSelected(source, eventArgs) {
 
@@ -85,7 +99,7 @@
             </asp:AutoCompleteExtender>
             <div class="col-md-12">
                 <div class="col-md-4">
-                    <div class="btn btn-lg btn-danger btn-block botaoVoltar semUnderline" data-toggle="modal" data-load-url="" data-target="#myModal">Novo Cliente</div>
+                    <div class="btn btn-lg btn-danger btn-block botaoVoltar semUnderline" data-toggle="modal" data-load-url="" data-target="#myModal" >Novo Cliente</div>
                 </div>
                 <div class="col-md-4"></div>
 
